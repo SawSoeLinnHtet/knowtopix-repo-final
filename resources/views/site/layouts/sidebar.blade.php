@@ -52,7 +52,7 @@
                 <div class="collection-wrapper">
                     <ul>
                         <li>
-                            <a href="#">
+                            <a href="{{ route('site.profile.index') }}">
                                 <i class="fa-solid fa-user me-3"></i><span class="fw-bold">Profile</span>
                             </a>
                         </li>
@@ -62,7 +62,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ route('site.profile.setting') }}">
                                 <i class="fa-solid fa-gear me-3"></i><span>Account Setting</span>
                             </a>
                         </li>

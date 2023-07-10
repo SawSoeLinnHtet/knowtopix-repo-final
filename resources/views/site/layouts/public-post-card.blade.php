@@ -7,7 +7,7 @@
                     <a href="#">
                         <h4>{{ $post->User->name }}</h4>
                     </a>
-                    <div class="post-created">{{ $post->created_at->diffForHumans() }}</div>
+                    <div class="post-created"><i class="fa-solid fa-earth-americas text-info me-2"></i>{{ $post->created_at->diffForHumans() }}</div>
                 </div>
             </div>
             <div class="card-option" x-data="{ openOption: false }">
@@ -82,3 +82,81 @@
         </div>
     </div>
 @endforeach
+
+@push('script')
+
+<script>
+    // like function 
+    $(document).on('click', '.like-btn', function (e) {
+        e.preventDefault();
+
+        if($(this).hasClass('text-danger')){
+            $(this).removeClass('text-danger')
+            $(this).addClass('text-white')
+            var x = $(this).next('.like-count').attr('value')
+            $(this).next('.like-count').text(Number(x) - 1).attr('value', Number(x) - 1)
+        }else{
+            $(this).addClass('text-danger')
+            $(this).removeClass('text-white')
+            var x = $(this).next('.like-count').attr('value')
+            $(this).next('.like-count').text(Number(x) + 1).attr('value', Number(x) + 1)
+            $(this).next('.like-count')
+        }
+
+        let like_url = $(this).data('url')
+
+        $.ajax({
+            url: like_url,
+            data: {
+                '_token': "{{ csrf_token() }}"
+            },
+            type: 'POST',
+            success: function(res){
+                return
+            }
+        })
+    })
+    // comment function
+    $(document).on('click', '.comment-submit', function (e) {
+        e.preventDefault()
+        
+        var x = $(this).parent('').parent().prev('.card-body').children('.card-body-option').children('.comment-wrap').children('.comment-count')
+        var x_val = x.attr('value')
+        x.attr('value', Number(x_val) + 1).text(Number(x_val) + 1)
+
+        var current = $(this)
+        var comment = $(this).prev('.comment-box')
+        create_url = $(this).data('url')
+
+        $.ajax({
+            url: create_url,
+            data: {
+                '_token': "{{ csrf_token() }}",
+                'comment': comment.val()
+            },
+            type: "POST",
+            success: function(res){
+                var comment_wrap = current.parent().prev()
+
+                let template = `
+                <div class="comment-card">
+                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                        <div class="text-wrap">
+                            <h6>
+                                {{ Auth::guard('user_auth')->User()->name }}
+                            </h6>
+                            <span>
+                                ${ comment.val() }
+                            </span>
+                        </div>
+                    </div> 
+                `
+
+                comment_wrap.append(template);
+                comment.val('')
+            }
+        })
+    });
+</script>
+
+@endpush

@@ -19,6 +19,34 @@ class Friend extends Model
 
     public function User()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class);
+    }
+
+    public static function friendCheck($users)
+    {
+        $friend_users = $users->map(function ($user) {
+            $auth_user = auth()->guard('user_auth')->user()->id;
+            $fromFriendRequests = $user->fromFriendRequest;
+            $toFriendRequests = $user->toFriendRequest;
+            $user->is_friend = false;
+
+            foreach ($fromFriendRequests as $fri) {
+                if ($fri->to_user == $auth_user && $fri->status == "accept") {
+                    return $user->is_friend = true;
+                }
+            }
+
+            if (!$user->is_friend) {
+                foreach ($toFriendRequests as $fri) {
+                    if ($fri->from_user == $auth_user && $fri->status == "accept") {
+                        return $user->is_friend = true;
+                    }
+                }
+            }
+
+            return $user;
+        });
+
+        return $friend_users;
     }
 }

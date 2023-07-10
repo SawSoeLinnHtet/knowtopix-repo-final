@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
+use PyaeSoneAung\MyanmarPhoneValidationRules\MyanmarPhone;
 
 class UserRequest extends FormRequest
 {
@@ -30,7 +31,7 @@ class UserRequest extends FormRequest
                 'name' => 'required|between:10,25',
                 'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username,'. $id,
                 'email' => 'required|email|unique:users,email,' . $id,
-                'phone' => 'required|regex:/^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/|unique:users,phone,' . $id
+                'phone' => ['required', new MyanmarPhone, 'unique:users,phone,' . $id]
             ];
         } else {
             return [
@@ -38,7 +39,7 @@ class UserRequest extends FormRequest
                 'username' => "required|regex:/(^([a-zA-z1-9]+)(\d+)?$)/u|unique:users,username",
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|confirmed|between:8,20',
-                'phone' => 'required|regex:/^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/|unique:users,phone',
+                'phone' => ['required', new MyanmarPhone, 'unique:users,phone,'],
             ];
         }
     }

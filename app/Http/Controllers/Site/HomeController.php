@@ -21,18 +21,9 @@ class HomeController extends Controller
 
         $friend_ids = implode(',', $ids);
 
-        $posts = Post::orderBy('created_at','desc')->orderByRaw("FIELD(user_id, $friend_ids)DESC")->with('User:id,name', 'PostLike', 'PostComment.User:id,name')->paginate(10);
+        $posts = Post::orderBy('created_at','desc')->orderByRaw("FIELD(user_id, $friend_ids)DESC")->with('User:id,name', 'PostComment.User:id,name')->paginate(10);
 
-        $liked_posts = $posts->map(function ($post) {
-            $post_likes = $post->PostLike;
-            $is_liked = false;
-
-            foreach ($post_likes as $like) {
-                $is_liked = $like->user_id == auth()->guard('user_auth')->user()->id;
-            }
-
-            return $post->is_liked = $is_liked;
-        });
+        $liked_posts = Post::getWithLike($posts);
 
         if ($request->ajax()) {
             $view = view('site.layouts.public-post-card', ['posts' => $posts])->render();

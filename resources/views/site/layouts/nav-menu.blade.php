@@ -5,7 +5,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a href="{{ route('site.search.index') }}">
             <i class="fa-solid fa-magnifying-glass"></i><span class="ms-3">Search</span>
         </a>
     </li>

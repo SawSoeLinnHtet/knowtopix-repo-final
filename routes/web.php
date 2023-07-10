@@ -10,9 +10,12 @@ use App\Http\Controllers\Site\FriendController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\Post\PostLikesController;
 use App\Http\Controllers\Site\PostController;
+use App\Http\Controllers\Site\ProfileController;
+use App\Http\Controllers\Site\SearchController;
 use App\Http\Controllers\Site\SiteUserController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Controllers\Site\UserController as confirm;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,4 +66,12 @@ Route::group([
     Route::post('users/{user}/add', [FriendController::class, 'addUser'])->name('friend.add');
     Route::get('friends', [FriendController::class, 'index'])->name('friend.index');
     Route::post('friends/{id}/confirm', [FriendController::class, 'confirmRequest'])->name('friend.confirm');
+
+    // search route
+    Route::get('search', [SearchController::class, 'index'])->name('search.index');
+    // profile route
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('profile/setting', [ProfileController::class, 'setting'])->name('profile.setting');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.edit');
+    Route::patch('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });

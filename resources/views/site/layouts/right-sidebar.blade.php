@@ -3,70 +3,7 @@
     <div class="random-user-wrap online-friend-wrap mt-3">
         <div class="random-user-card-header">
             <h6>
-                Online Users
-            </h6>
-            <span>
-                <i class="fa-solid fa-arrows-rotate"></i>
-            </span>
-        </div>
-        <div class="user-online-list">
-            <ul>
-                <li class="online-friend">
-                    <a href="">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <span class="active-status">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="online-friend">
-                    <a href="">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <span class="active-status">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="online-friend">
-                    <a href="">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <span class="active-status">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="online-friend">
-                    <a href="">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <span class="active-status">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="online-friend">
-                    <a href="">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <span class="active-status">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="online-friend">
-                    <a href="">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <span class="active-status">
-                            <i class="fa-solid fa-circle"></i>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="random-user-wrap online-friend-wrap mt-3">
-        <div class="random-user-card-header">
-            <h6>
-                Online Users
+                Pages
             </h6>
             <span>
                 <i class="fa-solid fa-arrows-rotate"></i>

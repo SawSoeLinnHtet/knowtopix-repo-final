@@ -10,6 +10,7 @@ use App\Models\Site\Post\PostLike;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -69,9 +70,14 @@ class User extends Authenticatable
         return $this->hasMany(PostComment::class);
     }
 
-    public function GetFriendRequest()
+    public function fromFriendRequest()
     {
         return $this->hasMany(Friend::class, 'from_user');
+    }
+
+    public function toFriendRequest()
+    {
+        return $this->hasMany(Friend::class, 'to_user');
     }
 
     public static function GetNotRequestFriend($current_user_id, $pending_user_ids, $suggested_user_ids)
@@ -79,5 +85,12 @@ class User extends Authenticatable
         $friend_ids = array_merge($pending_user_ids, $suggested_user_ids, [$current_user_id]);
         $users = User::whereNotIN('id', $friend_ids)->orderBy('created_at', 'desc')->paginate(5);
         return $users;
+    }
+
+    public function scopeFilter(Builder $query, array $filter)
+    {
+        return $query->when($filter['search'] ?? false, function ($q, $filter) {
+            $q->where('name', 'LIKE', "%" . $filter . "%")->orWhere('username', 'LIKE', "%" . $filter . "%");
+        });
     }
 }
