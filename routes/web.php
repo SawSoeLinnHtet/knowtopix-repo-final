@@ -66,12 +66,13 @@ Route::group([
     Route::post('users/{user}/add', [FriendController::class, 'addUser'])->name('friend.add');
     Route::get('friends', [FriendController::class, 'index'])->name('friend.index');
     Route::post('friends/{id}/confirm', [FriendController::class, 'confirmRequest'])->name('friend.confirm');
+    Route::get('friends/{user}/details', [FriendController::class, 'show'])->name('friend.details');
 
-    // search route
     Route::get('search', [SearchController::class, 'index'])->name('search.index');
-    // profile route
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('profile/setting', [ProfileController::class, 'setting'])->name('profile.setting');
-    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.edit');
-    Route::patch('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    Route::get('{user:username}', [ProfileController::class, 'viewProfile'])->name('profile.index');
+    Route::get('{user:username}/setting', [ProfileController::class, 'viewSetting'])->name('profile.setting');
+    Route::patch('{user:username}', [ProfileController::class, 'update'])->name('profile.edit');
+    Route::put('{user:username}/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('{user:username}/upload', [ProfileController::class, 'upload'])->name('profile.upload');
 });

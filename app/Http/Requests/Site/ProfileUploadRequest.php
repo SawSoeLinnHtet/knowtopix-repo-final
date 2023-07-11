@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Site;
 
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class ProfileUploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +21,10 @@ class PostRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'content_area' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'profile' => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
     }
 }

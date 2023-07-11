@@ -4,7 +4,7 @@
             <img src="{{ asset('site/img/user.jpeg') }}" alt="">
         </a>
         <div class="info-wrap">
-            <a href="" class="user-name">
+            <a href="{{ route('site.friend.details', $user->id) }}" class="user-name">
                 <p class="text-white">
                     {{ $user->name }}
                 </p>

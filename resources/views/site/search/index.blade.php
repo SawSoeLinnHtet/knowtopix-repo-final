@@ -14,7 +14,7 @@
                             </button>
                         </form>
                     </div>
-                    @if(isset($users))
+                    @if(isset($users) && $users->count() > 0)
                         <div class="search-items-wrap">
                             <h3 class="title">People</h3>
                             <div class="search-item-list-wrap">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     @endif
-                    @if(isset($posts))
+                    @if(isset($posts) && $posts->count() > 0)
                         <div class="search-items-wrap">
                             <h3 class="title">Posts</h3>
                             <div class="public-posts-wrap py-2" id="public-posts-wrap">

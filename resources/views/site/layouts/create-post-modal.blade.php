@@ -1,10 +1,11 @@
-<div class="add-post-btn-wrap" x-data="{ openCreateModalBox : false }">
+<div class="add-post-btn-wrap" x-data="{ openCreateModalBox : false }" x-init="$watch('openCreateModalBox', toggleOverflow)">
     <button class="add-text-btn" @click="openCreateModalBox = !openCreateModalBox">What do you have in mind?</button>
 
     <div 
         class="post-create-modal-box" 
         x-cloak x-show="openCreateModalBox"
-        @click.away="openCreateModalBox = false"
+        @click.away="openCreateModalBox = !openCreateModalBox"
+        @keyup.escape.window="openCreateModalBox = false"
     >
         <div 
             class="modal-box-wrapper" 
@@ -23,12 +24,12 @@
                     </p>
                 </div>
                 <div class="modal-form-wrap">
-                    <form action="{{ route('site.posts.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('site.posts.store') }}" id="post-create" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="input-area">
                             <label for="">What do you have in mind?</label>
                             {{-- <input type="text" name="content_area" id=""> --}}
-                            <textarea name="content_area" id="" rows="3"></textarea>
+                            <textarea name="content_area" class="content_area" rows="3"></textarea>
                         </div>
                         <div class="form-input">
                             <div class="preview">
@@ -45,10 +46,20 @@
                         </div>
                     </form>
                     @push('script')
-                        {!! JsValidator::formRequest('App\Http\Requests\Site\PostRequest') !!}
+                        {!! JsValidator::formRequest('App\Http\Requests\Site\PostRequest', '#post-create') !!}
                     @endpush
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('script')
+
+<script>
+    function toggleOverflow() {
+        document.getElementById('app').classList.toggle('overflow-hidden');
+    }
+</script>
+
+@endpush

@@ -18,7 +18,7 @@ class SearchController extends Controller
 
             $posts = Post::with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
             $liked_posts = Post::getWithLike($posts);
-
+            
             return view('site.search.index', ['users' => $users, 'posts' => $posts]);
         }else{
             $recent_posts = Post::with('PostComment.User:id,name')->get()->random(2);

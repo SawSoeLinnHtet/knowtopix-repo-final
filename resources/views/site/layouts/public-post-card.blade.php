@@ -2,7 +2,7 @@
     <div class="public-post-card">
         <div class="card-header">
             <div class="card-info">
-                <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                <img src="{{ asset('site/img/user.jpeg')}}" alt="">
                 <div>
                     <a href="#">
                         <h4>{{ $post->User->name }}</h4>
@@ -12,6 +12,7 @@
             </div>
             <div class="card-option" x-data="{ openOption: false }">
                 <button 
+                    class="option-menu-btn"
                     @click="openOption= !openOption"
                     @keydown.escape="openOption= false"
                 >
@@ -20,7 +21,7 @@
                 <div 
                     class="option-float-wrap" 
                     x-cloak x-show="openOption"
-                    @click.away="openOption= false" 
+                    @click.away="openOption= false"
                     x-transition:enter.duration.500ms
                     x-transition:leave.duration.400ms
                 >
@@ -35,6 +36,9 @@
                                 <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
                             </a>
                         </li>
+                        @if ($post->user_id == auth()->guard('user_auth')->user()->id)
+                            @include('site.layouts.post-edit-btn', ['post_id' => $post->id])
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -76,7 +80,7 @@
                 @endif
             </div>
             <div class="create-comment-wrap">
-                <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                <img src="{{ $post->User->profile ? asset('images/profile/'.$post->User->profile) : asset('site/img/user.jpeg') }}" alt="">
                 <x-site.post.comment-create :id="$post->id"></x-site.post.comment-create>
             </div>
         </div>
@@ -157,6 +161,20 @@
             }
         })
     });
-</script>
+    // edit function
+    $(document).on('click', '.post-edit-btn', function() {
+        
+        edit_url = $(this).data('url')
+        current_item = $(this);
+
+        $.ajax({
+            url: edit_url,
+            type: 'GET',
+            success: function (res) {
+                $('.edit-modal-form-wrap').html(res.html)
+            } 
+        })
+    })
+    </script>
 
 @endpush

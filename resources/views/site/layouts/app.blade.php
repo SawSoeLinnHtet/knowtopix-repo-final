@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/site/owl-carousel/owl.theme.default.min.css') }}">
     
 </head>
-<body>
+<body id="app" x-data="{ openEditModalBox : false }" x-init="$watch('openEditModalBox', toggleOverflow)">
     
     <div class="main-content">
         <div class="container-fluid main-content-wrapper p-0">
@@ -32,6 +32,7 @@
                         <i class="fa-solid fa-arrow-up"></i>
                     </div>
                 </div>
+                @include('site.layouts.edit-post-modal')
             </main>
         </div>
     </div>

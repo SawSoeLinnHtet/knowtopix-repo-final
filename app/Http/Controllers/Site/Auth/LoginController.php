@@ -18,10 +18,10 @@ class LoginController extends Controller
     }
 
     public function auth(LoginRequest $request){
-
         $credentials = $request->only('email', 'password');
 
-        if(Auth::guard('user_auth')->attempt($credentials)){
+        $remember = isset($request->remember) && $request->remember == 'on';
+        if(Auth::guard('user_auth')->attempt($credentials, $remember)){
             return redirect()->route('site.index')->with('success', 'Welcome, You are logged in!');
         }else{
             return redirect()->route('site.login.index')->with('error', "Your Credentials doesn't match");

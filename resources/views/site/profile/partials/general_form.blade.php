@@ -1,4 +1,4 @@
-<form action="{{ route('site.profile.edit') }}" method="POST">
+<form id="general-edit" action="{{ route('site.profile.edit', Auth::guard('user_auth')->user()->username) }}" method="POST">
     @csrf
     @method('PATCH')
     <div class="row mb-3">
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mt-2 mb-3">
         <div class="col-3">
             <label for=""  class="text-white">Address</label>
         </div>
@@ -60,7 +60,7 @@
             <textarea id="exampleFormControlTextarea1" rows="3">{{ $user->address }}</textarea>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row">
         <div class="col-3">
             <label for=""  class="text-white ">Personal Info</label>
         </div>
@@ -68,14 +68,13 @@
             <textarea id="exampleFormControlTextarea1" rows="3">{{ $user->personal_info }}</textarea>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <div class="col d-flex justify-content-end">
-            <button type="submit" class="btn btn-secondary">Cancel</button>
-            <button type="submit" class="btn btn-primary profile-edit-btn ms-3">Edit</button>
+            <button type="submit" class="btn btn-primary btn-sm profile-edit-btn ms-3">Edit</button>
         </div>
     </div>
 </form>
 
 @push('script')
-    {!! JsValidator::formRequest('App\Http\Requests\Site\ProfileRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\Site\ProfileRequest', '#general-edit') !!}
 @endpush

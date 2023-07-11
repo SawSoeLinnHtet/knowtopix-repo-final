@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\User;
+use App\Models\Site\Post;
 use App\Models\Site\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,5 +55,15 @@ class FriendController extends Controller
         $friend->update($request->except('_token'));
 
         return response()->json(['success' => 'Now you are friend with him']);
+    }
+
+    public function show(User $user)
+    {
+        $posts = Post::where('user_id', $user->id)->with('PostComment.User:id,name')->latest()->get();
+        $liked_posts = Post::getWithLike($posts);
+
+        $photos = Post::where('user_id', $user->id)->pluck('thumbnail');
+
+        return view('site.friends.details', ['user' => $user, 'posts' => $posts, 'photos' => $photos]);
     }
 }

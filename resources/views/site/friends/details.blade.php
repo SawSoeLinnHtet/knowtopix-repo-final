@@ -18,7 +18,7 @@
                                 Posts
                             </span>
                             <span class="text-white fw-bold fs-5">
-                                13
+                                {{ $posts->count() }}
                             </span>
                         </div>
                         <div class="d-flex flex-column align-items-center">
@@ -50,7 +50,7 @@
                                     Posts
                                 </span>
                                 <span class="text-white fw-bold fs-5">
-                                    {{ $posts->count() }}
+                                    {{ $posts->count()}}
                                 </span>
                             </div>
                             <div class="d-flex flex-column align-items-center">
@@ -71,8 +71,8 @@
                             </div>
                         </div>
                         <div class="options">
-                            <a href="{{ route('site.profile.setting', $user->username) }}" class="edit-btn text-decoration-none">
-                                Edit profile
+                            <a href="#" class="edit-btn add-friend-btn text-decoration-none" data-url="{{ route('site.friend.add', $user->id) }}">
+                                Add Friend
                             </a>
                         </div>
                     </div>
@@ -92,21 +92,33 @@
                     <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
                         <div class="row p-0">
                             <div class="col-12">
-                                <div class="public-posts-wrap">
-                                    @include('site.layouts.public-post-card', $posts)
-                                </div>
+                                @if($posts->count() !== 0)
+                                    <div class="public-posts-wrap">
+                                        @include('site.layouts.public-post-card', $posts)
+                                    </div>
+                                @else
+                                    <div class="text-center py-3">
+                                        <p class="text-danger fw-bold d-flex align-items-center justify-content-center"><i class="fa-solid fa-database me-3 fs-4"></i>This user has no post!</p>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
                         <div class="row py-4 profile-photos px-2">
-                            @foreach ($photos as $photo)
-                                <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
-                                    <a href="">
-                                        <img src="{{ asset('images/'.$photo) }}" alt="">
-                                    </a>
+                            @if($photos->count() !== 0)
+                                @foreach ($photos as $photo)
+                                    <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
+                                        <a href="">
+                                            <img src="{{ asset('images/'.$photo) }}" alt="">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="text-center py-3">
+                                    <p class="text-danger fw-bold d-flex align-items-center justify-content-center"><i class="fa-solid fa-database me-3 fs-4"></i>This user has no photos upload for posts!</p>
                                 </div>
-                            @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
@@ -164,3 +176,31 @@
 </div>
 
 @endsection
+
+@push('script')
+    
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.add-friend-btn', function (e) {
+                e.preventDefault();
+                add_url = $(this).data('url')
+                $(this).css('color', 'LimeGreen')
+                $(this).prop('disabled', true)
+                $(this).css('background-color', 'rgba(11, 107, 218, .7)')
+                $(this).html('<i class="fa-solid fa-check me-2"></i>Requested');
+
+                $.ajax({
+                    url: add_url,
+                    data: {
+                        '_token': '{{ csrf_token() }}'
+                    },
+                    type: 'POST',
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+            })
+        })
+    </script>
+
+@endpush

@@ -11,9 +11,10 @@
                     Settings
                 </h2>
             </div>
+            @include('site.layouts.page_info')
             <div class="profile-setting-wrap">
                 <div class="img-holder">
-                    <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                    <img src="{{ asset('images/profile/'.$user->profile) }}" alt="">
                     <a
                         href="#"
                         @click="openProfileUpload = !openProfileUpload"
@@ -30,35 +31,7 @@
                     </span>
                 </div>
             </div>
-            <div 
-                class="profile-upload-model-wrap" 
-                x-cloak x-show="openProfileUpload"
-                @click="openProfileUpload = !openProfileUpload"
-                @keyup.escape.window="openProfileUpload = false"
-            >
-                <div 
-                    class="profile-upload-modal modal-form-wrap" 
-                    x-show="openProfileUpload"
-                    x-transition:enter.duration.500ms
-                    x-transition:leave.duration.400ms
-                >
-                    <form action="" method="post">
-                        <div class="form-input">
-                            <div class="preview">
-                                <img id="file-ip-1-preview">
-                            </div>
-                            <label for="file-ip-1">
-                                <i class="fa-solid fa-image icon"></i>
-                                <span>Browse to Upload Image</span>
-                            </label>
-                            <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
-                        </div>
-                        <div class="input-area">
-                            <button class="btn btn-sm btn-primary w-100">Upload</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            @include('site.profile.partials.upload_form')
             <div class="profile-setting-edit-wrap mt-2 py-4">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">

@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Site\Post;
 use App\Models\Site\Friend;
 use Illuminate\Http\Request;
-use App\Models\Site\FriendRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +20,7 @@ class HomeController extends Controller
 
         $friend_ids = implode(',', $ids);
 
-        $posts = Post::orderBy('created_at','desc')->orderByRaw("FIELD(user_id, $friend_ids)DESC")->with('User:id,name', 'PostComment.User:id,name')->paginate(10);
+        $posts = Post::orderBy('updated_at','desc')->orderByRaw("FIELD(user_id, $friend_ids)DESC")->with('User:id,name,profile', 'PostComment.User:id,name,profile')->paginate(10);
 
         $liked_posts = Post::getWithLike($posts);
 

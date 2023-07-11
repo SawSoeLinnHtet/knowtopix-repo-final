@@ -12,6 +12,9 @@
     <div class="input-wrap">
         <input type="password" placeholder="Enter Your Password" name="password">
     </div>
+    <div class="input-wrap">
+        <input type="checkbox" name="remember" class="ms-1 outline-none" id="remember"> <label for="remember" class="text-danger ms-2">Remember Me</label>
+    </div>
     <div class="input-wrap submit-btn-wrap">
         <button class="submit-btn" type="submit">
             Sign In
