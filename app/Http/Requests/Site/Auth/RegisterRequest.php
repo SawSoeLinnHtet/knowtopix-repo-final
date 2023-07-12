@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|between:10,25',
+            'name' => 'required|max:25',
             'username' => "required|regex:/(^([a-zA-z1-9]+)(\d+)?$)/u|unique:users,username",
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|between:8,20'

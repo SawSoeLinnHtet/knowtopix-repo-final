@@ -995,7 +995,7 @@ ul li a{
 
 @media (max-width: 1300px) {
     .sidebar{
-        width: 80px;
+        width: 80px;    
     }
 
     .sidebar .site-logo-wrap{

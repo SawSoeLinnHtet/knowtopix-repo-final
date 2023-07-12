@@ -41,12 +41,22 @@ var swiper = new Swiper(".mySwiper", {
     },
 });
 
-function showPreview(event) {
-    if (event.target.files.length > 0) {
-        var src = URL.createObjectURL(event.target.files[0]);
-        var preview = document.getElementById("file-ip-1-preview");
-        console.log(preview.src);
-        preview.classList.add("d-block");
-        preview.src = src;
-    }
+function toggleOverflow() {
+    document.getElementById("app").classList.toggle("overflow-hidden");
 }
+
+$(document).on("change", "#photo", function () {
+    $("#imgPreview").removeAttr("src");
+    const file = this.files[0];
+    console.log(file)
+    if (file) {
+        let reader = new FileReader();
+        reader.onload = function (event) {
+            console.log(event.target.result)
+            $("#imgPreview").addClass("d-block")
+            $("#imgPreview").attr("src", event.target.result);
+        };
+        reader.readAsDataURL(file);
+        console.log('hello')
+    }
+});

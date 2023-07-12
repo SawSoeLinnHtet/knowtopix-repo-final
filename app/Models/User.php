@@ -94,4 +94,9 @@ class User extends Authenticatable
             $q->where('name', 'LIKE', "%" . $filter . "%")->orWhere('username', 'LIKE', "%" . $filter . "%");
         });
     }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

@@ -36,7 +36,7 @@
                                 <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
                             </a>
                         </li>
-                        @if ($post->user_id == auth()->guard('user_auth')->user()->id)
+                        @if ($post->user_id == auth()->guard('user')->user()->id)
                             @include('site.layouts.post-edit-btn', ['post_id' => $post->id])
                         @endif
                     </ul>
@@ -147,7 +147,7 @@
                         <img src="{{ asset('site/img/user.jpeg') }}" alt="">
                         <div class="text-wrap">
                             <h6>
-                                {{ Auth::guard('user_auth')->User()->name }}
+                                {{ Auth::guard('user')->User()->name }}
                             </h6>
                             <span>
                                 ${ comment.val() }
@@ -163,7 +163,7 @@
     });
     // edit function
     $(document).on('click', '.post-edit-btn', function() {
-        
+        console.log('hello')
         edit_url = $(this).data('url')
         current_item = $(this);
 
@@ -175,6 +175,6 @@
             } 
         })
     })
-    </script>
+</script>
 
 @endpush

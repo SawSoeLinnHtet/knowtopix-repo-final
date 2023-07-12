@@ -12,7 +12,7 @@ class PostLikesController extends Controller
 {
     public function like(Post $post)
     {
-        $user_id = Auth::guard('user_auth')->user()->id;
+        $user_id = Auth::guard('user')->user()->id;
         $current = PostLike::findByUserAndPost($post->id, $user_id);
 
         $data = [

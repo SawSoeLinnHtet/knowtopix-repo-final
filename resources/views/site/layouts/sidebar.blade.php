@@ -18,7 +18,7 @@
                 <div class="profile-name">
                     <img src="{{ asset('site/img/user.jpeg') }}" alt="">
                     <span>
-                        {{ Auth::guard('user_auth')->user()->name }}
+                        {{ Auth::guard('user')->user()->name }}
                     </span>
                 </div>
                 <div class="drop-icon">
@@ -33,12 +33,12 @@
                 x-transition:leave.duration.400ms
             >
                 <div class="profile-float-detail">
-                    <img src="{{ asset('images/profile/'.Auth::guard('user_auth')->user()->profile) }}" alt="">
+                    <img src="{{ asset('images/profile/'.Auth::guard('user')->user()->profile) }}" alt="">
                     <h5 class="profile-name">
-                        {{ Auth::guard('user_auth')->user()->name }}
+                        {{ Auth::guard('user')->user()->name }}
                     </h5>
                     <span class="username">
-                        @ {{ Auth::guard('user_auth')->user()->username }}
+                        @ {{ Auth::guard('user')->user()->username }}
                     </span>
                     <div class="popular">
                         <p class="following">
@@ -52,7 +52,7 @@
                 <div class="collection-wrapper">
                     <ul>
                         <li>
-                            <a href="{{ route('site.profile.index', Auth::guard('user_auth')->user()->username)}}">
+                            <a href="{{ route('site.profile.index', Auth::guard('user')->user()->username)}}">
                                 <i class="fa-solid fa-user me-3"></i><span class="fw-bold">Profile</span>
                             </a>
                         </li>
@@ -62,7 +62,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('site.profile.setting', Auth::guard('user_auth')->user()->username) }}">
+                            <a href="{{ route('site.profile.setting', Auth::guard('user')->user()->username) }}">
                                 <i class="fa-solid fa-gear me-3"></i><span>Account Setting</span>
                             </a>
                         </li>

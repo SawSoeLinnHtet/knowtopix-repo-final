@@ -16,13 +16,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-
-            dd('hello');
             return route('site.login.index');
         }
-    }
-
-    protected function checkAuth(){
-        dd('hello');
     }
 }

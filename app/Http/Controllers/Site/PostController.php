@@ -47,7 +47,7 @@ class PostController extends Controller
         
         $data = [
             'content_area' => $request->content_area,
-            'user_id' => Auth::guard('user_auth')->user()->id,
+            'user_id' => Auth::guard('user')->user()->id,
             'thumbnail' => $imageName ?? NULL
         ];
 
@@ -77,7 +77,7 @@ class PostController extends Controller
     {
         if($request->ajax()){
             $post = $post->findOrFail($post->id);
-            if ($post->user_id == auth()->guard('user_auth')->user()->id) {
+            if ($post->user_id == auth()->guard('user')->user()->id) {
                 $view = view('site.layouts.modal-box-form', ['post' => $post])->render();
 
                 return response()->json(['success' => 'Edit form request', 'html' => $view, 'post' => $post]);
@@ -96,7 +96,7 @@ class PostController extends Controller
     {
         $post = $post->findOrFail($post->id);
 
-        if($post->user_id == auth()->guard('user_auth')->user()->id){
+        if($post->user_id == auth()->guard('user')->user()->id){
             if (isset($request->thumbnail)) {
                 $imageName = "";
                 $imageName = time() . '-' . $request->thumbnail->getClientOriginalName();

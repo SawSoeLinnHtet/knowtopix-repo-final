@@ -7,13 +7,13 @@
     </div>
     <div class="form-input">
         <div class="preview">
-            <img id="file-ip-1-preview" class="{{ $post->thumbnail ? 'd-block' : '' }}" src="{{ $post->thumbnail ? asset('images/'.$post->thumbnail) : '' }}">
+            <img id="imgPreview" class="{{ $post->thumbnail ? 'd-block' : '' }}" src="{{ $post->thumbnail ? asset('images/'.$post->thumbnail) : '' }}">
         </div>
-        <label for="file-ip-1">
+        <label for="photo">
             <i class="fa-solid fa-image icon"></i>
             <span>Browse to Upload Image</span>
         </label>
-        <input type="file" name="thumbnail" id="file-ip-1" onchange="showPreview(event);">
+        <input type="file" name="thumbnail" id="photo">
     </div>
     <div class="input-area">
         <button class="btn btn-sm btn-primary py-2" type="submit">Submit</button>

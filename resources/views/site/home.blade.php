@@ -30,7 +30,6 @@
 
 @push('script')
     <script>
-        
         $(document).ready(function () { 
             // infinite scroll
             var ENDPOINT = "{{ route('site.index') }}";
@@ -71,7 +70,6 @@
                     console.log('Server error occured');
                 });
             }
-            
         })
     </script>
 @endpush

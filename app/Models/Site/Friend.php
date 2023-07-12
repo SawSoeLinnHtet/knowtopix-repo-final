@@ -25,7 +25,7 @@ class Friend extends Model
     public static function friendCheck($users)
     {
         $friend_users = $users->map(function ($user) {
-            $auth_user = auth()->guard('user_auth')->user()->id;
+            $auth_user = auth()->guard('user')->user()->id;
             $fromFriendRequests = $user->fromFriendRequest;
             $toFriendRequests = $user->toFriendRequest;
             $user->is_friend = false;

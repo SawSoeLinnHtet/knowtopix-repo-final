@@ -13,7 +13,7 @@ class PostCommentsController extends Controller
     public function comment(PostCommentRequest $request, Post $post)
     {
         $data = [
-            'user_id' => Auth::guard('user_auth')->user()->id,
+            'user_id' => Auth::guard('user')->user()->id,
             'post_id' => $post->id,
             'comment' => $request->comment
         ];

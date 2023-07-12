@@ -1,4 +1,4 @@
-<form action="{{ route('site.profile.password', Auth::guard('user_auth')->user()->username) }}" id="password-update-form" method="POST">
+<form action="{{ route('site.profile.password', Auth::guard('user')->user()->username) }}" id="password-update-form" method="POST">
     @csrf
     @method('PUT')
     <div class="row mb-3">

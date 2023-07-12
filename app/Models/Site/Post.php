@@ -40,7 +40,7 @@ class Post extends Model
             $is_liked = false;
 
             foreach ($post_likes as $like) {
-                $is_liked = $like->user_id == auth()->guard('user_auth')->user()->id;
+                $is_liked = $like->user_id == auth()->guard('user')->user()->id;
             }
 
             return $post->is_liked = $is_liked;

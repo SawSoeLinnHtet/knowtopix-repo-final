@@ -28,18 +28,17 @@
                         @csrf
                         <div class="input-area">
                             <label for="">What do you have in mind?</label>
-                            {{-- <input type="text" name="content_area" id=""> --}}
                             <textarea name="content_area" class="content_area" rows="3"></textarea>
                         </div>
                         <div class="form-input">
                             <div class="preview">
-                                <img id="file-ip-1-preview">
+                                <img id="imgPreview">
                             </div>
-                            <label for="file-ip-1">
+                            <label for="photo">
                                 <i class="fa-solid fa-image icon"></i>
                                 <span>Browse to Upload Image</span>
                             </label>
-                            <input type="file" name="thumbnail" id="file-ip-1" onchange="showPreview(event);">
+                            <input type="file" name="thumbnail" id="photo">
                         </div>
                         <div class="input-area">
                             <button class="btn btn-sm btn-primary py-2" type="submit">Submit</button>
@@ -53,13 +52,3 @@
         </div>
     </div>
 </div>
-
-@push('script')
-
-<script>
-    function toggleOverflow() {
-        document.getElementById('app').classList.toggle('overflow-hidden');
-    }
-</script>
-
-@endpush

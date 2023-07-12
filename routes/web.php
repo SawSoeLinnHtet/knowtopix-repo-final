@@ -4,6 +4,7 @@ use App\Http\Controllers\Site\Post\PostCommentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Site\Auth\LoginController;
 use App\Http\Controllers\Site\Auth\RegisterController;
 use App\Http\Controllers\Site\FriendController;
@@ -13,9 +14,6 @@ use App\Http\Controllers\Site\PostController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\SearchController;
 use App\Http\Controllers\Site\SiteUserController;
-use App\Http\Middleware\Authenticate;
-use App\Http\Controllers\Site\UserController as confirm;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,14 +38,28 @@ Route::group([
     Route::resource('staffs', StaffController::class);
     Route::resource('users', UserController::class);
 });
-// site register
-Route::get('/register', [RegisterController::class, 'index'])->name('site.register.index');
-Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
 
-// site login
-Route::get('/login', [LoginController::class, 'index'])->name('site.login.index');
-Route::post('/login', [LoginController::class, 'auth'])->name('site.login.auth');
+Route::middleware(['guest'])->group(function () {
+    // site register
+    Route::get('/register', [RegisterController::class, 'index'])->name('site.register.index');
+    Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
+
+    // site login
+    Route::get('/login', [LoginController::class, 'index'])->name('site.login.index');
+    Route::post('/login', [LoginController::class, 'auth'])->name('site.login.auth');
+});
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('site.logout');
+
+// verification
+
+Route::prefix('email/verify')->group(function () {
+    Route::get('/', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+    Route::get('notice', [EmailVerificationController::class, 'notice'])->name('verification.notice');
+    Route::get('resend', [EmailVerificationController::class, 'resend'])->name('verification.resend');
+    Route::get('sent', [EmailVerificationController::class, 'sent'])->name('verification.sent');
+    Route::get('success', [EmailVerificationController::class, 'success'])->name('verification.success');
+});
 
 // site routes
 Route::group([
