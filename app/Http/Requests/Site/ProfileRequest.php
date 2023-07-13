@@ -26,7 +26,7 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        $id = Auth::guard('user')->user()->id;
+        $id = Auth::user()->id;
         $rules = [
             'name' => 'required|between:10,25',
             'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username,' . $id,

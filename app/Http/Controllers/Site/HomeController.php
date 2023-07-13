@@ -11,8 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function index(Request $request, User $user){
-        $current_user_id = Auth::guard('user')->user()->id;
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request, User $user)
+    {
+        // // if(!Auth::check()){
+        //     return redirect()->route('site.login.index');
+        // // }
+        $current_user_id = Auth::user()->id;
         $pending_user_ids = Friend::where('from_user', $current_user_id)->where('status', 'accept')->pluck('to_user')->toArray();
         $suggested_user_ids = Friend::where('to_user', $current_user_id)->where('status', 'accept')->pluck('from_user')->toArray();
 

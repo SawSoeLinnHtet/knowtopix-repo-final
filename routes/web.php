@@ -64,7 +64,7 @@ Route::prefix('email/verify')->group(function () {
 // site routes
 Route::group([
     'as' => 'site.',
-    'middleware' => ['auth.check:web']
+    'middleware' => ['auth', 'verified']
 ], function () {
     Route::resource('/', HomeController::class);
     Route::resource('/posts', PostController::class);

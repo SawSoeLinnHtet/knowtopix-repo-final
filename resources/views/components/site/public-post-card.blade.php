@@ -146,7 +146,7 @@
                                 <img src="{{ asset('site/img/user.jpeg') }}" alt="">
                                 <div class="text-wrap">
                                     <h6>
-                                        {{ Auth::guard('user')->User()->name }}
+                                        {{ Auth::User()->name }}
                                     </h6>
                                     <span>
                                         ${ comment.val() }

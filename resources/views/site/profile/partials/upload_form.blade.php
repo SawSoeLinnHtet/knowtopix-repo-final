@@ -10,7 +10,7 @@
         x-transition:enter.duration.500ms
         x-transition:leave.duration.400ms
     >
-        <form action="{{ route('site.profile.upload', Auth::guard('user')->user()->username) }}" method="POST" id="upload-form" enctype="multipart/form-data">
+        <form action="{{ route('site.profile.upload', Auth::user()->username) }}" method="POST" id="upload-form" enctype="multipart/form-data">
             @csrf
             <div class="form-input">
                 <div class="preview">

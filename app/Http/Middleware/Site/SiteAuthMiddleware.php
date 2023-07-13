@@ -17,7 +17,7 @@ class SiteAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::guard('user')->check()){
+        if(Auth::check()){
             return $next($request);
         }
 

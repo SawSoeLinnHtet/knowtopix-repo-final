@@ -15,7 +15,7 @@ class FriendController extends Controller
     public function addUser(User $user)
     {
         $to_user = $user->id;
-        $from_user = Auth::guard('user')->user()->id;
+        $from_user = Auth::user()->id;
 
         $data = [
             'from_user' => $from_user,
@@ -29,7 +29,7 @@ class FriendController extends Controller
     
     public function index(Request $request)
     {
-        $current_user_id = Auth::guard('user')->user()->id;
+        $current_user_id = Auth::user()->id;
         $pending_user_ids = Friend::where('from_user', $current_user_id)->pluck('to_user')->toArray();
         $suggested_user_ids = Friend::where('to_user', $current_user_id)->pluck('from_user')->toArray();
         
@@ -50,7 +50,7 @@ class FriendController extends Controller
 
     public function confirmRequest($id, Request $request)
     {
-        $friend = Friend::where('from_user', $id)->where('to_user', Auth::guard('user')->user()->id)->first();
+        $friend = Friend::where('from_user', $id)->where('to_user', Auth::user()->id)->first();
         
         $friend->update($request->except('_token'));
 

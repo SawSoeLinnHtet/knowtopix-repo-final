@@ -26,7 +26,7 @@ class PostRequest extends FormRequest
     {
         return [
             'content_area' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }

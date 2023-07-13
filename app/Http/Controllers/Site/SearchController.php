@@ -24,7 +24,7 @@ class SearchController extends Controller
             $recent_posts = Post::with('PostComment.User:id,name')->get()->random(2);
             $liked_posts = Post::getWithLike($recent_posts);
 
-            $recent_users = User::get()->whereNotIn('id', auth()->guard('user')->user()->id)->random(2);
+            $recent_users = User::get()->whereNotIn('id', auth()->user()->id)->random(2);
             $friend_users = Friend::friendCheck($recent_users);
             
             return view('site.search.index', ['recent_users' => $recent_users, 'recent_posts' => $recent_posts]);

@@ -36,7 +36,7 @@
                                 <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
                             </a>
                         </li>
-                        @if ($post->user_id == auth()->guard('user')->user()->id)
+                        @if ($post->user_id == auth()->user()->id)
                             @include('site.layouts.post-edit-btn', ['post_id' => $post->id])
                         @endif
                     </ul>
@@ -147,7 +147,7 @@
                         <img src="{{ asset('site/img/user.jpeg') }}" alt="">
                         <div class="text-wrap">
                             <h6>
-                                {{ Auth::guard('user')->User()->name }}
+                                {{ Auth::User()->name }}
                             </h6>
                             <span>
                                 ${ comment.val() }

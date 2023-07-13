@@ -10,7 +10,7 @@
                 <p class="card-text verify-alert mb-4">
                     Please check your email and <br/>click on the verification link to verify your email address.
                 </p>
-                <a href="#" class="btn text-white fw-bolder px-3 py-2 resend-btn">Resend Verification Link</a>
+                <a href="{{ route('verification.resend') }}" class="btn text-white fw-bolder px-3 py-2 resend-btn">Resend Verification Link</a>
             </div>
         </div>
     </div>

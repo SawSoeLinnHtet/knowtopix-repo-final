@@ -15,7 +15,7 @@ class ProfileController extends Controller
 {
     public function viewProfile()
     {
-        $auth_user = Auth::guard('user')->user();
+        $auth_user = Auth::user();
 
         $posts = Post::where('user_id', $auth_user->id)->with('PostComment.User:id,name')->latest()->get();
         $liked_posts = Post::getWithLike($posts);
@@ -27,14 +27,14 @@ class ProfileController extends Controller
 
     public function viewSetting()
     {
-        $auth_user = Auth::guard('user')->user();
+        $auth_user = Auth::user();
 
         return view('site.profile.setting', ['user' => $auth_user]);
     }
 
     public function update(User $user, ProfileRequest $request)
     {
-        $auth_user = $user->findOrFail(Auth::guard('user')->user()->id);
+        $auth_user = $user->findOrFail(Auth::user()->id);
         $auth_user->update($request->except(['_token, _method']));
 
         return redirect()->back()->with('success', 'Profile Updated successfully');
@@ -42,7 +42,7 @@ class ProfileController extends Controller
 
     public function updatePassword(User $user, PasswordSettingRequest $request)
     {
-        $auth_user = $user->findOrFail(auth()->guard('user')->user()->id);
+        $auth_user = $user->findOrFail(auth()->user()->id);
 
         if (Hash::check($request->old_password, $auth_user->password)) {
             $auth_user->update([
@@ -57,7 +57,7 @@ class ProfileController extends Controller
 
     public function upload(ProfileUploadRequest $request, User $user)
     {
-        $auth_user = $user->findOrFail(auth()->guard('user')->user()->id);
+        $auth_user = $user->findOrFail(auth()->user()->id);
     
         $imageName = "";
         if (isset($request->profile)) {

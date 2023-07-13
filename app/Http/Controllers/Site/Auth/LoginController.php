@@ -19,6 +19,7 @@ class LoginController extends Controller
 
     public function auth(LoginRequest $request)
     {
+        
         $credentials = $request->only('email', 'password');
 
         $remember = isset($request->remember) && $request->remember == 'on' ? true : false;
@@ -26,12 +27,13 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if(!$user->hasVerifiedEmail()) {
+            
             $this->setResend($user);
 
             return redirect()->route('site.login.index')->with('unverified', 'Please verify your email to sign in.');
         }
 
-        if(Auth::guard('user')->attempt($credentials, $remember)){
+        if(Auth::attempt($credentials, $remember)){
             return redirect()->route('site.index');
         }
         return redirect()->route('site.login.index')->with('error', "Your Credentials doesn't match");
@@ -39,7 +41,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::guard('user')->logout();
+        Auth::logout();
 
         return redirect()->route('site.login.index');
     }

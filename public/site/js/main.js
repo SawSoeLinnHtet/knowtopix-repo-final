@@ -46,15 +46,14 @@ function toggleOverflow() {
 }
 
 $(document).on("change", "#photo", function () {
-    $("#imgPreview").removeAttr("src");
     const file = this.files[0];
     console.log(file)
     if (file) {
         let reader = new FileReader();
         reader.onload = function (event) {
             console.log(event.target.result)
-            $("#imgPreview").addClass("d-block")
-            $("#imgPreview").attr("src", event.target.result);
+            $(".imgPreview").addClass("d-block")
+            $(".imgPreview").attr("src", event.target.result);
         };
         reader.readAsDataURL(file);
         console.log('hello')

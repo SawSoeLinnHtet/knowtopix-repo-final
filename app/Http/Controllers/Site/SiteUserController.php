@@ -11,7 +11,7 @@ class SiteUserController extends Controller
 {
     public function randomUser()
     {
-        $current_user_id = Auth::guard('user')->user()->id;
+        $current_user_id = Auth::user()->id;
         $pending_user_ids = Friend::where('from_user', $current_user_id)->where('status', 'accept')->pluck('to_user')->toArray();
         $suggested_user_ids = Friend::where('to_user', $current_user_id)->where('status', 'accept')->pluck('from_user')->toArray();
 
