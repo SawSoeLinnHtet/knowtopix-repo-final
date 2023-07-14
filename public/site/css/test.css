@@ -3,7 +3,6 @@
     min-height: 200px;
     margin-top: 20px;
     margin-bottom: 20px;
-    padding: 20px;
     border: 1px solid #354966;
     border-radius: 7px;
     position: relative;
@@ -14,12 +13,14 @@
     height: 400px;
     object-fit: cover;
     display:none;
+    border-radius: 7px;
     opacity: .8;
 }
 
 .form-input input {
     display:none;
 }
+
 .form-input label {
     width: 100%;
     display:flex;

@@ -45,17 +45,18 @@ function toggleOverflow() {
     document.getElementById("app").classList.toggle("overflow-hidden");
 }
 
-$(document).on("change", "#photo", function () {
-    const file = this.files[0];
-    console.log(file)
-    if (file) {
-        let reader = new FileReader();
-        reader.onload = function (event) {
-            console.log(event.target.result)
-            $(".imgPreview").addClass("d-block")
-            $(".imgPreview").attr("src", event.target.result);
-        };
-        reader.readAsDataURL(file);
-        console.log('hello')
-    }
-});
+$(document).ready(function () {
+    $(document).on('change', '#photo', function () {
+        var file = this.files[0];
+        if (file) {
+            console.log('hello');
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                $(".imgPreview").addClass("d-block");
+                $(".imgPreview").attr("src", event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+        return this.files[0] = file
+    });  
+})

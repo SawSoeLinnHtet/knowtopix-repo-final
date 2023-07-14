@@ -31,13 +31,16 @@
                                 <i class="fa-regular fa-bookmark text-primary"></i><span class="fw-bold">Add To Favorites</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
-                            </a>
-                        </li>
+                        @if ($post->user_id !== auth()->user()->id)
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
+                                </a>
+                            </li>
+                        @endif
                         @if ($post->user_id == auth()->user()->id)
                             @include('site.layouts.post-edit-btn', ['post_id' => $post->id])
+                            @include('site.layouts.post-delete-btn', ['post_id' => $post->id])
                         @endif
                     </ul>
                 </div>
@@ -163,15 +166,13 @@
     });
     // edit function
     $(document).on('click', '.post-edit-btn', function() {
-        console.log('hello')
         edit_url = $(this).data('url')
-        current_item = $(this);
 
         $.ajax({
             url: edit_url,
             type: 'GET',
             success: function (res) {
-                $('.edit-modal-form-wrap').html(res.html)
+                $('#edit-modal-form-wrap').html(res.html)
             } 
         })
     })

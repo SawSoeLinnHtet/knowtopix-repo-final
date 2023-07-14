@@ -1,7 +1,6 @@
 @extends('site.layouts.app')
 
 @section('content')
-
 <div class="container-fluid px-0 px-lg-2 px-xl-2 py-3">
     <div class="row px-0">
         <div class="col-12 col-lg-10 col-xl-10 offset-0 offset-lg-1 offset-xl-1">
@@ -100,12 +99,14 @@
                     </div>
                     <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
                         <div class="row py-4 profile-photos px-2">
-                            @foreach ($photos as $photo)
-                                <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
-                                    <a href="">
-                                        <img src="{{ asset('images/'.$photo) }}" alt="">
-                                    </a>
-                                </div>
+                            @foreach ($posts as $key => $post)
+                                @if(isset($post->thumbnail))
+                                    <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
+                                        <a href="">
+                                            <img src="{{ asset('images/'.$post->thumbnail) }}" alt="">
+                                        </a>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

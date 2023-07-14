@@ -25,8 +25,7 @@ class PostRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'content_area' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg'
+            'thumbnail' => 'image|mimes:jpeg,png,jpg'
         ];
     }
 }

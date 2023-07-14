@@ -19,7 +19,7 @@
                     <i class="fa-solid fa-xmark"></i>
                 </p>
             </div>
-            <div class="modal-form-wrap edit-modal-form-wrap">    
+            <div class="modal-form-wrap" id="edit-modal-form-wrap">    
                 
             </div>
         </div>

@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-input">
                             <div class="preview">
-                                <img id="imgPreview">
+                                <img class="imgPreview">
                             </div>
                             <label for="photo">
                                 <i class="fa-solid fa-image icon"></i>

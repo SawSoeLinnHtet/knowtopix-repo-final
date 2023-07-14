@@ -17,12 +17,10 @@ class ProfileController extends Controller
     {
         $auth_user = Auth::user();
 
-        $posts = Post::where('user_id', $auth_user->id)->with('PostComment.User:id,name')->latest()->get();
+        $posts = Post::where('user_id', $auth_user->id)->with('User:id,name,username', 'PostComment.User:id,name')->latest()->get();
         $liked_posts = Post::getWithLike($posts);
-
-        $photos = Post::where('user_id', $auth_user->id)->pluck('thumbnail');
-
-        return view('site.profile.index', ['user' => $auth_user, 'posts' => $posts, 'photos' => $photos]);
+        
+        return view('site.profile.index', ['user' => $auth_user, 'posts' => $posts]);
     }
 
     public function viewSetting()

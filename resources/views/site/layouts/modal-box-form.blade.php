@@ -7,7 +7,7 @@
     </div>
     <div class="form-input">
         <div class="preview">
-            {{-- <img id="imgPreview" class="{{ $post->thumbnail ? 'd-block' : '' }} imgPreview" src="{{ $post->thumbnail ? asset('images/'.$post->thumbnail) : '' }}"> --}}
+            <img id="imgPreview" class="imgPreview {{ $post->thumbnail ? 'd-block' : '' }}" src="{{ $post->thumbnail ? asset('images/'.$post->thumbnail) : '' }}">
         </div>
         <label for="photo">
             <i class="fa-solid fa-image icon"></i>

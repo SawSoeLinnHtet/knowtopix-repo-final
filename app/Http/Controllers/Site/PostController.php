@@ -38,22 +38,25 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        if(isset($request->thumbnail)){
-            $imageName = "";
-            $imageName = time() . '-' . $request->thumbnail->getClientOriginalName();
+        if(isset($request->content_area) || isset($request->thumbnail)){
+            if (isset($request->thumbnail)) {
+                $imageName = "";
+                $imageName = time() . '-' . $request->thumbnail->getClientOriginalName();
 
-            $request->thumbnail->move(public_path('images'), $imageName);     
+                $request->thumbnail->move(public_path('images'), $imageName);
+            }
+
+            $data = [
+                'content_area' => $request->content_area ?? NULL,
+                'user_id' => Auth::user()->id,
+                'thumbnail' => $imageName ?? NULL
+            ];
+
+            Post::create($data);
+
+            return redirect()->route('site.index')->with('success', 'Your post is created successfully');
         }
-        
-        $data = [
-            'content_area' => $request->content_area,
-            'user_id' => Auth::user()->id,
-            'thumbnail' => $imageName ?? NULL
-        ];
-
-        Post::create($data);
-
-        return redirect()->route('site.index')->with('success', 'Your post is created successfully');
+        return redirect()->back();
     }
 
     /**
@@ -94,7 +97,6 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        dd($request->all());
         $post = $post->findOrFail($post->id);
 
         if($post->user_id == auth()->user()->id){

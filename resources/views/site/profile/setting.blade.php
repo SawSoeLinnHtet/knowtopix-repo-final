@@ -4,7 +4,7 @@
 
 <div class="container px-0 px-lg-5 px-xl-5 py-3">
     <div class="row">
-        <div class="col-12 col-lg-8 col-xl-8 offset-0 offset-md-0 offset-lg-1 offset-xl-2" x-data="{ openProfileUpload : false }">
+        <div class="col-12 col-lg-8 col-xl-8 offset-0 offset-md-0 offset-lg-1 offset-xl-2" x-data="{ openProfileUpload : false }" x-init="$watch('openProfileUpload', toggleOverflow)">
             <div class="setting-title">
                 <a href="" class="btn text-primary ps-0 mb-3 text-decoration-none"><i class="fa-solid fa-chevron-left me-2"></i> Back</a>
                 <h2 class="text-white mb-4">
