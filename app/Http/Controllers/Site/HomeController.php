@@ -37,7 +37,7 @@ class HomeController extends Controller
         }
 
         $users = User::GetNotRequestFriend($current_user_id, $pending_user_ids, $suggested_user_ids);
-
+        
         return view('site.home', ['posts' => $posts, 'users' => $users->random(5)]);
     }
 }

@@ -9,17 +9,19 @@
                     <div class="public-posts-wrap" id="public-posts-wrap">
                         @include('site.layouts.public-post-card', $posts)
                     </div>
-                    <div class="auto-load loader">
-                        <div class="square" id="sq1"></div>
-                        <div class="square" id="sq2"></div>
-                        <div class="square" id="sq3"></div>
-                        <div class="square" id="sq4"></div>
-                        <div class="square" id="sq5"></div>
-                        <div class="square" id="sq6"></div>
-                        <div class="square" id="sq7"></div>
-                        <div class="square" id="sq8"></div>
-                        <div class="square" id="sq9"></div>
-                    </div>
+                    @if($posts->total() > 10)
+                        <div class="auto-load loader">
+                            <div class="square" id="sq1"></div>
+                            <div class="square" id="sq2"></div>
+                            <div class="square" id="sq3"></div>
+                            <div class="square" id="sq4"></div>
+                            <div class="square" id="sq5"></div>
+                            <div class="square" id="sq6"></div>
+                            <div class="square" id="sq7"></div>
+                            <div class="square" id="sq8"></div>
+                            <div class="square" id="sq9"></div>
+                        </div>
+                    @endif
                 </div>
                 @include('site.layouts.right-sidebar', ['users' => $users])
                 @include('site.layouts.responsive-menu')

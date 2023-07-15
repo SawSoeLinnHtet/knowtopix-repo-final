@@ -14,7 +14,7 @@
             <h3>
                 Upload
             </h3>
-            <button class="close-btn">
+            <button class="close-btn" @click="openProfileUpload = false">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -22,13 +22,13 @@
             @csrf
             <div class="form-input">
                 <div class="preview">
-                    <img id="file-ip-1-preview">
+                    <img class="imgPreview">
                 </div>
-                <label for="file-ip-1">
+                <label for="photo">
                     <i class="fa-solid fa-image icon"></i>
                     <span>Browse to Upload Image</span>
                 </label>
-                <input type="file" id="file-ip-1" name="profile" accept="image/*" onchange="showPreview(event);">
+                <input type="file" id="photo" name="profile" accept="image/*" onchange="showPreview(event);">
             </div>
             <div class="input-area">
                 <button class="btn btn-sm btn-primary w-100" type="submit">Upload</button>

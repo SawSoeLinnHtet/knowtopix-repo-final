@@ -38,10 +38,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="header-info">
-                    <h4 class="name">{{ $user->name }}</h4>
-                    <span class="username">@ {{ $user->username }}</span>
-                    <span class="personal-info">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius ducimus, at incidunt ipsum vitae voluptatem corporis! Error suscipit.</span>
+                <div class="header-info w-100 d-flex flex-row flex-md-column flex-lg-column flex-xl-column justify-content-between">
+                    <div class="d-flex flex-column">
+                        <h4 class="name">{{ $user->name }}</h4>
+                        <span class="username">@ {{ $user->username }}</span>
+                    </div>
                     <div class="profile-option d-flex align-items-center justify-content-between mt-3">
                         <div class="popularity d-lg-flex d-md-flex d-xl-flex align-items-center justify-content-around gap-3 d-none d-none">
                             <div class="d-flex flex-column align-items-center">
@@ -92,22 +93,36 @@
                         <div class="row p-0">
                             <div class="col-12">
                                 <div class="public-posts-wrap">
-                                    @include('site.layouts.public-post-card', $posts)
+                                    @if($posts->count() !== 0)
+                                        <div class="public-posts-wrap">
+                                            @include('site.layouts.public-post-card', $posts)
+                                        </div>
+                                    @else
+                                        <div class="text-center py-3">
+                                            <p class="text-danger fw-bold d-flex align-items-center justify-content-center"><i class="fa-solid fa-database me-3 fs-4"></i>This user has no post!</p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
                         <div class="row py-4 profile-photos px-2">
-                            @foreach ($posts as $key => $post)
-                                @if(isset($post->thumbnail))
-                                    <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
-                                        <a href="">
-                                            <img src="{{ asset('images/'.$post->thumbnail) }}" alt="">
-                                        </a>
-                                    </div>
-                                @endif
-                            @endforeach
+                            @if($posts->count() !== 0)
+                                @foreach ($posts as $key => $post)
+                                    @if(isset($post->thumbnail))
+                                        <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
+                                            <a href="">
+                                                <img src="{{ asset('images/'.$post->thumbnail) }}" alt="">
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @else
+                                <div class="text-center py-3">
+                                    <p class="text-danger fw-bold d-flex align-items-center justify-content-center"><i class="fa-solid fa-database me-3 fs-4"></i>This user has no photo!</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
@@ -145,6 +160,14 @@
                                 </span>
                                 <span class="mt-2 text-info">
                                     <i class="fa-solid fa-venus-mars me-3 text-white"></i> {{ ucwords($user->gender) }}
+                                </span>
+                            </div>
+                            <div class="d-flex flex-column mb-3">
+                                <span class="fw-bold text-light fs-5">
+                                    Personal Info
+                                </span>
+                                <span class="mt-2 text-info">
+                                    <i class="fa-solid fa-circle-info text-white me-3"></i> {{ $user->personal_info }}
                                 </span>
                             </div>
                             <div class="d-flex flex-column mb-3">

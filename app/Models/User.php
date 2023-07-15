@@ -84,7 +84,7 @@ class User extends Authenticatable
     public static function GetNotRequestFriend($current_user_id, $pending_user_ids, $suggested_user_ids)
     { 
         $friend_ids = array_merge($pending_user_ids, $suggested_user_ids, [$current_user_id]);
-        $users = User::whereNotIN('id', $friend_ids)->orderBy('created_at', 'desc')->paginate(5);
+        $users = User::whereNotIN('id', $friend_ids)->orderBy('created_at', 'desc')->paginate(10);
         return $users;
     }
 

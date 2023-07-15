@@ -5,12 +5,12 @@
         <h6>
             People You Might Know 
         </h6>
-        <a href="#" class="refresh-btn" data-url="{{ route('site.user.random') }}" style="color: red">
+        <a class="refresh-btn" data-url="{{ route('site.user.random') }}" style="color: red; cursor: pointer">
             <i class="fa-solid fa-arrows-rotate"></i>
         </a>
     </div>
     <div class="random-user-card-list">
-        <div class="random">
+        <div id="random">
             @include('site.layouts.random-user', $users)
         </div>
         <a href="{{ route('site.friend.index') }}" class="seemore-btn">See more</a>
@@ -21,7 +21,9 @@
     
     <script>
         $(document).ready(function () {
-            $(document).on('click', '.follow-btn', function () {
+            $(document).on('click', '.follow-btn', function (e) {
+                e.preventDefault();
+                
                 status = `<i class="fa-solid fa-xmark me-2 text-danger h4"></i>`
                 $(this).prop('disabled', true)
                 $(this).html(status)
@@ -39,7 +41,9 @@
                 })
             })
 
-            $(document).on('click', '.refresh-btn', function () {
+            $(document).on('click', '.refresh-btn', function (e) {
+                e.preventDefault();
+                
                 url = $(this).data('url')
 
                 $.ajax({
@@ -49,7 +53,7 @@
                     },
                     type: 'POST',
                     success: function (res) {
-                        $('.random').html(res.html)
+                        $('#random').html(res.html)
                     }
                 })
             })

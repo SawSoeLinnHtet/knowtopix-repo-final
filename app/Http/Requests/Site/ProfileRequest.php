@@ -28,7 +28,7 @@ class ProfileRequest extends FormRequest
     {
         $id = Auth::user()->id;
         $rules = [
-            'name' => 'required|between:10,25',
+            'name' => 'required',
             'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username,' . $id,
             'email' => 'required|email|unique:users,email,' . $id,
             'phone' => ['required', new MyanmarPhone, 'unique:users,phone,' . $id],

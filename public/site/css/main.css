@@ -333,7 +333,7 @@ ul li a{
     background-color: #1a263a;
     width: 200px;
     right: 5px;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
     padding-inline: 0 !important;
     position: absolute;
@@ -594,7 +594,7 @@ ul li a{
 
 .post-create-modal-box .modal-box-wrapper .modal-box-contain{
     width: 700px;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #38393a;
 }
 
@@ -1325,6 +1325,12 @@ ul li a{
 }
 
 @media (max-width: 500px) {
+    .header-info{
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
     .search-items-wrap{
         padding-inline: 10px;
     }
@@ -1372,8 +1378,8 @@ ul li a{
     display: none;
     position: absolute;
     font-size: 40px;
-    top: 0;
-    left: 0;
+    bottom: 0;
+    right: 0;
     justify-content: center;
     align-items: center;
     color: #fff;
@@ -1388,6 +1394,7 @@ ul li a{
     width: 100px;
     height: 100px;
     border-radius: 100px;
+    border: 1px solid #000;
     object-fit: cover;
 }
 
@@ -1422,9 +1429,30 @@ ul li a{
     margin-top: 80px;
     background-color: #38393a;
     padding:20px 20px;
-    padding-bottom: 40px;
-    border-radius: 10px;
+    border-radius: 5px;
+    position: relative;
 }
+
+.profile-upload-modal .title-wrap{
+    text-align: center;
+    color: #fafafa;
+}
+
+.profile-upload-modal .title-wrap button{
+    cursor: pointer;
+    padding: 5px 11px;
+    background-color: #fafafa;
+    border-radius: 100%;
+    color: #000;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+
 
 .profile-setting-edit-wrap{
     width: 100%;
@@ -1509,16 +1537,16 @@ ul li a{
         width: 30px;
         height: 30px;
         padding: 10px;
-        background-color: #000;
+        background-color: #0F172A;
         font-size: 18px;
         position: absolute;
-        color: #3561c6;
+        color: #fafafa;
         bottom: 0;
     }
 }
 
 .profile-header{
-    width: 100%;
+    width: max-content;
     height: auto;
     padding: 20px;
     display: flex;
@@ -1549,8 +1577,7 @@ ul li a{
 }
 
 .header-info{
-    display: flex;
-    flex-direction: column;
+    width: 500px;
 }
 
 .header-info .name{

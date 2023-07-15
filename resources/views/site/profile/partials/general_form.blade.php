@@ -57,15 +57,15 @@
             <label for=""  class="text-white">Address</label>
         </div>
         <div class="col edit-input-wrap">
-            <textarea id="exampleFormControlTextarea1" rows="3">{{ $user->address }}</textarea>
+            <textarea id="exampleFormControlTextarea1" name="address" rows="3">{{ $user->address }}</textarea>
         </div>
     </div>
     <div class="row">
         <div class="col-3">
-            <label for=""  class="text-white ">Personal Info</label>
+        <label for=""  class="text-white ">Personal Info</label>
         </div>
         <div class="col edit-input-wrap">
-            <textarea id="exampleFormControlTextarea1" rows="3">{{ $user->personal_info }}</textarea>
+            <textarea id="exampleFormControlTextarea1" name="personal_info" rows="3">{{ $user->personal_info }}</textarea>
         </div>
     </div>
     <div class="row mt-4">

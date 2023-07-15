@@ -124,8 +124,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $current_user_id = auth()->user()->id;
+        $current_post = $post->where('id', $post->id)->where('user_id', $current_user_id);
+        $current_post->delete();
+        return response()->json(['success' => 'Delete post successfully']);
     }
 }

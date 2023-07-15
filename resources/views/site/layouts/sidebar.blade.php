@@ -33,7 +33,7 @@
                 x-transition:leave.duration.400ms
             >
                 <div class="profile-float-detail">
-                    <img src="{{ asset('images/profile/'.Auth::user()->profile) }}" alt="">
+                    <img src="{{ Auth::user()->profile ? asset('images/profile/'.Auth::user()->profile) : asset('images/profile/user.jpeg') }}" alt="">
                     <h5 class="profile-name">
                         {{ Auth::user()->name }}
                     </h5>

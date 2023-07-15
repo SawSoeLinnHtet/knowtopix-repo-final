@@ -28,14 +28,14 @@ class UserRequest extends FormRequest
         if ($this->method() == 'PATCH') {
             $id = $request->route('user')->id;
             return [
-                'name' => 'required|between:10,25',
+                'name' => 'required',
                 'username' => 'required|regex:/^[a-zA-Z0-9 ]+$/|unique:users,username,'. $id,
                 'email' => 'required|email|unique:users,email,' . $id,
                 'phone' => ['required', new MyanmarPhone, 'unique:users,phone,' . $id]
             ];
         } else {
             return [
-                'name' => 'required|between:10,25',
+                'name' => 'required',
                 'username' => "required|regex:/(^([a-zA-z1-9]+)(\d+)?$)/u|unique:users,username",
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|confirmed|between:8,20',
