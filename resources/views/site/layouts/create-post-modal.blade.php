@@ -1,4 +1,4 @@
-<div class="add-post-btn-wrap" x-data="{  }" x-init="$watch('openCreateModalBox', toggleOverflow)">
+<div class="add-post-btn-wrap" x-data="{ openCreateModalBox : false }" x-init="$watch('openCreateModalBox', toggleOverflow)">
     <button class="add-text-btn" @click="openCreateModalBox = !openCreateModalBox">What do you have in mind?</button>
 
     <div 

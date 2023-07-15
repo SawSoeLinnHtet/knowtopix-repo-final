@@ -2,7 +2,7 @@
     <div class="public-post-card">
         <div class="card-header">
             <div class="card-info">
-                <img src="{{ asset('site/img/user.jpeg')}}" alt="">
+                <img src="{{ $post->User->acsr_check_profile }}" alt="">
                 <div>
                     <a href="#">
                         <h4>{{ $post->User->name }}</h4>
@@ -39,8 +39,8 @@
                             </li>
                         @endif
                         @if ($post->user_id == auth()->user()->id)
-                            @include('site.layouts.post-edit-btn', ['post_id' => $post->id])
-                            @include('site.layouts.post-delete-btn', ['post_id' => $post->id])
+                            <x-site.post.post-edit-btn :post-id="$post->id"></x-site.post.post-edit-btn>
+                            <x-site.post.post-delete-btn :post-id="$post->id"></x-site.post.post-delete-btn>
                         @endif
                     </ul>
                 </div>
@@ -53,7 +53,9 @@
                 @endif
                 
                 @if(isset($post->thumbnail))
-                    <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
+                    <a @click="openPostDetailsModal = !openPostDetailsModal" class="show-details-modal" data-url="{{ route('site.posts.show', $post->id) }}">
+                        <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
+                    </a>
                 @endif
             </div>
             <div class="card-body-option">
@@ -83,7 +85,9 @@
                 @endif
             </div>
             <div class="create-comment-wrap">
-                <img src="{{ $post->User->profile ? asset('images/profile/'.$post->User->profile) : asset('site/img/user.jpeg') }}" alt="">
+                <div class="img-holder">
+                    <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
+                </div>
                 <x-site.post.comment-create :id="$post->id"></x-site.post.comment-create>
             </div>
         </div>
@@ -93,88 +97,91 @@
 @push('script')
 
 <script>
-    // like function 
-    $(document).on('click', '.like-btn', function (e) {
-        e.preventDefault();
+    $(document).ready(function() {
+        // like function 
+        $(document).on('click', '.like-btn', function (e) {
+            e.preventDefault();
 
-        if($(this).hasClass('text-danger')){
-            $(this).removeClass('text-danger')
-            $(this).addClass('text-white')
-            var x = $(this).next('.like-count').attr('value')
-            $(this).next('.like-count').text(Number(x) - 1).attr('value', Number(x) - 1)
-        }else{
-            $(this).addClass('text-danger')
-            $(this).removeClass('text-white')
-            var x = $(this).next('.like-count').attr('value')
-            $(this).next('.like-count').text(Number(x) + 1).attr('value', Number(x) + 1)
-            $(this).next('.like-count')
-        }
-
-        let like_url = $(this).data('url')
-
-        $.ajax({
-            url: like_url,
-            data: {
-                '_token': "{{ csrf_token() }}"
-            },
-            type: 'POST',
-            success: function(res){
-                return
+            if($(this).hasClass('text-danger')){
+                $(this).removeClass('text-danger')
+                $(this).addClass('text-white')
+                var x = $(this).next('.like-count').attr('value')
+                $(this).next('.like-count').text(Number(x) - 1).attr('value', Number(x) - 1)
+            }else{
+                $(this).addClass('text-danger')
+                $(this).removeClass('text-white')
+                var x = $(this).next('.like-count').attr('value')
+                $(this).next('.like-count').text(Number(x) + 1).attr('value', Number(x) + 1)
+                $(this).next('.like-count')
             }
-        })
-    })
-    // comment function
-    $(document).on('click', '.comment-submit', function (e) {
-        e.preventDefault()
-        
-        var x = $(this).parent('').parent().prev('.card-body').children('.card-body-option').children('.comment-wrap').children('.comment-count')
-        var x_val = x.attr('value')
-        x.attr('value', Number(x_val) + 1).text(Number(x_val) + 1)
 
-        var current = $(this)
-        var comment = $(this).prev('.comment-box')
-        create_url = $(this).data('url')
+            let like_url = $(this).data('url')
 
-        $.ajax({
-            url: create_url,
-            data: {
-                '_token': "{{ csrf_token() }}",
-                'comment': comment.val()
-            },
-            type: "POST",
-            success: function(res){
-                var comment_wrap = current.parent().prev()
+            $.ajax({
+                url: like_url,
+                data: {
+                    '_token': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                success: function(res){
+                    return
+                }
+            })
+        });
+        // comment function
+        $(document).on('click', '.comment-submit', function (e){
+            e.preventDefault()
+            
+            var x = $(this).parent('').parent().prev('.card-body').children('.card-body-option').children('.comment-wrap').children('.comment-count')
+            var x_val = x.attr('value')
+            x.attr('value', Number(x_val) + 1).text(Number(x_val) + 1)
 
-                let template = `
-                <div class="comment-card">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                        <div class="text-wrap">
-                            <h6>
-                                {{ Auth::User()->name }}
-                            </h6>
-                            <span>
-                                ${ comment.val() }
-                            </span>
-                        </div>
-                    </div> 
-                `
+            var current = $(this)
+            var comment = $(this).prev('.comment-box')
+            create_url = $(this).data('url')
 
-                comment_wrap.append(template);
-                comment.val('')
-            }
-        })
-    });
-    // edit function
-    $(document).on('click', '.post-edit-btn', function() {
-        edit_url = $(this).data('url')
+            $.ajax({
+                url: create_url,
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'comment': comment.val()
+                },
+                type: "POST",
+                success: function(res){
+                    var comment_wrap = current.parent().prev()
 
-        $.ajax({
-            url: edit_url,
-            type: 'GET',
-            success: function (res) {
-                $('#edit-modal-form-wrap').html(res.html)
-            } 
-        })
+                    let template = `
+                    <div class="comment-card">
+                            <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                            <div class="text-wrap">
+                                <h6>
+                                    {{ Auth::User()->name }}
+                                </h6>
+                                <span>
+                                    ${ comment.val() }
+                                </span>
+                            </div>
+                        </div> 
+                    `
+
+                    comment_wrap.append(template);
+                    comment.val('')
+                }
+            })
+        });
+        // edit function
+        $(document).on('click', '.post-edit-btn', function(e) {
+            e.preventDefault();
+            edit_url = $(this).data('url')
+
+            $.ajax({
+                url: edit_url,
+                type: 'GET',
+                success: function (res) {
+                    $('#edit-modal-form-wrap').html(res.html)
+                } 
+            })
+        });
     })
 </script>
 

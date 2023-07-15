@@ -1,7 +1,7 @@
 @extends('site.layouts.app')
 
 @section('content')
-    <div class="container-fluid p-0">
+    <div class="container p-0">
         <div class="row">
             <div class="col-12 border-white">
                 <div class="d-flex align-content-center justify-content-between">
@@ -38,8 +38,18 @@
                     <div class="row mb-5" id="suggest-post">
                         @include('site.layouts.suggest-friend-card', $users)
                     </div>
-                    <div class="lds-roller auto-load text-warning">
-                        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                    <div class="lds-roller auto-load text-warning text-center">
+                        <div class="auto-load loader">
+                            <div class="square" id="sq1"></div>
+                            <div class="square" id="sq2"></div>
+                            <div class="square" id="sq3"></div>
+                            <div class="square" id="sq4"></div>
+                            <div class="square" id="sq5"></div>
+                            <div class="square" id="sq6"></div>
+                            <div class="square" id="sq7"></div>
+                            <div class="square" id="sq8"></div>
+                            <div class="square" id="sq9"></div>
+                        </div>
                     </div>
                 </div>
             </div>

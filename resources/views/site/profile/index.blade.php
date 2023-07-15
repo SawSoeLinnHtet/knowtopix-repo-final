@@ -8,7 +8,7 @@
                 <div class="d-flex gap-3 justify-content-between">
                     <div class="img-holder">
                         <div class="inner-border">
-                            <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                            <img src="{{ $user->acsr_check_profile }}" alt="">
                         </div>
                     </div>
                     <div class="popularity-inner-img d-flex align-items-center justify-content-around gap-3 d-md-none d-lg-none d-xl-none">

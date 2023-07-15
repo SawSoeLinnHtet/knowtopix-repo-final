@@ -2,9 +2,10 @@
     <div class="sidebar">
         <div class="site-logo-wrap">
             <img src="{{ asset('site/img/logo.png') }}" class="logo-img" alt="">
-            <h3 class="site-logo">
+            {{-- <h3 class="site-logo">
                 Knowtopix
-            </h3>
+            </h3> --}}
+            <img src="{{ asset('site/img/long_logo.png') }}" class="site-logo" alt="">
         </div>
         <div class="sidebar-menu">
             @include('site.layouts.nav-menu')
@@ -16,7 +17,7 @@
                 @keydown.escape="openFloatProfile = false"
             >
                 <div class="profile-name">
-                    <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                    <img src="{{ Auth::user()->acsr_check_profile }}" alt="">
                     <span>
                         {{ Auth::user()->name }}
                     </span>

@@ -2,7 +2,7 @@
 
     @foreach ($comments as $key => $comment)
         <div class="comment-card">
-            <img src="{{ $comment->User->profile ? asset('images/profile/'.$comment->User->profile) : asset('site/img/user.jpeg') }}" alt="">
+            <img src="{{ $comment->User->acsr_check_profile }}" alt="">
             <div class="text-wrap">
                 <h6>
                     {{ $comment->User->name }}

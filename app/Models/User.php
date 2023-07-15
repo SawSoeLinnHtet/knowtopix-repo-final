@@ -99,4 +99,12 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function getAcsrCheckProfileAttribute()
+    {
+        if(isset($this->profile)){
+            return asset('images/profile/' . $this->profile);
+        }
+        return asset('images/profile/user.jpeg');
+    }
 }
