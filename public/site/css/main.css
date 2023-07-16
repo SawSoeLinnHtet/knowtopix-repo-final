@@ -408,6 +408,7 @@ ul li a{
     height: 400px;
     object-fit: cover;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .public-post-card .card-body .content-holder{
@@ -504,6 +505,7 @@ ul li a{
     width: 35px;
     height: 35px;
     border-radius: 100px;
+    object-fit: cover;
 }
 
 .comments-wrap .comment-card .text-wrap h6{
@@ -1660,7 +1662,7 @@ ul li a{
 }
 
 .post-details-modal-wrap .details-wrap{
-    width: 800px;
+    width: 700px;
     margin: 0px auto;
     border: 1px solid #19202c;
     border-radius: 10px;
@@ -1812,8 +1814,7 @@ ul li a{
 
 .details-body .card-body .img-holder img{
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
 }
 
@@ -1898,15 +1899,16 @@ ul li a{
 }
 
 .details-wrap .details-card-footer .create-comment-wrap .img-holder{
-    width: 40px;
+    width: 50px;
     height: 40px;
     margin-right: 20px;
 }
 
 .details-wrap .details-card-footer .create-comment-wrap .img-holder img{
-    width: 100%;
+    width: 40px;
     height: 100%;
     border-radius: 100px;
+    object-fit: cover;
 }
 
 .details-wrap .details-card-footer .create-comment-wrap .textarea-container{
@@ -1925,9 +1927,10 @@ ul li a{
     padding: 10px;
     color: #fff;
     border-radius: 5px;
+    font-size: 14px;
 }
 
-.details-wrap .details-card-footer .create-comment-wrap .textarea-container .comment-submit{
+.details-wrap .details-card-footer .create-comment-wrap .textarea-container .details-comment-submit{
     position: absolute;
     bottom: 0;
     right: 0;
@@ -1953,13 +1956,14 @@ ul li a{
     width: 40px;
     height: 40px;
     border-radius: 100px;
+    object-fit: cover;
 }
 
 .details-body .comment-card-wrap .comment-card .text-wrap{
     width: max-content;
     background-color: #636464;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 7px;
     color: #fff;
 }
 

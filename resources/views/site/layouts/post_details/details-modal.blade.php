@@ -39,11 +39,17 @@
                                 <i class="fa-regular fa-bookmark text-primary"></i><span class="fw-bold">Add To Favorites</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
-                            </a>
-                        </li>
+                        @if ($post->user_id !== auth()->user()->id)
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($post->user_id == auth()->user()->id)
+                            <x-site.post.post-edit-btn :post-id="$post->id"></x-site.post.post-edit-btn>
+                            <x-site.post.post-delete-btn :post-id="$post->id"></x-site.post.post-delete-btn>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -53,12 +59,12 @@
                 {{ $post->content_area }}
                 
                 <a href="#" @click="openPostDetailsModal = !openPostDetailsModal">
-                    <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
+                    <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-1">
                 </a>
             </div>
             <div class="card-body-option">
                 <div class="like-wrap me-3">
-                    <a class="me-2 button like-btn text-danger" href="#" {{ $post->is_liked ? 'text-danger' : 'text-white' }}>
+                    <a class="me-2 button details-like-btn {{ $post->is_liked ? 'text-danger' : 'text-white' }}" href="#" data-url="{{ route('site.post.like', $post->id) }}">
                         <i class="fa-solid fa-heart"></i>
                     </a>
                     <span class="like-count" value="{{ $post->PostLike->count() }}">
@@ -78,8 +84,11 @@
                 </button>
             </div>
         </div>
-        <div class="comment-card-wrap">
-            @include('site.layouts.post_details.comment-card')
+        <div class="comment-card-wrap" id="details-comment-card-wrap">
+            @include('site.layouts.post_details.comment-card', ['comments' => $post->PostComment])
+            <div class="spinner-border text-info" id="loading-spinner" role="status" style="display: none; margin-left: 100px">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
     <div class="details-card-footer">
@@ -89,7 +98,7 @@
             </div>
             <div class="textarea-container">
                 <textarea id="" rows="1" placeholder="Add Comment..." name="comment" class="comment-box"></textarea>
-                <a class="comment-submit button" href="#">
+                <a class="details-comment-submit button" href="#" data-url="{{ route('site.post.comment', $post->id) }}">
                     <i class="fa-solid fa-paper-plane"></i>
                 </a>
             </div>

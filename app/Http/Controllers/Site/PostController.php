@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Site\PostRequest;
+use App\Models\Site\Post\PostLike;
 
 class PostController extends Controller
 {
@@ -65,9 +66,22 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        dd('hello');
+        $post->is_liked = false;
+        $post = Post::with('User:id,name,profile', 'PostComment.User:id,name,profile')->findOrFail($post->id);
+        $is_liked = false;
+        $post_likes = $post->PostLike;
+
+        foreach($post_likes as $like){
+            $is_liked = $like->user_id == auth()->user()->id;
+
+            $post->is_liked = $is_liked;
+        }
+
+        $view = view('site.layouts.post_details.details-modal', ['post' => $post])->render();
+
+        return response()->json(['success' => 'Get post success', 'html' => $view]);
     }
 
     /**
@@ -97,6 +111,8 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        dd($request->all());
+
         $post = $post->findOrFail($post->id);
 
         if($post->user_id == auth()->user()->id){

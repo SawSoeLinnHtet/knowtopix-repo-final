@@ -17,7 +17,7 @@ class PostLike extends Model
     ];
 
     public function Post() {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Post::class, 'id');
     }
 
     public function User()
@@ -28,4 +28,6 @@ class PostLike extends Model
     public function findByUserAndPost(int $post_id, int $user_id){
         return self::where('post_id', $post_id)->where('user_id', $user_id)->first();
     }
+
+
 }

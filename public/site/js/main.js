@@ -57,6 +57,5 @@ $(document).ready(function () {
             };
             reader.readAsDataURL(file);
         }
-        return this.files[0] = file
     });  
 })

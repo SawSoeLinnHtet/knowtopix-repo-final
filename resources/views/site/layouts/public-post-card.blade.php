@@ -53,7 +53,7 @@
                 @endif
                 
                 @if(isset($post->thumbnail))
-                    <a @click="openPostDetailsModal = !openPostDetailsModal" class="show-details-modal" data-url="{{ route('site.posts.show', $post->id) }}">
+                    <a @click="openPostDetailsModal = !openPostDetailsModal" class="click-details-modal" data-url="{{ route('site.posts.show', $post->id) }}">
                         <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
                     </a>
                 @endif
@@ -99,7 +99,7 @@
 <script>
     $(document).ready(function() {
         // like function 
-        $(document).on('click', '.like-btn', function (e) {
+        $(document).on('click', '.like-btn', function(e) {
             e.preventDefault();
 
             if($(this).hasClass('text-danger')){
@@ -129,7 +129,7 @@
             })
         });
         // comment function
-        $(document).on('click', '.comment-submit', function (e){
+        $(document).on('click', '.comment-submit', function(e){
             e.preventDefault()
             
             var x = $(this).parent('').parent().prev('.card-body').children('.card-body-option').children('.comment-wrap').children('.comment-count')
@@ -151,37 +151,51 @@
                     var comment_wrap = current.parent().prev()
 
                     let template = `
-                    <div class="comment-card">
-                            <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                        <div class="comment-card">
+                            <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
                             <div class="text-wrap">
                                 <h6>
-                                    {{ Auth::User()->name }}
+                                    {{ auth()->user()->name }}
                                 </h6>
                                 <span>
                                     ${ comment.val() }
                                 </span>
                             </div>
                         </div> 
-                    `
-
+                    `;
                     comment_wrap.append(template);
                     comment.val('')
                 }
             })
         });
         // edit function
-        $(document).on('click', '.post-edit-btn', function(e) {
+        $(document).on('click', '.post-edit-modal-btn', function(e) {
             e.preventDefault();
+
             edit_url = $(this).data('url')
 
             $.ajax({
                 url: edit_url,
                 type: 'GET',
                 success: function (res) {
-                    $('#edit-modal-form-wrap').html(res.html)
+                    $('#edit-modal-box-wrap').html(res.html)
                 } 
             })
         });
+        // modal function
+        $(document).on('click', '.click-details-modal', function (e) {
+            e.preventDefault();
+
+            show_url = $(this).data('url');
+
+            $.ajax({
+                type: 'GET',
+                url: show_url,
+                success: function (res) {
+                    $('#post-details-modal-wrap').html(res.html)
+                }
+            })
+        })
     })
 </script>
 

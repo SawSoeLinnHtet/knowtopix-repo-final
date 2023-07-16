@@ -18,7 +18,7 @@ class PostCommentsController extends Controller
             'comment' => $request->comment
         ];
 
-        PostComment::create($data);
+        $comment = PostComment::create($data);
         
         return response()->json(['success' => 'Like post successfully!']);
     }
