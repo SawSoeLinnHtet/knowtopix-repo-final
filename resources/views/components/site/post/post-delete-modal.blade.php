@@ -1,25 +1,27 @@
 <div 
-    class="profile-upload-modal-wrap" 
+    class="profile-delete-modal-wrapper" 
     x-cloak x-show="openDeleteModal"
      x-init="$watch('openDeleteModal', toggleOverflow)"
     @keyup.escape.window="openDeleteModal = false"
 >
     <div 
-        class="profile-upload-modal modal-form-wrap" 
+        class="profile-delete-wrap"
         x-show="openDeleteModal"
-        @click.away="openDeleteModal = false"
+        @click="openDeleteModal=false"
         x-transition:enter.duration.500ms
         x-transition:leave.duration.400ms
     >
-        <div class="title-wrap">
-            <h4>
-                Delete Confirmation
-            </h4>
-        </div>
-        <p class="text-center py-3 mb-0 text-danger">Are you sure you want to delete this record?</p>
-        <div class="d-flex justify-content-between gap-2 py-2">
-            <button class="btn btn-sm btn-secondary w-50 shadow-none" @click="openDeleteModal = false">CANCEL</button>
-            <a class="btn btn-sm btn-danger w-50" @click="deleteRecord">DELETE</a>
+        <div class="modal-box-contain">
+            <div class="title-wrap">
+                <h4 class="border-bottom pt-3 px-3 text-white border-white pb-3">
+                    Delete Confirmation
+                </h4>
+            </div>
+            <p class="text-left py-3 px-3 mb-0 text-danger">Are you sure you want to delete this post?</p>
+            <div class="d-flex justify-content-end gap-2 px-3 py-2">
+                <button class="btn btn-sm btn-secondary shadow-none" @click="openDeleteModal = false"><i class="fa-solid fa-arrow-left"></i></button>
+                <a class="btn btn-sm btn-danger" @click="deleteRecord"><i class="fa-solid fa-trash"></i></a>
+            </div>
         </div>
     </div>
 </div>

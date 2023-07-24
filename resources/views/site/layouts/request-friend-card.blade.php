@@ -1,7 +1,7 @@
 @foreach ($request_users as $req_user)
     <div class="col-12 col-sm-6 col-lg-3 col-xl-3 col-xxl-2 request-card">
         <a href="">
-            <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+            <img src="{{ $req_user->acsr_check_profile }}" alt="">
         </a>
         <div class="info-wrap">
             <a href="" class="user-name">

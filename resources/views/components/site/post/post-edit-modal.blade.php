@@ -19,7 +19,7 @@
                     <i class="fa-solid fa-xmark"></i>
                 </p>
             </div>
-            <div class="modal-form-wrap" id="edit-modal-box-wrap">    
+            <div class="modal-form-wrap" id="edit-modal-box-wrap">
                 
             </div>
         </div>
@@ -28,4 +28,25 @@
 
 @push('script')
     {!! JsValidator::formRequest('App\Http\Requests\Site\PostRequest', '#post-edit-modal') !!}
+@endpush
+
+@push('script')
+
+<script>
+    $(document).ready(function () {
+        $(document).on('change', '#editPhotoUpload', function () {    
+            console.log('hello');
+            var file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    $("#editImgPreview").addClass("d-block");
+                    $("#editImgPreview").attr("src", event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });  
+    })
+</script>
+
 @endpush

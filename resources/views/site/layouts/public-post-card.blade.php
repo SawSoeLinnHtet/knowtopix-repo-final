@@ -1,13 +1,13 @@
 @foreach ($posts as $key => $post)
     <div class="public-post-card">
-        <div class="card-header">
+        <div class="card-heading">
             <div class="card-info">
                 <img src="{{ $post->User->acsr_check_profile }}" alt="">
                 <div>
-                    <a href="#">
+                    <a href="{{ $post->User->acsr_check_user_link }}">
                         <h4>{{ $post->User->name }}</h4>
                     </a>
-                    <div class="post-created"><i class="fa-solid fa-earth-americas text-info me-2"></i>{{ $post->created_at->diffForHumans() }}</div>
+                    <div class="post-created"><i class="fa-solid {{ $post->privacyIcon($post->privacy) }} text-info me-2"></i>{{ $post->acsr_created_at }}</div>
                 </div>
             </div>
             <div class="card-option" x-data="{ openOption: false }">
@@ -47,13 +47,14 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="img-holder">
+            <div class="content-holder">
                 @if(isset($post->content_area))
                     {{ $post->content_area }}
                 @endif
-                
+            </div>
+            <div class="img-holder">        
                 @if(isset($post->thumbnail))
-                    <a @click="openPostDetailsModal = !openPostDetailsModal" class="click-details-modal" data-url="{{ route('site.posts.show', $post->id) }}">
+                    <a href="{{ route('site.posts.show', $post->id) }}">
                         <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
                     </a>
                 @endif
@@ -69,8 +70,15 @@
                     <button class="me-2">
                         <i class="fa-solid fa-comment-dots"></i>
                     </button>
-                    <span class="comment-count" value="{{ $post->PostComment->count() }}">
-                        {{ $post->PostComment->count() }}
+                    <span 
+                        class="comment-count click-details-modal"
+                        @click="openPostDetailsModal = !openPostDetailsModal"
+                        data-url="{{ route('site.posts.show', $post->id) }}" 
+                        value="{{ $post->PostComment->count() }}"
+                    >
+                        <a href="#" class="text-decoration-none text-white">
+                            {{ $post->PostComment->count() }}
+                        </a>
                     </span>
                 </div>
                 <button class="normal-btn ms-auto">
@@ -148,22 +156,29 @@
                 },
                 type: "POST",
                 success: function(res){
-                    var comment_wrap = current.parent().prev()
-
+                    var comment_wrap = current.parent().parent().prev()
+                    var res_comment =  res.data.comment
                     let template = `
                         <div class="comment-card">
                             <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
-                            <div class="text-wrap">
-                                <h6>
-                                    {{ auth()->user()->name }}
-                                </h6>
-                                <span>
-                                    ${ comment.val() }
-                                </span>
+                            <div class="d-flex flex-column">
+                                <div class="text-wrap">
+                                    <a href="{{ auth()->user()->acsr_check_user_link }}" class="text-decoration-none text-white">
+                                        <h6>
+                                            {{ auth()->user()->name }}
+                                        </h6>
+                                    </a>
+                                    <span>
+                                        ${ res_comment.comment }
+                                    </span>
+                                </div>
+                                <p class="comment-time">
+                                    Now
+                                </p>
                             </div>
-                        </div> 
+                        </div>
                     `;
-                    comment_wrap.append(template);
+                    comment_wrap.prepend(template);
                     comment.val('')
                 }
             })
@@ -181,7 +196,7 @@
                     $('#edit-modal-box-wrap').html(res.html)
                 } 
             })
-        });
+        }); 
         // modal function
         $(document).on('click', '.click-details-modal', function (e) {
             e.preventDefault();

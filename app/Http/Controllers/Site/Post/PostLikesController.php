@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Site\Post;
 
+use App\Models\Site\Post;
 use Illuminate\Http\Request;
 use App\Models\Site\Post\PostLike;
 use App\Http\Controllers\Controller;
-use App\Models\Site\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PostLikesController extends Controller
 {
@@ -23,6 +24,7 @@ class PostLikesController extends Controller
         if(!isset($current)){
             PostLike::create($data);
 
+            Session::put(['success' => 'Liked!']);
             return response()->json(['result' => 'Post like success']);
         }else{
 

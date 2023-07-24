@@ -1,7 +1,7 @@
 <div 
     class="profile-upload-modal-wrap" 
     x-cloak x-show="openDeleteModal"
-     x-init="$watch('openDeleteModal', toggleOverflow)"
+    x-init="$watch('openDeleteModal', toggleOverflow)"
     @keyup.escape.window="openDeleteModal = false"
 >
     <div 
@@ -32,11 +32,11 @@
             console.log(postId)
 
             fetch(`/posts/${postId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
             })
             .then(response => response.json())
             .then(data => {

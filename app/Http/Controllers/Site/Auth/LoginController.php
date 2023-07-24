@@ -30,7 +30,7 @@ class LoginController extends Controller
             
             $this->setResend($user);
 
-            return redirect()->route('site.login.index')->with('unverified', 'Please verify your email to sign in.');
+            return view('auth.verification.notice');
         }
 
         if(Auth::attempt($credentials, $remember)){

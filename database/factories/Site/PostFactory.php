@@ -2,6 +2,8 @@
 
 namespace Database\Factories\Site;
 
+use App\Models\Site\Post;
+use App\Enums\PostPrivacyEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -15,7 +17,8 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1, 10),
-            'content_area' => implode(" ", $this->faker->paragraphs())
+            'content_area' => implode(" ", $this->faker->paragraphs()),
+            'privacy' => PostPrivacyEnum::PRIVATE()
         ];
     }
 }

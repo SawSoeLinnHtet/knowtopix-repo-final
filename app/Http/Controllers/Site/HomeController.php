@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Enums\PostPrivacyEnum;
 use App\Models\User;
 use App\Models\Site\Post;
 use App\Models\Site\Friend;
@@ -25,9 +26,28 @@ class HomeController extends Controller
         $ids = array_merge([$current_user_id], $pending_user_ids, $suggested_user_ids);
 
         $friend_ids = implode(',', $ids);
+        $friends = array_merge($pending_user_ids, $suggested_user_ids);
 
-        $posts = Post::orderBy('updated_at','desc')->orderByRaw("FIELD(user_id, $friend_ids)DESC")->with('User:id,name,profile', 'PostComment.User:id,name,profile')->paginate(10);
+        // $public_posts = Post::where('privacy', PostPrivacyEnum::PUBLIC())->pluck('id')->toArray();
+        // $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostPrivacyEnum::FRIEND())->pluck('id')->toArray();
+        // $post_ids = array_merge($friend_posts, $public_posts,);
+        // $posts = Post::whereIn('id', $post_ids);
+        // dd($posts);
 
+        // $public_posts = Post::where('privacy', PostPrivacyEnum::PUBLIC());
+        // $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostPrivacyEnum::FRIEND())->get();
+        // $posts = $friend_posts->merge($public_posts);
+        //dd($posts);
+        
+        $posts = Post::orderBy('updated_at', 'desc')
+                    ->orderByRaw("FIELD(user_id, $friend_ids)DESC")
+                    ->with([
+                        'User:id,name,profile',
+                        'PostComment' => function ($query) {
+                            $query->orderBy('created_at', 'desc');
+                        },
+                        'PostComment.User:id,name,profile'
+                    ])->paginate(10);
         $liked_posts = Post::getWithLike($posts);
 
         if ($request->ajax()) {
@@ -39,5 +59,10 @@ class HomeController extends Controller
         $users = User::GetNotRequestFriend($current_user_id, $pending_user_ids, $suggested_user_ids);
         
         return view('site.home', ['posts' => $posts, 'users' => $users->random(5)]);
+    }
+
+    private function setResend($id)
+    {
+        session(['resend' => ['id' => $id]]);
     }
 }

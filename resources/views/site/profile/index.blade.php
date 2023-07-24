@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid px-0 px-lg-2 px-xl-2 py-3">
     <div class="row px-0">
-        <div class="col-12 col-lg-10 col-xl-10 offset-0 offset-lg-1 offset-xl-1">
+        <div class="col-12 col-lg-12 col-xl-10 offset-0 offset-xl-1">
             <div class="profile-header w-100">
                 <div class="d-flex gap-3 justify-content-between">
                     <div class="img-holder">
@@ -38,12 +38,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="header-info w-100 d-flex flex-row flex-md-column flex-lg-column flex-xl-column justify-content-between">
+                <div class="header-info d-flex flex-row flex-md-column flex-lg-column flex-xl-column pt-3">
                     <div class="d-flex flex-column">
                         <h4 class="name">{{ $user->name }}</h4>
                         <span class="username">@ {{ $user->username }}</span>
                     </div>
-                    <div class="profile-option d-flex align-items-center justify-content-between mt-3">
+                    <div class="profile-option d-flex align-items-center justify-content-between">
                         <div class="popularity d-lg-flex d-md-flex d-xl-flex align-items-center justify-content-around gap-3 d-none d-none">
                             <div class="d-flex flex-column align-items-center">
                                 <span class="text-light">
@@ -70,16 +70,37 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="options">
+                        <div class="options" x-data="{ openProfileOptions : false }">
                             <a href="{{ route('site.profile.setting', $user->username) }}" class="edit-btn text-decoration-none">
                                 Edit profile
                             </a>
+                            <button class="options-dropdown" @click="openProfileOptions = !openProfileOptions">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                            <div 
+                                class="options-dropdown-wrap" 
+                                x-cloak x-show="openProfileOptions" 
+                                @click.away="openProfileOptions = false"
+                                x-transition:enter.duration.500ms
+                                x-transition:leave.duration.400ms
+                            >
+                                <ul>
+                                    <li>
+                                        <a href="">
+                                            <i class="fa-solid fa-square-plus me-3"></i>Page
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <x-site.logout-btn />
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-10 col-xl-8 offset-0 offset-lg-1 offset-xl-1">
+        <div class="col-12 col-lg-12 col-xl-10 offset-0 offset-xl-1">
             <div class="profile-setting-edit-wrap mt-2 py-2 py-lg-4 py-xl-4 px-2 px-lg-4 px-xl-4">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -90,7 +111,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
-                        <div class="row p-0">
+                        <div class="row">
                             <div class="col-12">
                                 <div class="public-posts-wrap">
                                     @if($posts->count() !== 0)
@@ -107,12 +128,12 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
-                        <div class="row py-4 profile-photos px-2">
+                        <div class="row profile-photos px-2">
                             @if($posts->count() !== 0)
                                 @foreach ($posts as $key => $post)
                                     @if(isset($post->thumbnail))
                                         <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
-                                            <a href="">
+                                            <a href="{{ route('site.profile.index', $post->id) }}">
                                                 <img src="{{ asset('images/'.$post->thumbnail) }}" alt="">
                                             </a>
                                         </div>

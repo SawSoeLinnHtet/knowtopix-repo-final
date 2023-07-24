@@ -5,8 +5,8 @@
     <div class="wrapper">
         <div class="card px-3 py-3">
             <div class="card-body">
-                <h3 class="card-title text-dark mb-4 fw-bolder">Successfully Verified</h3>
-                <img src="{{ asset('site/img/check.png') }}" class="verify-img" alt="">
+                <img src="{{ asset('site/img/verification-success.gif') }}" class="verify-img" alt="">
+                <h3 class="card-title text-success mb-4 fw-bolder">Successfully Verified</h3>
                 <p class="card-text verify-alert mb-4">
                     You have been verified email successfully. Please sign in to see our contents.
                 </p>

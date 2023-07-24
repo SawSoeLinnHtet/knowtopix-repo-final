@@ -2,7 +2,7 @@
     
     <div class="random-user">
         <div class="random-user-info">
-            <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+            <img src="{{ $user->acsr_check_profile }}" alt="">
             <span>
                 {{ $user->name }}
                 <span class="reach">Followed By Jason</span>

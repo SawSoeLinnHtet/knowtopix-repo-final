@@ -2,6 +2,7 @@
 
 namespace App\Models\Site;
 
+use App\Enums\PostPrivacyEnum;
 use App\Models\User;
 use App\Models\Site\Post\PostLike;
 use App\Models\Site\Post\PostComment;
@@ -18,8 +19,18 @@ class Post extends Model
     protected $fillable = [
         'content_area',
         'user_id',
-        'thumbnail'
+        'thumbnail',
+        'privacy'
     ];
+
+    protected $casts = [
+        'privacy' => PostPrivacyEnum::class
+    ];
+
+    public function setStatus(PostPrivacyEnum $privacy)
+    {
+        $this->privacy = $privacy;
+    }
     public function User(){
         return $this->belongsTo(User::class);
     }
@@ -52,5 +63,31 @@ class Post extends Model
         return $query->when($filter['search'] ?? false, function ($q, $filter) {
             $q->where('content_area', 'LIKE', "%" . $filter . "%");
         });
+    }
+
+    public function privacyIcon($privacy)
+    {
+        if(PostPrivacyEnum::PUBLIC() == $privacy){
+            return 'fa-earth-americas text-primary';
+        }elseif(PostPrivacyEnum::FRIEND() == $privacy){
+            return 'fa-user-group text-info';
+        }else{
+            return 'fa-lock text-danger';
+        }
+    }
+
+    public function getAcsrCreatedAtAttribute()
+    {
+        $created_at = $this->created_at->diffForHumans();
+        $created_at = str_replace([' seconds ago', ' second ago'], 's', $created_at);
+        $created_at = str_replace([' minutes ago', ' minute ago'], 'm', $created_at);
+        $created_at = str_replace([' hours ago', ' hour ago'], 'h', $created_at);
+        $created_at = str_replace([' months ago', ' month ago'], 'm', $created_at);
+
+        if (preg_match('(years|year)', $created_at)) {
+            $created_at = $this->created_at->toFormattedDateString();
+        }
+
+        return $created_at;
     }
 }

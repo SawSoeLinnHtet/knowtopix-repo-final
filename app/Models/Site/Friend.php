@@ -28,18 +28,24 @@ class Friend extends Model
             $auth_user = auth()->user()->id;
             $fromFriendRequests = $user->fromFriendRequest;
             $toFriendRequests = $user->toFriendRequest;
-            $user->is_friend = false;
+            $user->friend_status = false;
 
             foreach ($fromFriendRequests as $fri) {
                 if ($fri->to_user == $auth_user && $fri->status == "accept") {
-                    return $user->is_friend = true;
+                    return $user->friend_status = 'accept';
+                }else if($fri->to_user == $auth_user && $fri->status == "pending") {
+                    return $user->friend_status = 'pending';
+                }else{
+                    return;
                 }
             }
 
-            if (!$user->is_friend) {
+            if (!$user->friend_status) {
                 foreach ($toFriendRequests as $fri) {
                     if ($fri->from_user == $auth_user && $fri->status == "accept") {
-                        return $user->is_friend = true;
+                        return $user->friend_status = 'accept';
+                    }else if($fri->from_user == $auth_user && $fri->status == "pending") {
+                        return $user->friend_status = 'pending';
                     }
                 }
             }

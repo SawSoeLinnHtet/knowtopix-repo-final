@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('auth/main.css') }}">
     <!-- bootstrap -->
     <link rel="stylesheet" href="{{ asset('plugins/site/bootstrap/bootstrap.min.css') }}">
+    {{-- fontawesome --}}
+    <link rel="stylesheet" href="{{ asset('plugins/site/fontawesome/fontawesome-free-6.4.0-web/css/all.min.css') }}">
 </head>
 <body>
     <div class="verification-main-wrap">
@@ -16,5 +18,7 @@
 
     <!-- bootstrap -->
     <script src="{{ asset('plugins/site/bootstrap/bootstrap.min.js') }}"></script>
+    {{-- fontawesome --}}
+    <script src="{{ asset('plugins/site/fontawesome/fontawesome-free-6.4.0-web/js/all.js') }}"></script>
 </body>
 </html>

@@ -20,7 +20,16 @@
 </head>
 <body 
     id="app" 
-    x-data="{ openPostDetailsModal : false, openEditModalBox : false, openDeleteModal : false, postId : '' }" x-init="$watch('openEditModalBox', toggleOverflow)">
+    x-data="{ 
+        openPostDetailsModal : false, 
+        openEditModalBox : false, 
+        openDeleteModal : false, 
+        openCommentDeleteModal : false,
+        postId : '',
+        commentId: ''
+    }" 
+    x-init="$watch('openEditModalBox', toggleOverflow)"
+>
     
     <div class="main-content">
         <div class="container-fluid main-content-wrapper p-0">
@@ -34,8 +43,9 @@
                         <i class="fa-solid fa-arrow-up"></i>
                     </div>
                 </div>
-                <x-site.post.post-edit-modal></x-site.post.post-edit-modal>
-                <x-site.post.post-delete-modal></x-site.post.post-delete-modal>
+                <x-site.post.post-edit-modal/>
+                <x-site.post.post-delete-modal/>
+                @include('site.layouts.comment.comment-delete-modal')
                 @include('site.layouts.post-details-modal')
             </main>
         </div>
@@ -50,6 +60,7 @@
     <script src="{{ asset('plugins/site/swiper/swiper-bundle.min.js') }}"></script>
     <!-- Alpinejs -->
     <script defer src="{{ asset('plugins/site/alpinejs/cdn.min.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.2.1/dist/cdn.min.js"></script>
     <!-- owl carousel js -->
     <script src="{{ asset('plugins/site/owl-carousel/owl.carousel.min.js') }}"></script>
     <!-- laravel validation -->

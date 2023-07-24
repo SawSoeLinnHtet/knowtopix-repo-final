@@ -49,7 +49,6 @@ $(document).ready(function () {
     $(document).on('change', '#photo', function () {
         var file = this.files[0];
         if (file) {
-            console.log('hello');
             let reader = new FileReader();
             reader.onload = function (event) {
                 $(".imgPreview").addClass("d-block");
@@ -57,5 +56,8 @@ $(document).ready(function () {
             };
             reader.readAsDataURL(file);
         }
-    });  
+    });
+    $("#site-back-btn").on("click", function () {
+        window.history.back();
+    });
 })

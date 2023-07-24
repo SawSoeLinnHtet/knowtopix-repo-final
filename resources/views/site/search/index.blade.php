@@ -14,56 +14,82 @@
                             </button>
                         </form>
                     </div>
-                    @if(isset($users) && $users->count() > 0)
-                        <div class="search-items-wrap">
-                            <h3 class="title">People</h3>
-                            <div class="search-item-list-wrap">
-                                @foreach ($users as $user)
-                                    <div class="user-card mb-2">
-                                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
-                                        <div class="info">
-                                            <div class="info-text">
-                                                <h5 class="mt-3">{{ $user->name }}</h5>
-                                                <p><span>@ {{ $user->username }}</span></p>
+                    @if(!isset($recent_users))
+                        @if(isset($users) && $users->count() > 0 || isset($posts) && $posts->count() > 0)
+                            @if(isset($users) && $users->count() > 0)
+                                <div class="search-items-wrap">
+                                    <h3 class="title">People</h3>
+                                    <div class="search-item-list-wrap">
+                                        @foreach ($users as $user)
+                                            <div class="user-card mb-2">
+                                                <img src="{{ $user->acsr_check_profile }}" alt="">
+                                                <div class="info">
+                                                    <div class="info-text">
+                                                        <h5 class="mt-3">{{ $user->name }}</h5>
+                                                        <p><span>@ {{ $user->username }}</span></p>
+                                                    </div>
+                                                    @if($user->friend_status == 'pending')
+                                                        <button class="add-btn d-flex align-items-center gap-1">
+                                                        <i class="fa-regular fa-clock me-1"></i> Pending
+                                                        </button>
+                                                    @elseif($user->friend_status == 'accept')
+                                                        <button class="add-btn d-flex align-items-center gap-1">
+                                                            <i class="fa-solid fa-user-xmark me-1"></i>Unfriend
+                                                        </button>
+                                                    @else
+                                                        <button data-url="{{ route('site.friend.add', $user->id) }}" class="add-btn add-friend-btn d-flex align-items-center gap-1">
+                                                            <i class="fa-solid fa-user-plus me-1"></i>Add Friend
+                                                        </button>
+                                                    @endif
+                                                </div>
                                             </div>
-                                            @if(!$user->is_friend)
-                                                <button data-url="{{ route('site.friend.add', $user->id) }}" class="add-friend-btn">
-                                                    Add Friend
-                                                </button>
-                                            @endif
-                                        </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
+                            @endif
+                            @if(isset($posts) && $posts->count() > 0)
+                                <div class="search-items-wrap">
+                                    <h3 class="title">Posts</h3>
+                                    <div class="public-posts-wrap py-2" id="public-posts-wrap">
+                                        @include('site.layouts.public-post-card', $posts)
+                                    </div>
+                                </div>
+                            @endif
+                        @else
+                            <div class="noting-alert">
+                                <img src="{{ asset('site/img/nothing_found.png') }}" alt="">
+                                <h4>
+                                    No Results Found!
+                                </h4>
+                                <p>
+                                    Your Search Returned no results. Try shortening or rephrasing your search.
+                                </p>
                             </div>
-                        </div>
-                    @endif
-                    @if(isset($posts) && $posts->count() > 0)
-                        <div class="search-items-wrap">
-                            <h3 class="title">Posts</h3>
-                            <div class="public-posts-wrap py-2" id="public-posts-wrap">
-                                @include('site.layouts.public-post-card', $posts)
-                            </div>
-                        </div>
+                        @endif
                     @endif
                     @if(isset($recent_users))
                         <div class="search-items-wrap">
                             <h3 class="title">Recents</h3>
                             <div class="search-item-list-wrap">
-                                @foreach ($recent_users as $user)
+                                @foreach ($recent_users as $key => $user)
                                     <div class="user-card mb-2">
-                                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                                        <img src="{{ $user->acsr_check_profile }}" alt="">
                                         <div class="info">
                                             <div class="info-text">
-                                                <h5 class="mt-3">{{ $user->name }}{{ $user->id }}</h5>
+                                                <h5 class="mt-3">{{ $user->name }}</h5>
                                                 <p><span>@ {{ $user->username }}</span></p>
                                             </div>
-                                            @if(!$user->is_friend)
-                                                <button class="add-btn">
-                                                    Add Friend
+                                            @if($user->friend_status == 'pending')
+                                                <button class="add-btn d-flex align-items-center gap-1">
+                                                   <i class="fa-regular fa-clock me-1"></i> Pending
+                                                </button>
+                                            @elseif($user->friend_status == 'accept')
+                                                <button class="add-btn d-flex align-items-center gap-1">
+                                                    <i class="fa-solid fa-user-xmark me-1"></i> Unfriend
                                                 </button>
                                             @else
-                                                <button class="add-btn">
-                                                    Unfollow
+                                                <button data-url="{{ route('site.friend.add', $user->id) }}" class="add-btn add-friend-btn d-flex align-items-center gap-1d-flex align-items-center gap-1">
+                                                    <i class="fa-solid fa-user-plus me-1"></i> Add Friend
                                                 </button>
                                             @endif
                                         </div>
@@ -88,7 +114,9 @@
         $(document).ready(function () {
             $(document).on('click', '.add-friend-btn', function (e) {
                 e.preventDefault();
+
                 add_url = $(this).data('url')
+
                 $(this).css('color', 'LimeGreen')
                 $(this).prop('disabled', true)
                 $(this).css('background-color', 'rgba(11, 107, 218, .7)')

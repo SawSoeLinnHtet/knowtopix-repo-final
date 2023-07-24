@@ -50,6 +50,7 @@ class PostController extends Controller
             $data = [
                 'content_area' => $request->content_area ?? NULL,
                 'user_id' => Auth::user()->id,
+                'privacy' => $request->privacy,
                 'thumbnail' => $imageName ?? NULL
             ];
 
@@ -78,10 +79,13 @@ class PostController extends Controller
 
             $post->is_liked = $is_liked;
         }
+        if(request()->ajax()){
+            $view = view('site.layouts.post_details.details-modal', ['post' => $post])->render();
 
-        $view = view('site.layouts.post_details.details-modal', ['post' => $post])->render();
+            return response()->json(['success' => 'Get post success', 'html' => $view]);
+        }
 
-        return response()->json(['success' => 'Get post success', 'html' => $view]);
+        return view('site.post.index', ['post' => $post]);
     }
 
     /**
@@ -111,8 +115,6 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        dd($request->all());
-
         $post = $post->findOrFail($post->id);
 
         if($post->user_id == auth()->user()->id){
@@ -124,6 +126,7 @@ class PostController extends Controller
             }
 
             $data = [
+                'privacy' => $request->privacy,
                 'content_area' => $request->content_area,
                 'thumbnail' => $imageName ?? $post->thumbnail
             ];

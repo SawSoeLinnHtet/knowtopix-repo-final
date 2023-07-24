@@ -55,13 +55,16 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="img-holder">
+            <div class="content-holder">
                 {{ $post->content_area }}
-                
-                <a href="#" @click="openPostDetailsModal = !openPostDetailsModal">
-                    <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-1">
-                </a>
             </div>
+            @if(isset($post->thumbnail))
+                <div class="img-holder">
+                    <a href="#" @click="openPostDetailsModal = !openPostDetailsModal">
+                        <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-1">
+                    </a>
+                </div>
+            @endif
             <div class="card-body-option">
                 <div class="like-wrap me-3">
                     <a class="me-2 button details-like-btn {{ $post->is_liked ? 'text-danger' : 'text-white' }}" href="#" data-url="{{ route('site.post.like', $post->id) }}">

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -84,7 +84,7 @@ class User extends Authenticatable
     public static function GetNotRequestFriend($current_user_id, $pending_user_ids, $suggested_user_ids)
     { 
         $friend_ids = array_merge($pending_user_ids, $suggested_user_ids, [$current_user_id]);
-        $users = User::whereNotIN('id', $friend_ids)->orderBy('created_at', 'desc')->paginate(10);
+        $users = User::whereNotIN('id', $friend_ids)->orderBy('created_at', 'desc')->paginate(6);
         return $users;
     }
 
@@ -105,6 +105,24 @@ class User extends Authenticatable
         if(isset($this->profile)){
             return asset('images/profile/' . $this->profile);
         }
-        return asset('images/profile/user.jpeg');
+        return 'https://i.pravatar.cc?u='.$this->id;
+    }
+
+    public function getAcsrCheckUserLinkAttribute()
+    {
+        if($this->id == auth()->user()->id){
+            return route('site.profile.index', auth()->user()->username);
+        }
+        return route('site.friend.details', $this->id);
+    }
+
+    public function getAcsrAcceptFriendAttribute()
+    {
+        $pending_user_ids = Friend::where('from_user', $this->id)->where('status', 'accept')->pluck('to_user')->toArray();
+        $suggested_user_ids = Friend::where('to_user', $this->id)->where('status', 'accept')->pluck('from_user')->toArray();
+
+        $friend_ids = array_merge($pending_user_ids, $suggested_user_ids);
+
+        return $friend_ids;
     }
 }

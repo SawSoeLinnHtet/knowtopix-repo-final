@@ -70,6 +70,8 @@ Route::group([
     Route::resource('/posts', PostController::class);
     Route::post('posts/{post}/like', [PostLikesController::class, 'like'])->name('post.like');
     Route::post('posts/{post}/comment', [PostCommentsController::class, 'comment'])->name('post.comment');
+    Route::patch('posts/{post}/comment/{comment}', [PostCommentsController::class, 'update'])->name('post.comment.update');
+    Route::delete('posts/{post}/comment/{comment}', [PostCommentsController::class, 'destroy'])->name('post.comment.delete');
 
     // user all route
     Route::post('users/random', [SiteUserController::class, 'randomUser'])->name('user.random');

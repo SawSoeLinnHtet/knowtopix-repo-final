@@ -1,7 +1,7 @@
 @foreach ($users as $key => $user)
-    <div class="col-12 col-sm-6 col-lg-3 col-xl-3 col-xxl-2 request-card">
+    <div class="col-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-2 request-card">
         <a href="">
-            <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+            <img src="{{ $user->acsr_check_profile }}" alt="">
         </a>
         <div class="info-wrap">
             <a href="{{ route('site.friend.details', $user->id) }}" class="user-name">
@@ -30,6 +30,7 @@
         $(document).ready(function () {
             $(document).on('click', '.add-friend-btn', function (e) {
                 e.preventDefault();
+
                 add_url = $(this).data('url')
                 $(this).css('color', 'LimeGreen')
                 $(this).prop('disabled', true)
