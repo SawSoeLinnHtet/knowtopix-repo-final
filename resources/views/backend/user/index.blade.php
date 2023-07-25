@@ -55,12 +55,8 @@
                                 <td>
                                     {{ $user->gender }}
                                 </td>
-                                <td>
-                                    @if($user->status)
-                                        <div class="badge badge-success">Active</div>
-                                    @else
-                                        <div class="badge badge-danger">No active</div>
-                                    @endif
+                                <td class="position-relative">
+                                    <a class="status-btn badge {{ $user->status ? 'badge-success' : 'badge-danger text-white' }} status-btn mb-2" @click="accountStatusDropDown=!accountStatusDropDown" data-url="{{ route('admin.users.status', $user->id) }}">{{ $user->status ? 'Active' : 'Banned' }}</a>
                                 </td>
                                 <td>
                                     {{ $user->created_at->diffForHumans() }}
@@ -69,11 +65,7 @@
                                     <div class="dropdown d-inline">
                                         <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-icon btn-info"><i class="far fa-eye"></i></a>
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-icon btn-warning"><i class="far fa-edit"></i></a>
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                        <button class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
-                                        </form>
+                                        <x-admin.delete-btn :action="route('admin.users.destroy', $user->id)"/>
                                     </div>
                                 </td>
                             </tr>                          
@@ -92,7 +84,52 @@
 </div>
 
 @push('script')
-    <script src="{{ asset('backend/js/page/index.js') }}"></script>
+    <script>
+        $(document).on('click', '.status-btn', function(e){
+            e.preventDefault();
+
+            console.log('hello')
+            
+            Swal.fire({
+                title: 'Account Status Control',
+                text: "You will control this user's account status!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirm'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    let status_url = $(this).data('url');
+
+                    $.ajax({
+                        url: status_url,
+                        data: {
+                            '_token': '{{ csrf_token() }}'
+                        },
+                        type: 'POST',
+                        success: function(res){
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000); 
+                        },
+                        error: function(res) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: "Something wrong",
+                                text: res.responseJSON.message
+                            });
+                        }
+                    })
+                }
+            })
+        })
+    </script>
 @endpush
 
 @endsection

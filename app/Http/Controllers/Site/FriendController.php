@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Enums\PostPrivacyEnum;
 use App\Models\User;
 use App\Models\Site\Post;
 use App\Models\Site\Friend;
@@ -10,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Enums\PostTypes;
 
 class FriendController extends Controller
 {
@@ -63,11 +63,11 @@ class FriendController extends Controller
         $friend = Friend::where('from_user', auth()->user()->id)->where('to_user', $user->id)->where('status', 'accept')
                         ->orWhere('from_user', $user->id)->where('to_user', auth()->user()->id)->where('status', 'accept')->first();
 
-        $posts = Post::where('user_id', $user->id)->where('privacy', PostPrivacyEnum::PUBLIC())->with('PostComment.User:id,name')->latest()->get();
+        $posts = Post::where('user_id', $user->id)->where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->latest()->get();
         
         $is_friend = false;
         if(isset($friend)){
-            $posts = $posts->merge(Post::where('user_id', $user->id)->where('privacy', PostPrivacyEnum::FRIEND())->with('PostComment.User:id,name')->latest()->get());
+            $posts = $posts->merge(Post::where('user_id', $user->id)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->get());
             $user->is_friend = true;   
         }
 

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use PyaeSoneAung\MyanmarPhoneValidationRules\MyanmarPhone;
 
 class StaffRequest extends FormRequest
 {
@@ -29,14 +30,14 @@ class StaffRequest extends FormRequest
             return [
                 'name' => 'required|between:10,25',
                 'email' => 'required|email|unique:staff,email,' . $id,
-                'phone' => 'required|regex:/^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/|unique:staff,phone,' . $id
+                'phone' => ['required', new MyanmarPhone, 'unique:users,phone,' . $id]
             ];
         }else{
             return [
                 'name' => 'required|between:10,25',
                 'email' => 'required|email|unique:staff,email',
                 'password' => 'required|confirmed|between:8,20',
-                'phone' => 'required|regex:/^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/|unique:staff,phone',
+                'phone' => ['required', new MyanmarPhone, 'unique:users,phone,']
             ];
         }
     }

@@ -65,4 +65,19 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'User Deleted Successfully');
     }
+
+    public function changeAccountStatus(User $user)
+    {
+        if($user->status == 0){
+            $user->status = 1;
+
+            $user->save();
+            return response()->json(['success' => "Now, this user's account is active"]);
+        }else{
+            $user->status = 0;
+
+            $user->save();
+            return response()->json(['success' => "Now, this user's account is suspended"]);
+        }
+    }
 }

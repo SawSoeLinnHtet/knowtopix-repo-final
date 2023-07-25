@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Enums\PostPrivacyEnum;
 use App\Models\User;
 use App\Models\Site\Post;
 use App\Models\Site\Friend;
 use Illuminate\Http\Request;
+use App\Models\Enums\PostTypes;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,7 +39,8 @@ class HomeController extends Controller
         // $posts = $friend_posts->merge($public_posts);
         //dd($posts);
         
-        $posts = Post::orderBy('updated_at', 'desc')
+        $posts = Post::where('privacy', PostTypes::PUBLIC)
+                    ->orderBy('updated_at', 'desc')
                     ->orderByRaw("FIELD(user_id, $friend_ids)DESC")
                     ->with([
                         'User:id,name,profile',

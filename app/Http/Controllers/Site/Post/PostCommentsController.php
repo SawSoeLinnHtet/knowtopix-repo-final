@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Site\Post\PostComment;
 use App\Http\Requests\Site\PostCommentRequest;
+use App\Models\Enums\StatusTypes;
 
 class PostCommentsController extends Controller
 {
@@ -16,7 +17,8 @@ class PostCommentsController extends Controller
         $data = [
             'user_id' => Auth::user()->id,
             'post_id' => $post->id,
-            'comment' => $request->comment
+            'comment' => $request->comment,
+            'status' => StatusTypes::ACTIVE
         ];
 
         $comment = PostComment::create($data);

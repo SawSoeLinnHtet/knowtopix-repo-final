@@ -17,7 +17,8 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->longText('content_area');
-            $table->string('privacy');
+            $table->integer('privacy');
+            $table->enum('status', ['active', 'banned']);
             $table->string('thumbnail')->nullable();
             $table->timestamps();
 

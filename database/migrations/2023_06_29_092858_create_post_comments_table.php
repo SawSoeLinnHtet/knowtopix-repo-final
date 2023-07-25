@@ -18,6 +18,7 @@ class CreatePostCommentsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('post_id');
             $table->longText('comment');
+            $table->enum('status', ['active', 'banned']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

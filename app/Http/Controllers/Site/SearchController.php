@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Enums\PostPrivacyEnum;
 use App\Models\User;
 use App\Models\Site\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Site\Friend;
+use App\Models\Enums\PostTypes;
 
 class SearchController extends Controller
 {
@@ -20,14 +20,14 @@ class SearchController extends Controller
 
             $friend_users_id = $current_auth_user->acsr_accept_friend;
 
-            $public_posts = Post::where('privacy', PostPrivacyEnum::PUBLIC())->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
-            $friend_posts = Post::whereIn('user_id', $friend_users_id)->where('privacy', PostPrivacyEnum::FRIEND())->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
+            $public_posts = Post::where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
+            $friend_posts = Post::whereIn('user_id', $friend_users_id)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
             $posts = $friend_posts->merge($public_posts);
             $liked_posts = Post::getWithLike($posts);
             
             return view('site.search.index', ['users' => $users, 'posts' => $posts]);
         }else{
-            $recent_posts = Post::whereNotIN('user_id', [$current_auth_user->id])->where('privacy', PostPrivacyEnum::PUBLIC())->with('PostComment.User:id,name')->get()->random(2);
+            $recent_posts = Post::whereNotIN('user_id', [$current_auth_user->id])->where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->get()->random(2);
             $liked_posts = Post::getWithLike($recent_posts);
 
             $recent_users = User::get()->whereNotIn('id', auth()->user()->id)->random(2);

@@ -19,6 +19,9 @@
             <li class="dropdown @if (Request::is('admin/users')) {{'active'}} @endif">
                 <a href="{{ route('admin.users.index') }}" class="nav-link"><i class="fas fa-users"></i><span>Users</span></a>
             </li>
+            <li class="dropdown @if (Request::is('admin/posts')) {{'active'}} @endif">
+                <a href="{{ route('admin.posts.index') }}" class="nav-link"><i class="fas fa-file-alt"></i><span>Posts</span></a>
+            </li>
         </ul>    
     </aside>
 </div>

@@ -1,6 +1,5 @@
 <div class="add-post-btn-wrap" x-data="{ openCreateModalBox : false }" x-init="$watch('openCreateModalBox', toggleOverflow)">
     <button class="add-text-btn" @click="openCreateModalBox = true">What do you have in mind?</button>
-
     <div 
         class="post-create-modal-box" 
         x-cloak x-show="openCreateModalBox"
@@ -25,9 +24,15 @@
                 <div class="modal-form-wrap">
                     <form action="{{ route('site.posts.store') }}" id="post-create" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="privacy-area d-flex mb-2" x-data="{ openSelectPrivacy : false, selectedPrivacy : 'public' }">
-                            <a href="#" class="d-flex align-items-center" @click="openSelectPrivacy = true">
-                                <i class="fa-solid fa-earth-americas me-2"></i><span x-text="selectedPrivacy" style="text-transform: capitalize"></span><i class="fa-solid fa-angle-down arrow ms-2"></i>
+                        <div class="privacy-area d-flex mb-2" x-data="{ openSelectPrivacy: false, selectedPrivacy: 1 }">
+                            <a x-show="selectedPrivacy == 1" @click="openSelectPrivacy = true">
+                                <i class="fa-solid fa-earth-americas me-2"></i><span style="text-transform: capitalize">Public</span><i class="fa-solid fa-angle-down arrow ms-2"></i>
+                            </a>
+                            <a x-show="selectedPrivacy == 2" @click="openSelectPrivacy = true">
+                                <i class="fa-solid fa-user-group me-2"></i><span style="text-transform: capitalize">Friend Only</span><i class="fa-solid fa-angle-down arrow ms-2"></i>
+                            </a>
+                            <a x-show="selectedPrivacy == 3" @click="openSelectPrivacy = true">
+                                <i class="fa-solid fa-lock me-2"></i><span style="text-transform: capitalize">Private</span><i class="fa-solid fa-angle-down arrow ms-2"></i>
                             </a>
                             <div 
                                 class="select-input-modal" 
@@ -61,7 +66,7 @@
                                                 </div>
                                                 Public
                                             </label>
-                                            <input type="radio" name="privacy" id="public-radio" value="public" x-model="selectedPrivacy" checked>
+                                            <input type="radio" name="privacy" id="public-radio" value="1" x-model="selectedPrivacy" checked>
                                         </div>  
                                         <div class="value-wrap mb-3">
                                             <label for="friend-radio" class="d-flex align-items-center">
@@ -70,7 +75,7 @@
                                                 </div>
                                                 Friend Only
                                             </label>
-                                            <input type="radio" name="privacy" id="friend-radio" value="friend" x-model="selectedPrivacy">
+                                            <input type="radio" name="privacy" id="friend-radio" value="2" x-model="selectedPrivacy">
                                         </div> 
                                         <div class="value-wrap mb-3">
                                             <label for="private-radio" class="d-flex align-items-center">
@@ -79,7 +84,7 @@
                                                 </div>
                                                 Private
                                             </label>
-                                            <input type="radio" name="privacy" id="private-radio" value="private" x-model="selectedPrivacy">
+                                            <input type="radio" name="privacy" id="private-radio" value="3" x-model="selectedPrivacy">
                                         </div> 
                                     </div>
                                 </div>

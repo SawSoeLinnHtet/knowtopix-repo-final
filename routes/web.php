@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\Site\Post\PostCommentsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\PostController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Site\FriendController;
+use App\Http\Controllers\Site\SearchController;
+use App\Http\Controllers\Site\ProfileController;
+use App\Http\Controllers\Site\SiteUserController;
 use App\Http\Controllers\Site\Auth\LoginController;
 use App\Http\Controllers\Site\Auth\RegisterController;
-use App\Http\Controllers\Site\FriendController;
-use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\Post\PostLikesController;
-use App\Http\Controllers\Site\PostController;
-use App\Http\Controllers\Site\ProfileController;
-use App\Http\Controllers\Site\SearchController;
-use App\Http\Controllers\Site\SiteUserController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Site\Post\PostCommentsController;
+use App\Http\Controllers\Admin\Auth\LoginController as AdminLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,17 @@ Route::get('admin/dashboard', function () {
     return view('backend.dashboard.index');
 })->middleware(['auth'])->name('admin.dashboard');
 
+Route::group([
+        'prefix' => 'admin',
+        'as' => 'admin.',
+        'middleware' => 'guest_staff'
+    ],
+    function () {
+    // staff login
+    Route::get('login', [AdminLogin::class, 'index'])->name('login.index');
+    Route::post('login', [AdminLogin::class, 'auth'])->name('login.auth');
+});
+
 // admin routes
 Route::group([
     'prefix' => 'admin',
@@ -37,6 +50,12 @@ Route::group([
 ], function () {
     Route::resource('staffs', StaffController::class);
     Route::resource('users', UserController::class);
+    Route::post('users/{user}/status', [UserController::class, 'changeAccountStatus'])->name('users.status');
+    Route::resource('posts', App\Http\Controllers\Admin\PostController::class);
+    Route::patch('posts/{post}/status', [App\Http\Controllers\Admin\PostController::class, 'changePostStatus'])->name('posts.status');
+    Route::get('posts/{post}/likes', [App\Http\Controllers\Admin\Post\LikeController::class, 'index'])->name('posts.likes.index');
+    Route::get('posts/{post}/comments', [App\Http\Controllers\Admin\Post\CommentController::class, 'index'])->name('posts.comments.index');
+    Route::patch('posts/{post}/comments/{comment}/status', [App\Http\Controllers\Admin\Post\CommentController::class, 'changeCommentStatus'])->name('posts.comments.status');
 });
 
 Route::middleware(['guest'])->group(function () {

@@ -24,7 +24,7 @@ class CreateStaffTable extends Migration
             $table->string('profile')->nullable();
             $table->string('gender')->nullable();
             $table->timestamp('login_at')->nullable();
-            $table->boolean('status')->nullable();
+            $table->enum('status', ['active', 'banned']);
             $table->rememberToken();
             $table->timestamps();
         });

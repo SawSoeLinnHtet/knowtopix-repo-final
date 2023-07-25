@@ -25,6 +25,7 @@ class PostLikesController extends Controller
             PostLike::create($data);
 
             Session::put(['success' => 'Liked!']);
+            Session::forget('success');
             return response()->json(['result' => 'Post like success']);
         }else{
 

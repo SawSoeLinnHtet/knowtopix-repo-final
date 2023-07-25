@@ -2,13 +2,13 @@
 
 namespace App\Models\Site;
 
-use App\Enums\PostPrivacyEnum;
 use App\Models\User;
 use App\Models\Site\Post\PostLike;
 use App\Models\Site\Post\PostComment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Enums\PostTypes;
 
 class Post extends Model
 {
@@ -23,14 +23,6 @@ class Post extends Model
         'privacy'
     ];
 
-    protected $casts = [
-        'privacy' => PostPrivacyEnum::class
-    ];
-
-    public function setStatus(PostPrivacyEnum $privacy)
-    {
-        $this->privacy = $privacy;
-    }
     public function User(){
         return $this->belongsTo(User::class);
     }
@@ -67,11 +59,11 @@ class Post extends Model
 
     public function privacyIcon($privacy)
     {
-        if(PostPrivacyEnum::PUBLIC() == $privacy){
+        if(PostTypes::PUBLIC == $privacy){
             return 'fa-earth-americas text-primary';
-        }elseif(PostPrivacyEnum::FRIEND() == $privacy){
+        }elseif(PostTypes::FRIEND_ONLY == $privacy){
             return 'fa-user-group text-info';
-        }else{
+        }elseif(PostTypes::PRIVATE == $privacy){
             return 'fa-lock text-danger';
         }
     }

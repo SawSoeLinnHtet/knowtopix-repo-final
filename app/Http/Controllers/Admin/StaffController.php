@@ -6,6 +6,7 @@ use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StaffRequest;
+use App\Models\Enums\StatusTypes;
 use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
@@ -45,7 +46,8 @@ class StaffController extends Controller
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'address' => $request->address,
-            'gender' => $request->gender
+            'gender' => $request->gender,
+            'status' => StatusTypes::ACTIVE
         ]);
 
         return redirect()->route('admin.staffs.index')->with('success', 'Staff created successfully');

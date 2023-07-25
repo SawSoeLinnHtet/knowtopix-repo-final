@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Site\PostRequest;
-use App\Models\Site\Post\PostLike;
+use App\Models\Enums\PostTypes;
 
 class PostController extends Controller
 {

@@ -14,10 +14,13 @@
     <link rel="stylesheet" href="{{ asset('plugins/backend/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/backend/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/backend/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/components.css') }}">
+    {{-- Custom Css --}}
+    <link rel="stylesheet" href="{{ asset('backend/css/custom.css') }}">
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -44,6 +47,8 @@
         </div>
     </div>
 
+    {{-- alpinejs --}}
+    <script src="{{ asset('plugins/backend/alpinejs/cdn.min.js') }}"></script>
     <!-- General JS Scripts -->
     <script src="{{ asset('plugins/backend/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/popper.js') }}"></script>
@@ -59,7 +64,7 @@
     <script src="{{ asset('plugins/backend/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('plugins/backend/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
     {{-- Laravel Validation --}}
     <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <!-- Template JS File -->
@@ -68,9 +73,7 @@
     {{-- Pages script --}}
     <script>
         $('.go_back').on('click', function() {
-
             window.history.go(-1);
-
             return false;
         });
     </script>

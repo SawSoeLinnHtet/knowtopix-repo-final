@@ -7,7 +7,7 @@
             </ul>
             <div class="search-element">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-lg" type="submit"><i class="fas fa-search"></i></button>
                 <div class="search-backdrop"></div>
                 <div class="search-result">
                     <div class="search-header">
@@ -199,7 +199,7 @@
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <img alt="image" src="{{ asset('backend/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">David</div>
+                    <div class="d-sm-none d-lg-inline-block">{{ Auth::guard('staff')->user()->name }}</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-title">Logged in 5 min ago</div>
@@ -212,11 +212,8 @@
                     <a href="features-settings.html" class="dropdown-item has-icon">
                         <i class="fas fa-cog"></i> Settings
                     </a>
-                    <div class="dropdown-divider"></div>
-                    {{-- <a href="#" class="dropdown-item has-icon text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a> --}}
-                    {{-- <form action="{{ route('logout') }}" method="POST" class="dropdown-item">
+                    {{-- <div class="dropdown-divider"></div>
+                    <form action="" method="POST" class="dropdown-item">
                         @csrf
                         <button class="btn btn-link btn-icon">
                             <i class="fas fa-sign-out-alt"></i> Logout

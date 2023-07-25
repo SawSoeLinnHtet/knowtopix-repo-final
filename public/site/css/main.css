@@ -848,36 +848,22 @@ ul li a{
 }
 
 
-input[type="radio"] + label {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid #ccc; /* Default border color */
-    margin-right: 8px;
-    cursor: pointer;
-}
-
-input[type="radio"]:checked + label {
-    border-color: #007bff; /* Change to your desired color */
-    background-color: #007bff; /* Change to your desired color */
-}
-
 .privacy-area .select-input-modal .info-body .radio-wrap .value-wrap label{
     font-size: 16px;
-    color: #fafafa;
+    color: #f5f5f5;
     cursor: pointer;
 }
 
 .privacy-area .select-input-modal .info-body .radio-wrap .value-wrap label .privacy-icon{
     width: 40px;
     height: 40px;
-    background-color: #58595a;
+    background-color: #f5f5f5;
     font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 100px;
+    color: #020202;
 }
 
 .privacy-area .select-input-modal .info-body span{

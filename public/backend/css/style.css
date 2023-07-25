@@ -1551,7 +1551,7 @@ h6 .badge {
   .navbar .form-inline .btn {
     border-radius: 0 3px 3px 0;
     background-color: #fff;
-    padding: 9px 15px 9px 15px;
+
     border-color: transparent; }
   .navbar .form-inline .search-backdrop {
     position: fixed;
