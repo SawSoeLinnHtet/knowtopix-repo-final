@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Post;
 
-use App\Models\Admin\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Models\Admin\PostComment;
+use App\Models\PostComment;
 use App\Models\Enums\StatusTypes;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +17,7 @@ class CommentController extends Controller
      */
     public function index(Post $post)
     {   
-        $comments = PostComment::where('post_id', $post->id)->with(['User:id,name'])->paginate(10);
+        $comments = PostComment::where('post_id', $post->id)->with(['User:id,name'])->get();
         return view('backend.post.comment.index', ['comments' => $comments]);
     }
 

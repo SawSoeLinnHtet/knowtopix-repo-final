@@ -18,7 +18,7 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
-        <form action="{{ route('site.profile.upload', Auth::user()->username) }}" method="POST" id="upload-form" enctype="multipart/form-data">
+        <form action="{{ route('site.profile.upload', Auth::user()->id) }}" method="POST" id="upload-form" enctype="multipart/form-data">
             @csrf
             <div class="form-input">
                 <div class="preview">

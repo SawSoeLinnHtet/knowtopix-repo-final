@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container-fluid py-0">
+{{-- <div class="container-fluid py-0">
     <div class="row p-0">
         <div class="col-0 d-none d-xl-block col-lg-7 col-xl-8 p-0 rounded-none">
             <div class="w-100 h-100 position-relative" style="background-color: #1F2B3F">
@@ -151,7 +151,7 @@
         </div>
         @include('site.layouts.responsive-menu')
     </div>
-</div>
+</div> --}}
 
 @endsection
 

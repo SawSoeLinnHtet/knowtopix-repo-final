@@ -86,8 +86,8 @@
                             >
                                 <ul>
                                     <li>
-                                        <a href="">
-                                            <i class="fa-solid fa-square-plus me-3"></i>Page
+                                        <a href="{{ route('site.blog.request') }}">
+                                            <i class="fa-solid fa-square-plus me-3"></i>Create Blog
                                         </a>
                                     </li>
                                     <li>

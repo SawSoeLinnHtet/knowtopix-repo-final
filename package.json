@@ -20,6 +20,7 @@
         "tailwindcss": "^3.0.18"
     },
     "dependencies": {
+        "mammoth": "^1.6.0",
         "sweetalert2": "^11.7.12"
     }
 }

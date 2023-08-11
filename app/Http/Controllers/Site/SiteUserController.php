@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\User;
-use App\Models\Site\Friend;
+use App\Models\Friend;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

@@ -1,0 +1,1 @@
+<p>{{ $post->acsr_post_privacy_value }}</p>

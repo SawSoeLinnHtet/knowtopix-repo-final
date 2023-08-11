@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\User;
-use App\Models\Site\Post;
-use App\Models\Site\Friend;
+use App\Models\Post;
+use App\Models\Friend;
 use Illuminate\Http\Request;
 use App\Models\Enums\PostTypes;
 use App\Http\Controllers\Controller;
@@ -28,27 +28,17 @@ class HomeController extends Controller
         $friend_ids = implode(',', $ids);
         $friends = array_merge($pending_user_ids, $suggested_user_ids);
 
-        // $public_posts = Post::where('privacy', PostPrivacyEnum::PUBLIC())->pluck('id')->toArray();
-        // $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostPrivacyEnum::FRIEND())->pluck('id')->toArray();
-        // $post_ids = array_merge($friend_posts, $public_posts,);
-        // $posts = Post::whereIn('id', $post_ids);
-        // dd($posts);
-
-        // $public_posts = Post::where('privacy', PostPrivacyEnum::PUBLIC());
-        // $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostPrivacyEnum::FRIEND())->get();
-        // $posts = $friend_posts->merge($public_posts);
-        //dd($posts);
+        $user_posts = Post::where('privacy', PostTypes::FRIEND_ONLY )->where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        $public_posts = Post::where('privacy', PostTypes::PUBLIC)->pluck('id')->toArray();
+        $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostTypes::FRIEND_ONLY)->pluck('id')->toArray();
         
-        $posts = Post::where('privacy', PostTypes::PUBLIC)
-                    ->orderBy('updated_at', 'desc')
-                    ->orderByRaw("FIELD(user_id, $friend_ids)DESC")
-                    ->with([
-                        'User:id,name,profile',
-                        'PostComment' => function ($query) {
-                            $query->orderBy('created_at', 'desc');
-                        },
-                        'PostComment.User:id,name,profile'
-                    ])->paginate(10);
+        $post_ids = array_merge($user_posts, $friend_posts, $public_posts);
+        shuffle($post_ids);
+        $posts = Post::with(['PostComment', 'PostLike'])
+            ->whereIn('id', $post_ids)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
         $liked_posts = Post::getWithLike($posts);
 
         if ($request->ajax()) {

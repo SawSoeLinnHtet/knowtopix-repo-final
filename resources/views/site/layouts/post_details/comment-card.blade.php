@@ -1,7 +1,7 @@
 @foreach ($comments as $comment)
     <div class="comment-card mb-2">
         <img src="{{ $comment->User->acsr_check_profile }}" alt="">
-        <div class="d-flex flex-column" x-data="{openCommentBox: false, comment: '{{ $comment->comment }}'}">
+        <div class="d-flex flex-column" x-data='{openCommentBox: false, comment: "{{ $comment->comment }}"}'>
             <div class="text-wrap">
                 <a href="{{ route('site.friend.details', $comment->user_id) }}" class="text-decoration-none text-white">
                     <h6>

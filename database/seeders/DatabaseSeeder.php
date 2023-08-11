@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Site\Post;
+use App\Models\Post;
 use App\Models\Staff;
 use Illuminate\Database\Seeder;
 

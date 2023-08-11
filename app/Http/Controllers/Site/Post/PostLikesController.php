@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Site\Post;
 
-use App\Models\Site\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Models\Site\Post\PostLike;
+use App\Models\PostLike;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;

@@ -26,9 +26,16 @@ class LoginController extends Controller
         $user = Staff::where('email', $request->email)->first();
 
         if(Auth::guard('staff')->attempt($credentials, $remember)){
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         return redirect()->route('admin.login.index')->with('error', "Your Credentials doesn't match");
+    }
+
+    public function logout()
+    {
+        Auth::guard('staff')->logout();
+
+        return redirect()->route('admin.login.index');
     }
 }

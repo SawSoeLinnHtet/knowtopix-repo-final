@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\User;
-use App\Models\Site\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Site\Friend;
+use App\Models\Friend;
 use App\Models\Enums\PostTypes;
 
 class SearchController extends Controller

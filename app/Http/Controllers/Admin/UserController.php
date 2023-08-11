@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-
-    public function index(User $user)
+    public function index(Request $request)
     {
-        $users = $user->orderBy('created_at', 'desc')->paginate(10);
-        return view('backend.user.index', ['users' => $users]);
+        if ($request->ajax()) {
+
+            $data = User::get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.user.index');
     }
 
     public function create()

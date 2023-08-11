@@ -1,0 +1,1 @@
+<p>{{ $attribute->name ?? '-'}}</p>

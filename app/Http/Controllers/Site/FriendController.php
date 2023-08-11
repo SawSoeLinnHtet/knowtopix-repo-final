@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\User;
-use App\Models\Site\Post;
-use App\Models\Site\Friend;
+use App\Models\Post;
+use App\Models\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -18,14 +18,19 @@ class FriendController extends Controller
         $to_user = $user->id;
         $from_user = Auth::user()->id;
 
-        $data = [
-            'from_user' => $from_user,
-            'to_user' => $to_user
-        ];
+        $is_pending_friend = Friend::isPendingFriend($user->id);
 
-        Friend::create($data);
+        if($is_pending_friend){
+            $data = [
+                'from_user' => $from_user,
+                'to_user' => $to_user
+            ];
 
-        return response()->json(['success' => 'Friend add successfully']);
+            Friend::create($data);
+
+            return response()->json(['success' => 'Friend add successfully']);
+        }
+        return response()->json(['success' => 'Already requested']);
     }
     
     public function index(Request $request)
@@ -49,32 +54,65 @@ class FriendController extends Controller
         return view('site.friends.index', ['request_users' => $requested_users, 'users' => $users]);
     }
 
-    public function confirmRequest($id, Request $request)
+    public function unfriend(User $user)
     {
-        $friend = Friend::where('from_user', $id)->where('to_user', Auth::user()->id)->first();
+        $friend = Friend::getFriendUser($user);
+
+        $friend->delete();
+
+        return response()->json(['success' => 'Unfriend successfully']);
+    }
+
+    public function cancel(User $user)
+    {
+        $friend = Friend::where('from_user', auth()->user()->id)->where('to_user', $user->id)->where('status', 'pending')->first();
+
+        $friend->delete();
+
+        return response()->json(['success' => 'Cancel request successfully']);
+    }
+
+    public function show(User $user)
+    {    
+        $friend = Friend::getFriendUser($user);
         
-        $friend->update($request->except('_token'));
+        $pending_friend = Friend::where('from_user', auth()->user()->id)->where('to_user', $user->id)->where('status', 'pending')->first();
+        $requested_friend = Friend::where('from_user', $user->id)->where('to_user', auth()->user()->id)->where('status', 'pending')->first();
+    
+        $posts = Post::where('user_id', $user->id)->where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->latest()->get();
+
+        $is_friend = false;
+        if(isset($friend)){
+            $posts = $posts->merge(Post::where('user_id', $user->id)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->get());
+            $user->is_friend = 'accept';
+        }elseif(isset($pending_friend)){
+            $user->is_friend = 'pending';
+        }elseif(isset($requested_friend)){
+            $user->is_friend = 'requested';
+        }else{
+            $user->is_friend = false;
+        }
+        
+        $posts = $posts->sortByDesc('created_at');
+        $liked_posts = Post::getWithLike($posts);
+        return view('site.friends.details', ['user' => $user, 'posts' => $posts]);
+    }
+
+    public function confirmRequest(User $user)
+    {
+        $friend = Friend::where('from_user', $user->id)->where('to_user', Auth::user()->id)->where('status', 'pending')->first();
+
+        $friend->update(['status' => 'accept']);
 
         return response()->json(['success' => 'Now you are friend with him']);
     }
 
-    public function show(User $user)
+    public function cancelRequest(User $user)
     {
-        $friend = Friend::where('from_user', auth()->user()->id)->where('to_user', $user->id)->where('status', 'accept')
-                        ->orWhere('from_user', $user->id)->where('to_user', auth()->user()->id)->where('status', 'accept')->first();
+        $friend = Friend::where('from_user', $user->id)->where('to_user', Auth::user()->id)->where('status', 'pending')->first();
 
-        $posts = Post::where('user_id', $user->id)->where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->latest()->get();
-        
-        $is_friend = false;
-        if(isset($friend)){
-            $posts = $posts->merge(Post::where('user_id', $user->id)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->get());
-            $user->is_friend = true;   
-        }
+        $friend->delete();
 
-        $posts = $posts->sortByDesc('created_at');
-
-        $liked_posts = Post::getWithLike($posts);
-
-        return view('site.friends.details', ['user' => $user, 'posts' => $posts]);
+        return response()->json(['success' => 'Cancel request successfully']);
     }
 }

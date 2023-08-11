@@ -25,7 +25,7 @@
         </div>
     </div>
 </div>
-s
+
 @push('script')
     <script>
         function deleteRecord() {

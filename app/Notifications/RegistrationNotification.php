@@ -44,7 +44,7 @@ class RegistrationNotification extends Notification implements ShouldQueue
     {
         $verify_url = URL::temporarySignedRoute('verification.verify', Carbon::now()->addMinutes(5), ['user_id' => $notifiable->id]);
 
-        return (new MailMessage())
+        return (new MailMessage())  
             ->view('email.verification', ['verification_link' => $verify_url, 'user' => $notifiable])
             ->subject('Email Verification From Knowtopix');
     }

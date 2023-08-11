@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Enums\StatusTypes;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,8 +25,8 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
             'gender' => $this->faker->randomElement(['male', 'female', 'other']),
-            'personal_info' => $this->faker->randomHtml(),
-            'status' => $this->faker->randomElement([true, false])
+            'personal_info' => implode(" ", $this->faker->paragraphs()),
+            'status' => StatusTypes::ACTIVE,
         ];
     }
 

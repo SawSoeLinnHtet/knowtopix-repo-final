@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Site\Post;
 
-use App\Models\Site\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Site\Post\PostComment;
+use App\Models\PostComment;
 use App\Http\Requests\Site\PostCommentRequest;
 use App\Models\Enums\StatusTypes;
 
@@ -22,8 +22,9 @@ class PostCommentsController extends Controller
         ];
 
         $comment = PostComment::create($data);
+        $view = view('site.layouts.comment.comment-frame',['comment' => $comment])->render();
         
-        return response()->json(['data' => ['success' => 'Like post successfully!', 'comment' => $comment]]);
+        return response()->json(['data' => ['success' => 'Like post successfully!', 'html' => $view]]);
     }
 
     public function update(Request $request ,Post $post, PostComment $comment)

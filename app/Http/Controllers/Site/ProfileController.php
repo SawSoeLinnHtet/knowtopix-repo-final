@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\User;
-use App\Models\Site\Post;
+use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\PasswordSettingRequest;
 use Illuminate\Support\Facades\Auth;

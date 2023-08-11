@@ -1,4 +1,4 @@
-<div class="col-12 col-lg-4 col-xl-4 d-none d-xl-block d-lg-block right-side-bar">
+<div id="right-side-bar" class="col-12 col-lg-4 col-xl-4 d-none d-xl-block d-lg-block right-side-bar">
     <x-site.random.user-wrap :users="$users"/>
     <div class="random-user-wrap online-friend-wrap mt-3">
         <div class="random-user-card-header">

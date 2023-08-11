@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StaffRequest;
 use App\Models\Enums\StatusTypes;
+use App\Http\Requests\StaffRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class StaffController extends Controller
 {
@@ -16,10 +17,17 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Staff $staff)
+    public function index(Request $request)
     {
-        $staff_members = $staff->orderBy('created_at', 'desc')->paginate(10);
-        return view('backend.staff.index', ['staff_members' => $staff_members]);
+        if ($request->ajax()) {
+
+            $data = Staff::get();
+
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        }
+        return view('backend.staff.index');
     }
 
     /**

@@ -3,12 +3,6 @@
 
 <div class="main-content">
     <section class="section">
-        <div class="section-header">
-            <div class="section-header-breadcrumb ml-0">
-                <div class="breadcrumb-item active"><a href="{{ route('admin.posts.index') }}">Posts</a></div>
-                <div class="breadcrumb-item">Comments</div>
-            </div>
-        </div>
         @include('backend.layouts.page_info')
         <div class="section-header">
             <h1>Post Comments</h1>
@@ -17,7 +11,7 @@
         <div class="section-body">
             @if($comments->count())
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-md">
+                    <table class="myTable table table-bordered table-striped table-md">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -60,9 +54,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div class="float-right mt-3">
-                    {{ $comments->links() }}
                 </div>
             @else
                 <div class="alert alert-warning">No record found</div>

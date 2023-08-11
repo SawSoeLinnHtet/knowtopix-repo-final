@@ -4,9 +4,9 @@
             <img src="{{ $req_user->acsr_check_profile }}" alt="">
         </a>
         <div class="info-wrap">
-            <a href="" class="user-name">
+            <a href="{{ route('site.friend.details', $req_user->id) }}" class="user-name">
                 <p class="text-white">
-                    {{ $req_user->name }}{{ $req_user->id }}
+                    {{ $req_user->name }}
                 </p>
             </a>
             <span class="friend-count">

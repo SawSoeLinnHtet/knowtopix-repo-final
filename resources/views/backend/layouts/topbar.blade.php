@@ -212,13 +212,13 @@
                     <a href="features-settings.html" class="dropdown-item has-icon">
                         <i class="fas fa-cog"></i> Settings
                     </a>
-                    {{-- <div class="dropdown-divider"></div>
-                    <form action="" method="POST" class="dropdown-item">
+                    <div class="dropdown-divider"></div>
+                    <form action="{{ route('admin.logout') }}" method="POST">
                         @csrf
-                        <button class="btn btn-link btn-icon">
+                        <button class="btn btn-link btn-icon dropdown-item has-icon d-flex align-items-center ml-3">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </button>
-                    </form> --}}
+                    </form>
                 </div>
             </li>
         </ul>

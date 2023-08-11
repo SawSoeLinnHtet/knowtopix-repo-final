@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Enums\StatusTypes;
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 
 class PostController extends Controller
 {
@@ -14,11 +15,31 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(['User:id,name', 'Like', 'Comment'])->paginate(10);
+        if ($request->ajax()) {
 
-        return view('backend.post.index', ['posts' => $posts]);
+            $data = Post::with(['User:id,name', 'PostLike', 'PostComment'])->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn(
+                    'content_area', function ($row) {
+                        return view('site.layouts.datatable-content-area', ['content_area' => $row->content_area])->render();
+                })
+                ->addColumn('privacy', function ($row) {
+                    return view('backend.layouts.post-type', ['post' => $row])->render();
+                })
+                ->addColumn('post_likes', function ($row) {
+                    return view('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.likes.index', $row->id),'attributes' => $row->PostLike])->render();
+                })
+                ->addColumn('post_comments', function ($row) {
+                    return view('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.comments.index', $row->id), 'attributes' => $row->PostComment])->render();
+                })
+                ->rawColumns(['privacy','post_likes', 'post_comments', 'content_area'])
+                ->make(true);
+        }
+        return view('backend.post.index');
     }
 
     /**
@@ -82,9 +103,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
     }
 
     public function changePostStatus(Post $post)

@@ -20,10 +20,10 @@
             <p class="text-left py-3 px-3 mb-0 text-danger">Are you sure you want to delete this comment?</p>
             <div class="d-flex justify-content-end gap-2 px-3 py-2">
                 <button class="btn btn-sm btn-secondary shadow-none" @click="openCommentDeleteModal = false">
-                    <i class="fa-solid fa-arrow-left"></i>
+                    <i class="fa-solid fa-arrow-left me-1"></i>Cancel
                 </button>
                 <a class="btn btn-sm btn-danger" @click="deleteComment">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-trash me-1"></i>Delete
                 </a>
             </div>
         </div>
@@ -58,5 +58,5 @@
                 console.error("Error deleting record:", error);
             });
         }
-        </script>
+    </script>
 @endpush

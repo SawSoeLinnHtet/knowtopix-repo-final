@@ -16,9 +16,6 @@
                 <a  href="#"  data-url="{{ route('site.friend.add', $user->id) }}" class="button add-friend-btn">
                     Add Friend
                 </a>
-                <a class="button reject-btn btn btn-danger">
-                    Remove
-                </a>
             </div>
         </div>
     </div>

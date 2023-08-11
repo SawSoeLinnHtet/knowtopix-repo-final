@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -12,9 +15,12 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.4",
+        "nadirhamid/docx-to-html": "^0.0.1",
+        "phpoffice/phpword": "^1.1",
         "proengsoft/laravel-jsvalidation": "^4.7",
         "pyaesoneaung/myanmar-phone-validation-rules": "^1.0",
-        "spatie/laravel-enum": "^3.0"   
+        "spatie/laravel-enum": "^3.0",
+        "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

@@ -19,22 +19,23 @@ class LoginController extends Controller
 
     public function auth(LoginRequest $request)
     {
-        
         $credentials = $request->only('email', 'password');
-
+    
         $remember = isset($request->remember) && $request->remember == 'on' ? true : false;
 
         $user = User::where('email', $request->email)->first();
+        
+        if(isset($user)){
+            if (!$user->hasVerifiedEmail()) {
 
-        if(!$user->hasVerifiedEmail()) {
-            
-            $this->setResend($user);
+                $this->setResend($user);
 
-            return view('auth.verification.notice');
+                return view('auth.verification.notice');
+            }
         }
 
         if(Auth::attempt($credentials, $remember)){
-            return redirect()->route('site.index');
+            return redirect()->back();
         }
         return redirect()->route('site.login.index')->with('error', "Your Credentials doesn't match");
     }

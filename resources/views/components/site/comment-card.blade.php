@@ -1,9 +1,14 @@
 @props(['comments'])
-
-@foreach ($comments as $key => $comment)
+@php
+    $loopCount = 0;
+@endphp
+@foreach ($comments->reverse() as $key => $comment)
+    @php
+        $loopCount++
+    @endphp
     <div class="comment-card">
         <img src="{{ $comment->User->acsr_check_profile }}" alt="">
-        <div class="comment-text-wrapper d-flex flex-column" x-data="{openCommentBox: false, comment: '{{ $comment->comment }}'}">
+        <div class="comment-text-wrapper d-flex flex-column" x-data='{openCommentBox: false, comment: "{{ str_replace(['"', "'"], '', $comment->comment) }}"}'>
             <div class="text-wrap">
                 <a href="{{ route('site.friend.details', $comment->user_id) }}" class="text-decoration-none text-white">
                     <h6>
@@ -14,12 +19,13 @@
                     id="contact_1" 
                     x-show="!openCommentBox"
                     x-transition:enter.duration.500ms
-                    x-html="comment"
+                    x-text="comment"
                     @keyup.escape.window="openCommentBox = false"
                 >
                 </span>
                 <div 
                     x-cloak x-show="openCommentBox" 
+                    @click.away="openCommentBox=false"
                     x-transition:enter.duration.500ms
                     class="py-2 editCommentBox"
                 >
@@ -36,16 +42,17 @@
                 <p>{{ $comment->acsr_created_at }}</p>
                 @if ($comment->User->id == auth()->user()->id)
                     <a class="text-decoration-none text-info" style="cursor: pointer" @click="openCommentBox = true">Edit</a>
-                    <a class="text-decoration-none text-warning" style="cursor: pointer" @click="postId ={{ $comment->post_id }}; commentId={{ $comment->id }}; openCommentDeleteModal = !openCommentDeleteModal" >Delete</a>
+                    <a class="text-decoration-none text-warning" style="cursor: pointer" @click="postId ={{ $comment->post_id }}; commentId={{ $comment->id }}; openCommentDeleteModal = !openCommentDeleteModal">Delete</a>
                 @endif
             </div>
         </div>
     </div>
-    @if($key == 2)
-        <div class="ms-5 mb-3 ps-2">
+    @if($loopCount > 2)
+        <div class="ms-5 mt-2 mb-3 ps-2">
             <a 
                 href="#" 
                 class="click-details-modal text-decoration-none d-flex align-items-center text-info" 
+                style="font-size: 1rem"
                 @click="openPostDetailsModal = !openPostDetailsModal"
                 data-url="{{ route('site.posts.show', $comment->post_id) }}"
             >

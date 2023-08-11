@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/backend/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/backend/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/components.css') }}">
@@ -47,9 +47,8 @@
         </div>
     </div>
 
-    {{-- alpinejs --}}
-    <script src="{{ asset('plugins/backend/alpinejs/cdn.min.js') }}"></script>
     <!-- General JS Scripts -->
+    <script src="{{ asset('plugins/backend/alpinejs/cdn.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/popper.js') }}"></script>
     <script src="{{ asset('plugins/backend/tooltip.js') }}"></script>
@@ -57,7 +56,7 @@
     <script src="{{ asset('plugins/backend/nicescroll/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/moment.min.js') }}"></script>
     <script src="{{ asset('backend/js/stisla.js') }}"></script>
-    
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
     <!-- JS Libraies -->
     <script src="{{ asset('plugins/backend/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/chart.min.js') }}"></script>
@@ -66,7 +65,9 @@
     <script src="{{ asset('plugins/backend/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
     {{-- Laravel Validation --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    
     <!-- Template JS File -->
     <script src="{{ asset('backend/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/js/custom.js') }}"></script>

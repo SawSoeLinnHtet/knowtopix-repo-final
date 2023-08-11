@@ -1,4 +1,4 @@
-<form id="general-edit" action="{{ route('site.profile.edit', Auth::user()->username) }}" method="POST">
+<form id="general-edit" action="{{ route('site.profile.edit', Auth::user()->id) }}" method="POST">
     @csrf
     @method('PATCH')
     <div class="row mb-3">

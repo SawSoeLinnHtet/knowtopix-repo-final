@@ -71,6 +71,7 @@
                         <i class="fa-solid fa-comment-dots"></i>
                     </button>
                     <span 
+                        id="comment-count"
                         class="comment-count click-details-modal"
                         @click="openPostDetailsModal = !openPostDetailsModal"
                         data-url="{{ route('site.posts.show', $post->id) }}" 
@@ -140,7 +141,7 @@
         $(document).on('click', '.comment-submit', function(e){
             e.preventDefault()
             
-            var x = $(this).parent('').parent().prev('.card-body').children('.card-body-option').children('.comment-wrap').children('.comment-count')
+            var x = $(this).parent().parent().parent().prev('.card-body').children('.card-body-option').children('.comment-wrap').children('.comment-count')
             var x_val = x.attr('value')
             x.attr('value', Number(x_val) + 1).text(Number(x_val) + 1)
 
@@ -156,28 +157,10 @@
                 },
                 type: "POST",
                 success: function(res){
+                    console.log(res)
                     var comment_wrap = current.parent().parent().prev()
                     var res_comment =  res.data.comment
-                    let template = `
-                        <div class="comment-card">
-                            <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
-                            <div class="d-flex flex-column">
-                                <div class="text-wrap">
-                                    <a href="{{ auth()->user()->acsr_check_user_link }}" class="text-decoration-none text-white">
-                                        <h6>
-                                            {{ auth()->user()->name }}
-                                        </h6>
-                                    </a>
-                                    <span>
-                                        ${ res_comment.comment }
-                                    </span>
-                                </div>
-                                <p class="comment-time">
-                                    Now
-                                </p>
-                            </div>
-                        </div>
-                    `;
+                    let template = res.data.html;
                     comment_wrap.prepend(template);
                     comment.val('')
                 }

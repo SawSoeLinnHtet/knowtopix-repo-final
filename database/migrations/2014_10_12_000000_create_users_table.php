@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('career')->nullable();
             $table->longText('personal_info')->nullable();
             $table->timestamp('login_at')->nullable();
-            $table->boolean('status')->nullable();
+            $table->enum('status', ['active', 'banned'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

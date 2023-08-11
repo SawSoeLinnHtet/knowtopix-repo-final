@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Site\Post;
-use App\Models\Site\Friend;
+use App\Models\Post;
+use App\Models\Friend;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Site\Post\PostLike;
+use App\Models\PostLike;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -59,6 +59,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class);
     }
 
+    public function RequestBlog()
+    {
+        return $this->hasMany(RequestBlog::class);
+    }
+
     public function PostLike()
     {
         return $this->hasMany(PostLike::class, 'user_id');
@@ -82,7 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function GetNotRequestFriend($current_user_id, $pending_user_ids, $suggested_user_ids)
     { 
         $friend_ids = array_merge($pending_user_ids, $suggested_user_ids, [$current_user_id]);
+                
         $users = User::whereNotIN('id', $friend_ids)->orderBy('created_at', 'desc')->paginate(6);
+        
         return $users;
     }
 

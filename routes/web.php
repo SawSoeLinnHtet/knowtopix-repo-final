@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site\BlogController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\PostController;
 use App\Http\Controllers\Admin\UserController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\Site\Post\PostLikesController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Site\Post\PostCommentsController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLogin;
+use App\Http\Controllers\Admin\BlogMailController;
+use App\Http\Controllers\Site\Blogs\BlogPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +31,14 @@ use App\Http\Controllers\Admin\Auth\LoginController as AdminLogin;
 |
 */
 
-Route::get('admin/dashboard', function () {
+Route::get('admin/', function () {
     return view('backend.dashboard.index');
-})->middleware(['auth'])->name('admin.dashboard');
+})->middleware('auth.staff')->name('admin.dashboard');
 
 Route::group([
         'prefix' => 'admin',
         'as' => 'admin.',
-        'middleware' => 'guest_staff'
+        'middleware' => 'guest:staff'
     ],
     function () {
     // staff login
@@ -46,8 +49,10 @@ Route::group([
 // admin routes
 Route::group([
     'prefix' => 'admin',
-    'as' => 'admin.'
+    'as' => 'admin.',
+    'middleware' => ['auth.staff']
 ], function () {
+    Route::post('logout', [AdminLogin::class, 'logout'])->name('logout');
     Route::resource('staffs', StaffController::class);
     Route::resource('users', UserController::class);
     Route::post('users/{user}/status', [UserController::class, 'changeAccountStatus'])->name('users.status');
@@ -56,7 +61,14 @@ Route::group([
     Route::get('posts/{post}/likes', [App\Http\Controllers\Admin\Post\LikeController::class, 'index'])->name('posts.likes.index');
     Route::get('posts/{post}/comments', [App\Http\Controllers\Admin\Post\CommentController::class, 'index'])->name('posts.comments.index');
     Route::patch('posts/{post}/comments/{comment}/status', [App\Http\Controllers\Admin\Post\CommentController::class, 'changeCommentStatus'])->name('posts.comments.status');
+    Route::get('friends', [App\Http\Controllers\Admin\FriendController::class, 'accepted'])->name('friends.accepted');
+    Route::get('friends/pending', [App\Http\Controllers\Admin\FriendController::class, 'pending'])->name('friends.pending');
+    Route::get('blogs/request', [App\Http\Controllers\Admin\BlogController::class, 'request'])->name('blogs.request');
+    Route::put('blogs/{blog}/request/accept', [App\Http\Controllers\Admin\BlogController::class, 'accept'])->name('blogs.request.accept');
+    Route::put('blogs/{blog}/request/reject', [App\Http\Controllers\Admin\BlogController::class, 'reject'])->name('blogs.request.reject');
 });
+
+// site routes -----  
 
 Route::middleware(['guest'])->group(function () {
     // site register
@@ -98,14 +110,30 @@ Route::group([
     // friend all route
     Route::post('users/{user}/add', [FriendController::class, 'addUser'])->name('friend.add');
     Route::get('friends', [FriendController::class, 'index'])->name('friend.index');
-    Route::post('friends/{id}/confirm', [FriendController::class, 'confirmRequest'])->name('friend.confirm');
     Route::get('friends/{user}/details', [FriendController::class, 'show'])->name('friend.details');
+    Route::delete('friends/{user}/unfriend', [FriendController::class, 'unfriend'])->name('friend.unfriend');
+    Route::delete('friends/{user}/cancel', [FriendController::class, 'cancel'])->name('friend.cancel');
+    Route::post('friends/{user}/confirm', [FriendController::class, 'confirmRequest'])->name('friend.confirm');
+    Route::delete('friends/{user}/cancel_request', [FriendController::class, 'cancelRequest'])->name('friend.cancel_request');
 
+    // search route
     Route::get('search', [SearchController::class, 'index'])->name('search.index');
+    
+    // username route
+    Route::get('profile/{user}', [ProfileController::class, 'viewProfile'])->name('profile.index');
+    Route::get('profile/{user}/setting', [ProfileController::class, 'viewSetting'])->name('profile.setting');
+    Route::patch('profile/{user}', [ProfileController::class, 'update'])->name('profile.edit');
+    Route::put('profile/{user}/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('profile/{user}/upload', [ProfileController::class, 'upload'])->name('profile.upload');
 
-    Route::get('{user:username}', [ProfileController::class, 'viewProfile'])->name('profile.index');
-    Route::get('{user:username}/setting', [ProfileController::class, 'viewSetting'])->name('profile.setting');
-    Route::patch('{user:username}', [ProfileController::class, 'update'])->name('profile.edit');
-    Route::put('{user:username}/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::post('{user:username}/upload', [ProfileController::class, 'upload'])->name('profile.upload');
+    // blogs route
+    Route::get('blogs/index', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('blogs/request', [BlogController::class, 'request'])->name('blog.request');
+    Route::post('blogs/request', [BlogController::class, 'request_store'])->name('blog.request.store');
+
+    Route::get('blogs/accept/mail/check', [BlogMailController::class, 'verify'])->name('blogs.accept.verify');
+    Route::get('blogs/{blog:slug}', [BlogController::class, 'details'])->name('blog.details');
+    Route::get('blogs/{blog:slug}/post/create', [BlogPostController::class, 'create'])->name('blog.post.create');
+    Route::post('blogs/{blog:slug}/post/store', [BlogPostController::class, 'store'])->name('blog.post.store');
+    Route::post('blogs/{blog:slug}/post/docx-to-html', [BlogPostController::class, 'docxToHtml'])->name('blog.post.docsToHtml');
 });

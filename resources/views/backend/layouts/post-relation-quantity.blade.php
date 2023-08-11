@@ -1,0 +1,1 @@
+<a href="{{ $action }}" class="text-info">{{ count($attributes) }}<i class="fas fa-chevron-circle-down"></i></a>

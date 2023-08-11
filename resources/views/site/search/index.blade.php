@@ -25,7 +25,7 @@
                                                 <img src="{{ $user->acsr_check_profile }}" alt="">
                                                 <div class="info">
                                                     <div class="info-text">
-                                                        <h5 class="mt-3">{{ $user->name }}</h5>
+                                                        <a href="{{ route('site.friend.details', $user->id) }}" class="text-decoration-none text-white"><h5 class="mt-3">{{ $user->name }}</h5></a>
                                                         <p><span>@ {{ $user->username }}</span></p>
                                                     </div>
                                                     @if($user->friend_status == 'pending')
@@ -76,7 +76,11 @@
                                         <img src="{{ $user->acsr_check_profile }}" alt="">
                                         <div class="info">
                                             <div class="info-text">
-                                                <h5 class="mt-3">{{ $user->name }}</h5>
+                                                <a href="{{ route('site.friend.details', $user->id) }}" class="text-decoration-none text-white">
+                                                    <h5 class="mt-3">
+                                                        {{ $user->name }}
+                                                    </h5>
+                                                </a>
                                                 <p><span>@ {{ $user->username }}</span></p>
                                             </div>
                                             @if($user->friend_status == 'pending')
@@ -85,11 +89,11 @@
                                                 </button>
                                             @elseif($user->friend_status == 'accept')
                                                 <button class="add-btn d-flex align-items-center gap-1">
-                                                    <i class="fa-solid fa-user-xmark me-1"></i> Unfriend
+                                                    <i class="fa-solid fa-user-check me-1"></i> Friend
                                                 </button>
                                             @else
                                                 <button data-url="{{ route('site.friend.add', $user->id) }}" class="add-btn add-friend-btn d-flex align-items-center gap-1d-flex align-items-center gap-1">
-                                                    <i class="fa-solid fa-user-plus me-1"></i> Add Friend
+                                                    <i class="fa-solid fa-user-plus "></i> Add Friend
                                                 </button>
                                             @endif
                                         </div>
