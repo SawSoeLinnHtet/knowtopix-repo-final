@@ -32,7 +32,7 @@ class BlogCreateMail extends Mailable
     public function build()
     {
         $success_url = URL::signedRoute(
-            'site.blog.accept.verify',
+            'site.blogs.accept.verify',
             [
                 'blog_slug' => $this->blog->slug,
                 'user_id' => $this->blog->user_id
@@ -40,7 +40,7 @@ class BlogCreateMail extends Mailable
         );
 
         return $this->subject('Your Blog Post Has Been Accepted')
-        ->from('noreply@knowtopix.com')
+        ->from(env('MAIL_NAME'))
         ->view(
             'email.blogs.success-create',
             [

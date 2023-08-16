@@ -11,14 +11,15 @@ use App\Http\Controllers\Site\FriendController;
 use App\Http\Controllers\Site\SearchController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\SiteUserController;
+use App\Http\Controllers\Admin\BlogMailController;
 use App\Http\Controllers\Site\Auth\LoginController;
 use App\Http\Controllers\Site\Auth\RegisterController;
+use App\Http\Controllers\Site\Blogs\BlogPostController;
 use App\Http\Controllers\Site\Post\PostLikesController;
+use App\Http\Controllers\Admin\Blogs\CategoryController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Site\Post\PostCommentsController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLogin;
-use App\Http\Controllers\Admin\BlogMailController;
-use App\Http\Controllers\Site\Blogs\BlogPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,7 @@ Route::group([
     Route::get('blogs/request', [App\Http\Controllers\Admin\BlogController::class, 'request'])->name('blogs.request');
     Route::put('blogs/{blog}/request/accept', [App\Http\Controllers\Admin\BlogController::class, 'accept'])->name('blogs.request.accept');
     Route::put('blogs/{blog}/request/reject', [App\Http\Controllers\Admin\BlogController::class, 'reject'])->name('blogs.request.reject');
+    Route::resource('blogs/categories', CategoryController::class);
 });
 
 // site routes -----  
@@ -127,13 +129,27 @@ Route::group([
     Route::post('profile/{user}/upload', [ProfileController::class, 'upload'])->name('profile.upload');
 
     // blogs route
-    Route::get('blogs/index', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('blogs', [BlogController::class, 'index'])->name('blog.index');
     Route::get('blogs/request', [BlogController::class, 'request'])->name('blog.request');
     Route::post('blogs/request', [BlogController::class, 'request_store'])->name('blog.request.store');
+    Route::get('blogs/{blog:slug}/edit', [BlogController::class, 'edit'])->name('blog.edit');
+    Route::patch('blogs/{blog}/update', [BlogController::class, 'update'])->name('blog.update');
 
     Route::get('blogs/accept/mail/check', [BlogMailController::class, 'verify'])->name('blogs.accept.verify');
-    Route::get('blogs/{blog:slug}', [BlogController::class, 'details'])->name('blog.details');
+
     Route::get('blogs/{blog:slug}/post/create', [BlogPostController::class, 'create'])->name('blog.post.create');
     Route::post('blogs/{blog:slug}/post/store', [BlogPostController::class, 'store'])->name('blog.post.store');
-    Route::post('blogs/{blog:slug}/post/docx-to-html', [BlogPostController::class, 'docxToHtml'])->name('blog.post.docsToHtml');
+
+    Route::get('blogs/{blog:slug}/post/{slug}/edit', [BlogPostController::class, 'edit'])->name('blog.post.edit');
+    Route::put('blogs/{blog:slug}/post/{slug}/update', [BlogPostController::class, 'update'])->name('blog.post.update');
+    Route::delete('blogs/{blog:slug}/post/{slug}/delete', [BlogPostController::class, 'destroy'])->name('blog.post.delete');
+    Route::get('blogs/{blog:slug}/post/{slug}/feature', [BlogPostController::class, 'feature'])->name('blog.post.feature');
+});
+
+Route::group([
+    'as' => 'site.',
+], function () {
+    Route::get('blogs/{blog:slug}', [BlogController::class, 'details'])->name('blog.details');
+    Route::get('blogs/{blog:slug}/posts/{slug}', [BlogPostController::class, 'details'])->name('blog.post.details');
+    Route::get('blogs/{blog:slug}/author', [BlogController::class, 'author_details'])->name('blog.author_details');
 });

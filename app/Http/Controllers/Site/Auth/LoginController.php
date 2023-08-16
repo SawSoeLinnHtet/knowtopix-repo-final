@@ -44,7 +44,7 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('site.login.index');
+        return view('site.auth.login');
     }
 
     private function setResend($user)

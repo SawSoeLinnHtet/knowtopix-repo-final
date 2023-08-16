@@ -249,7 +249,7 @@ ul li a{
 }
 
 .main-wrap{
-    width: 90%;
+    width: 70%;
     min-height: 100vh;
 }
 
@@ -1492,6 +1492,13 @@ ul li a{
     }
 }
 
+
+@media (max-width: 750px) {
+    .request-card{
+        width: 100%;
+    }
+}
+
 .search-tool-wrap,
 .profile-setting-wrap{
     width: 100%;
@@ -2448,7 +2455,7 @@ ul li a{
 }
 
 .comment-delete-modal-wrap .wrapper{
-      width: 100%;
+    width: 100%;
     height: 100vh;
     display: flex;
     align-items: start;
@@ -2536,35 +2543,14 @@ ul li a{
     color: #fafafa;
 }
 
-.category-list-float p{
-    font-size: 20px;
-    padding-bottom: 10px;
-    color: #fafafa;
-    font-weight: bold;
-}
-
-.category-list-float .category-list{
-    padding-right: 5px;
-    max-height: 700px;
-    overflow-y: scroll;
-    font-size: 17px;
-}
-
-.category-list-float .category-list ul li{
-    padding-block: 7px;
-    color: #fafafa;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #23375a;
-}
-
 .category-label{
     width: 80%;
 }
 
 .input-frame{
-    max-height: 420px;
-    overflow-y: scroll;
+    max-height: 100vh;
     padding-right: 10px;
+    margin-bottom: 100px;
 }
 
 .input-frame *{
@@ -2580,55 +2566,6 @@ ul li a{
     width: 100% !important;
 }
 
-.select2-container--classic .select2-selection--multiple {
-    width: 100% !important;
-    padding-block: 13px;
-}
-
-.select2-container--classic .select2-search--inline .select2-search__field{
-    padding-left: 15px;
-    line-height: 20px;
-    margin: 0px !important;
-    margin-bottom: 3px !important;
-}
-
-.select2-container--classic .select2-search--inline .select2-search__field::placeholder{
-    font-size: 15px;
-    color: #000;
-}
-
-.select2-container--classic .select2-selection--multiple .select2-selection__choice{
-    background-color: #fafafa;
-}
-
-.select2-container--classic .select2-selection--multiple .select2-selection__choice__remove{
-    color: #000;
-}
-
-.select2-container--classic .select2-results > .select2-results__options{
-    color: #000;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.select2-selection {
-    border: none;
-    background-color: #fff;
-    color: #333;
-}
-
-.select2-results__option--highlighted {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.select2-container--classic .select2-selection--multiple .select2-selection__choice{
-    padding-inline: 5px;
-    padding-block: 5px;
-    margin: 0;
-    margin-left: 5px;
-}
-
 .blog-input-wrap .submit-btn{
     font-size: 12px !important;
     padding-block: 10px;
@@ -2637,6 +2574,80 @@ ul li a{
     font-weight: bold;
     color: #fafafa;
     border-radius: 5px;
+}
+
+
+.go-to-blog-btn{
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #DB2777;
+    color: #f5f5f5;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-right: auto;
+    float: right;
+    bottom: 0;
+}
+
+.go-to-blog-btn:hover{
+    color: #fafafa !important;
+    background-color: #DB2777;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.blogs-options-dropdown{
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    padding-top: 7px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #38393a;
+    color: #f5f5f5;
+    font-weight: bold;
+    border: none;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.blogs-options-dropdown:hover{
+    background-color: #5c5b5b;
+    color: #fff;
+}
+
+.blogs-options-dropdown-wrap{
+    min-width: 160px;
+    width: auto;
+    padding: 10px;
+    background-color: #1a263a;
+    position: absolute;
+    right: 0px;
+    z-index: 20;
+    margin-top: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #354966;
+}
+
+.blogs-options-dropdown-wrap ul li{
+    padding-block: 10px;
+    padding-inline: 10px !important;
+    font-weight: bold;
+}
+
+.blogs-options-dropdown-wrap ul li a{    
+    color: #fff;
+    font-size: 14px;
+}
+
+.blogs-options-dropdown-wrap ul li:hover{
+    border-radius: 5px;
+    background-color: #404140;
 }
 
 

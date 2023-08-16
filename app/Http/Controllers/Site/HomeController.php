@@ -8,6 +8,7 @@ use App\Models\Friend;
 use Illuminate\Http\Request;
 use App\Models\Enums\PostTypes;
 use App\Http\Controllers\Controller;
+use App\Models\Enums\StatusTypes;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -28,9 +29,9 @@ class HomeController extends Controller
         $friend_ids = implode(',', $ids);
         $friends = array_merge($pending_user_ids, $suggested_user_ids);
 
-        $user_posts = Post::where('privacy', PostTypes::FRIEND_ONLY )->where('user_id', auth()->user()->id)->pluck('id')->toArray();
-        $public_posts = Post::where('privacy', PostTypes::PUBLIC)->pluck('id')->toArray();
-        $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostTypes::FRIEND_ONLY)->pluck('id')->toArray();
+        $user_posts = Post::where('privacy', PostTypes::FRIEND_ONLY )->where('user_id', auth()->user()->id)->where('status', '!=' , StatusTypes::BANNED)->pluck('id')->toArray();
+        $public_posts = Post::where('privacy', PostTypes::PUBLIC)->pluck('id')->where('status', '!=', StatusTypes::BANNED)->toArray();
+        $friend_posts = Post::whereIn('user_id', $friends)->where('privacy', PostTypes::FRIEND_ONLY)->where('status', '!=', StatusTypes::BANNED)->pluck('id')->toArray();
         
         $post_ids = array_merge($user_posts, $friend_posts, $public_posts);
         shuffle($post_ids);

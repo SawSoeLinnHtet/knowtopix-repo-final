@@ -6,8 +6,22 @@
             <div class="col-12 border-white">
                 <div class="search-main-wrap mb-3">
                     <div class="search-tool-wrap">
-                        <form action="{{ route('site.search.index') }}" method="GET">
-                            <input type="text" placeholder="Type what you search" name="search" value="{{ request('search') }}">
+                        <form action="{{ route('site.blog.index') }}" method="GET">
+                            <div class="dropdown">
+                                <button class="btn text-white dropdown-toggle shadow-none outline-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Categories
+                                </button>
+                                <ul class="dropdown-menu pt-3 pb-3" style="background-color: #1E293B">
+                                    @foreach ($categories as $key => $category)
+                                        <li>
+                                            <a class="dropdown-item text-secondary category_select" href="#" value="{{ $key }}">
+                                                {{ $category }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <input type="text" placeholder="Type what you search" name="blog_search" value="{{ request('blog_search') }}">
                             <button>
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
@@ -15,107 +29,90 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 d-none d-lg-block d-xl-block col-lg-4 col-xl-3 category-list-wrap">
-                        <p><i class="fa-solid fa-sliders me-1"></i>Filter with Category</p>
-                        <div class="category-list">
-                            <ul>
-                                <li class="d-flex justify-content-between align-items-center">
-                                        <input type="radio" name="category_id" id="category1" class="me-3">
-                                        <label for="category1" class="category-label pb-0">Media and Entertainment</label>
-                                    <a class="badge bg-info">
-                                        22
-                                    </a>
-                                </li>
-                                <li class="d-flex justify-content-between align-items-center">
-                                        <input type="radio" name="category_id" id="category2" class="me-3">
-                                        <label for="category2" class="category-label pb-0">Political</label>
-                                    <a class="badge bg-info">
-                                        22
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-8 col-xl-9 blog-list-wrap">
-                        <div class="mb-3">
-                            <button 
-                                class="btn btn-info btn-md shadow-none d-block d-lg-none d-xl-none" 
-                                @click="openCategoryFloat=!openCategoryFloat"
-                                x-init="$watch('openCategoryFloat', toggleOverflow)"    
-                            >
-                                <i class="fa-solid fa-sliders me-1"></i>
-                            </button>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-3 px-0">
-                                <div class="blog-card">
-                                    <img src="{{ asset('site/img/brooke-cagle-g1Kr4Ozfoac-unsplash.jpg') }}" width="100%" height="170px" style="object-fit: cover" alt="" class="">
-                                    <div class="blog-text pb-3 px-2">
-                                        <div class="mb-3 gap-2">
-                                            <span class="badge bg-info text-dark">Political</span>
-                                            <span class="badge bg-info text-dark">Political</span>
-                                            <span class="badge bg-info text-dark">Political</span>
-                                        </div>
-                                        <h5>
-                                            Animation And Editing
-                                        </h5>
-                                        <a href="" class="btn btn-sm btn-link ps-0 text-decoration-none text-info me-auto shadow-none outline-none mt-3 d-flex gap-2 align-items-center">
-                                            See more<i class="fa-solid fa-arrow-right"></i>
-                                        </a>
-                                    </div>
+                    @if(isset($blogs))
+                        @foreach ($blogs as $key => $blog)
+                            <section class="d-flex flex-column flex-lg-row flex-xl-row mt-3" style="background-color: #1E293B; border-radius: 10px; min-height: 300px !important">
+                                <div class="p-2">
+                                    <img src="{{ $blog->acsr_blog_logo }}" alt="" width="250px" style="object-fit: cover; border-radius: 10px">
                                 </div>
-                            </div>
+                                <div class="ps-4 py-3 pe-4 position-relative" x-data="{ openBlogOptions: false }">
+                                    @if(auth()->user()->id == $blog->user_id)
+                                        <button class="blogs-options-dropdown" @click="openBlogOptions = !openBlogOptions">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </button>
+                                        <div 
+                                            class="blogs-options-dropdown-wrap" 
+                                            x-cloak x-show="openBlogOptions"
+                                            @click.away="openBlogOptions = false"
+                                            x-transition:enter.duration.500ms
+                                            x-transition:leave.duration.400ms
+                                        >
+                                            <ul>
+                                                <li>
+                                                    <a href="{{ route('site.blog.edit', $blog->slug) }}">
+                                                        <i class="fa-solid fa-pen-to-square me-3"></i>Edit Blog
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <x-site.logout-btn />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <div class="badge pt-1 pb-2 mb-2" style="background-color: #DB2777">
+                                        {{ $blog->Category->name }}
+                                    </div>
+                                    <h3 class="text-white">
+                                        {{ $blog->title }}
+                                    </h3>
+                                    <div class="blog-details d-flex gap-3 align-items-center">
+                                        <p class="text-white">
+                                            <i class="fa-solid fa-calendar-days me-2 text-info"></i><span style="font-size: 12px">{{ \Carbon\Carbon::parse($blog->created_at)->format('M d, Y')}}</span>
+                                        </p>
+                                        <p class="text-secondary">|</p>
+                                        <p class="text-white">
+                                            <i class="fa-solid fa-user-graduate me-2 text-info"></i><span style="font-size: 12px">{{ $blog->author_name }}</span>
+                                        </p>
+                                    </div>
+                                    <p class="text-secondary" style="padding-bottom: 50px">
+                                        {{ $blog->description }}
+                                    </p>
+                                    <a href="{{ route('site.blog.details', $blog->slug) }}" target="_blank" class="text-decoration-none text-white position-absolute bottom-0 end-0 mt-5 mb-3 me-3 go-to-blog-btn d-flex align-items-center gap-2">
+                                        Go To Blog <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                    </a>
+                                </div>
+                            </section>
+                        @endforeach
+                    @else
+                        <div class="noting-alert">
+                            <img src="{{ asset('site/img/nothing_found.png') }}" alt="">
+                            <h4>
+                                No Results Found!
+                            </h4>
+                            <p class="text-center">
+                                Your Search Returned no results. Try shortening or rephrasing your search.
+                            </p>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             @include('site.layouts.responsive-menu')
-        </div>
-    </div>
-    <div 
-        class="category-list-float" 
-        x-cloak @click.away="openCategoryFloat=false" 
-        x-show="openCategoryFloat"
-        @keyup.escape.window="openCategoryFloat=false"
-        x-transition:enter.duration.500ms
-        x-transition:leave.duration.400ms
-    >
-        <p><i class="fa-solid fa-sliders me-1"></i>Filter with Category</p>
-        <div class="category-list">
-            <ul>
-                <li class="d-flex justify-content-between align-items-center">
-                        <input type="radio" name="category_id" id="category1" class="me-3">
-                        <label for="category1" class="category-label pb-0">Media and Entertainment</label>
-                    <a class="badge bg-info">
-                        22
-                    </a>
-                </li>
-                <li class="d-flex justify-content-between align-items-center">
-                        <input type="radio" name="category_id" id="category2" class="me-3">
-                        <label for="category2" class="category-label pb-0">Political</label>
-                    <a class="badge bg-info">
-                        22
-                    </a>
-                </li>
-            </ul>
         </div>
     </div>
 @endsection
 
 @push('script')
     <script>
-        $(document).ready(function() {
-            $("#flipButton").click(function() {
-                $("#card-front").toggleClass("flipped");
-                $("#card-back").toggleClass("flipped");
-                $("#card-front").css('display', 'none');
-                $("#card-back").css('display', 'block !important')
-            });
+        $(function() {
+            $('.category_select').on('click', function(e) {
+                e.preventDefault();
 
-            $("#flipButtonBack").click(function() {
-                $("#card-front").toggleClass("flipped");
-                $("#card-back").toggleClass("flipped");
+                let current_category = $(this).attr('value');
+                
+                let change_location = "{{ route('site.blog.index') }}";
+
+                window.location = `${change_location}?category_select=${current_category}`;
             });
-        });
+        })
     </script>
 @endpush

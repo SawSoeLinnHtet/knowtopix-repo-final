@@ -35,6 +35,9 @@
             <li class="dropdown @if (Request::routeIs('admin.blogs.*')) {{'active'}} @endif">
                 <a href="{{ route('admin.blogs.request') }}" class="nav-link"><i class="fas fa-users"></i><span>Blogs</span></a>
             </li>
+            <li class="dropdown @if (Request::routeIs('admin.categories.*')) {{'active'}} @endif">
+                <a href="{{ route('admin.categories.index') }}" class="nav-link"><i class="fas fa-users"></i><span>Categories</span></a>
+            </li>
         </ul>    
     </aside>
 </div>

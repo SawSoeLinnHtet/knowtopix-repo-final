@@ -59,7 +59,7 @@
     </style>
 @endpush
 
-<div class="container-fluid mb-3 px-0">
+<div class="container-fluid px-0">
     <div class="card pt-3">
         <h3>Upload Your Content Sample File</h3>
         <input type="file" hidden accept=".doc,.docx,.pdf" class="file-upload" name="sample_file" id="fileID" style="display:none;">

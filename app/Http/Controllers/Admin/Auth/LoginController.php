@@ -36,6 +36,6 @@ class LoginController extends Controller
     {
         Auth::guard('staff')->logout();
 
-        return redirect()->route('admin.login.index');
+        return view('backend.auth.login');
     }
 }

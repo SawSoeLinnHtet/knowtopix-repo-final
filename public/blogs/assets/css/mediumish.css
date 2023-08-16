@@ -6,7 +6,7 @@ License: https://www.wowthemes.net/freebies-license/
 */
 body {
 	background-color: #fafafa !important;
-	padding-top:5rem;
+	padding-top:60px;
 }
 .mainheading {
 	padding:1rem 0rem;
@@ -19,8 +19,9 @@ a,a:hover {
 }
 .mediumnavigation {
 	background:rgba(255,255,255,.97);
-	box-shadow:0 2px 9px -2px rgba(0,0,0, .8);
+	box-shadow:0 2px 9px -2px rgba(0,0,0, .2);
 }
+
 section {
 	margin-bottom:20px;
 }
@@ -38,18 +39,45 @@ section {
 	margin-bottom:-1px;
 }
 @media (min-width:576px) {
-	.card-columns.listfeaturedtag {
+	.card-columns{
+		-webkit-column-count:1;
+		-moz-column-count:1;
+		column-count:1;
+	}
+
+	/* .card-columns.listfeaturedtag {
+		-webkit-column-count:2;
+		-moz-column-count:2;
+		column-count:2;
+	} */
+}
+@media (min-width:992px) {
+	.card-columns{
 		-webkit-column-count:2;
 		-moz-column-count:2;
 		column-count:2;
 	}
-}
-@media (min-width:992px) {
+
+	/* .card-columns.listfeaturedtag {
+		-webkit-column-count:2;
+		-moz-column-count:2;
+		column-count:2;
+	} */
+
 	.navbar-toggleable-md .navbar-nav .nav-link {
 		padding-right:.7rem;
 		padding-left:.7rem;
 	}
 }
+
+@media (min-width:1400px) {
+	.card-columns{
+		-webkit-column-count:3;
+		-moz-column-count:3;
+		column-count:3;
+	}
+}
+
 .card-columns .card {
 	margin-bottom:20px;
 }
@@ -306,7 +334,6 @@ blockquote {
 	fill:rgba(0,0,0,.44);
 }
 .graybg {
-	background-color:#fafafa;
 	padding:40px 0 46px;
 	position:relative;
 }
@@ -441,4 +468,32 @@ ul.tags li a:hover {
 	line-height:22px;
 	border-radius:50%;
 	font-size:12px;
+}
+
+.thumbnail-img{
+	height: 300px !important;
+  	object-fit: cover;
+  	width: 100%;
+}
+
+.custom-file-uploader {
+    position: relative;
+}
+
+.custom-file-uploader input[type='file'] {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    z-index: 5 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    cursor: default !important;
+}
+
+.dropdown-menu.show{
+	left: -120px !important;
 }

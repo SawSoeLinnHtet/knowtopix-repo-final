@@ -15,6 +15,8 @@ class RequestBlog extends Model
     protected $fillable = [
         'title',
         'slug',
+        'logo',
+        'category_id',
         'author_name',
         'author_bios',
         'email',

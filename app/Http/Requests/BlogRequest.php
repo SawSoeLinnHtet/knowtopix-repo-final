@@ -22,10 +22,11 @@ class BlogRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
             'title' => 'required',
+            'category_id' => 'required',
             'author_name' => 'required',
             'author_bios' => 'required',
             'email' => 'required|email|unique:blog_requests,email',

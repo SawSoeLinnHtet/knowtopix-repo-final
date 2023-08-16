@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Models\User;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Friend;
+use Illuminate\Http\Request;
 use App\Models\Enums\PostTypes;
+use App\Models\Enums\StatusTypes;
+use App\Http\Controllers\Controller;
 
 class SearchController extends Controller
 {
@@ -20,14 +21,14 @@ class SearchController extends Controller
 
             $friend_users_id = $current_auth_user->acsr_accept_friend;
 
-            $public_posts = Post::where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
-            $friend_posts = Post::whereIn('user_id', $friend_users_id)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
+            $public_posts = Post::where('privacy', PostTypes::PUBLIC)->where('status', '!=', StatusTypes::BANNED)->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
+            $friend_posts = Post::whereIn('user_id', $friend_users_id)->where('status', '!=', StatusTypes::BANNED)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->filter(request()->all())->get();
             $posts = $friend_posts->merge($public_posts);
             $liked_posts = Post::getWithLike($posts);
             
             return view('site.search.index', ['users' => $users, 'posts' => $posts]);
         }else{
-            $recent_posts = Post::whereNotIN('user_id', [$current_auth_user->id])->where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->get()->random(2);
+            $recent_posts = Post::whereNotIN('user_id', [$current_auth_user->id])->where('privacy', PostTypes::PUBLIC)->where('status', '!=', StatusTypes::BANNED)->with('PostComment.User:id,name')->get()->random(2);
             $liked_posts = Post::getWithLike($recent_posts);
 
             $recent_users = User::get()->whereNotIn('id', auth()->user()->id)->random(2);

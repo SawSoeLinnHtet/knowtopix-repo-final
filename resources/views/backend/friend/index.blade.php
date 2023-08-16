@@ -20,7 +20,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @if(count($friends) !== 0)
+                            @foreach ($friends as $key => $friend)
+                                <tr>
+                                    <td>
+                                        {{ $key + 1 }}
+                                    </td>
+                                    <td>
+                                        {{ $friend->RequestFromUser->name }}
+                                    </td>
+                                    <td>    
+                                        {{ $friend->RequestFromUser->name }}
+                                    </td>
+                                    <td>
+                                        {{ $friend->created_at->diffForHumans() }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="alert alert-warning text-white">
+                                There is no data found!
+                            </div>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -29,34 +50,3 @@
 </div>
 
 @endsection
-
-@push('script')
-<script>
-    $(function () {
-        var table = $('.myTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('admin.friends.accepted') }}",
-            columns: [
-                {
-                    data: 'id',
-                    name: 'id',
-                    render: function (data, type, row, meta) {
-                        var x = meta.row + 1;
-                        return x;
-                    }
-                },
-                {data: 'from_users', name: 'from_users'},
-                {data: 'to_users', name: 'to_users'},
-                {
-                    data: 'created_at', 
-                    name: 'created_at', 
-                    render: function (data) {
-                        return moment(data).fromNow();
-                    }
-                },
-            ]
-        });
-    })
-</script>
-@endpush

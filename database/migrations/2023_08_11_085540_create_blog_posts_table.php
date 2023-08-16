@@ -17,10 +17,14 @@ class CreateBlogPostsTable extends Migration
             $table->id();
             $table->string('post_thumbnail');
             $table->string('title');
-            $table->string('description');
+            $table->string('slug');
+            $table->text('description');
             $table->longText('content');
+            $table->boolean('is_feature');
             $table->foreignId('blog_id');
             $table->timestamps();
+
+            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
         });
     }
 

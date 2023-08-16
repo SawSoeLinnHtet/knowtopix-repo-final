@@ -59,6 +59,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class);
     }
 
+
+    public function Blog()
+    {
+        return $this->hasMany(Blog::class);
+    }
+
     public function RequestBlog()
     {
         return $this->hasMany(RequestBlog::class);
@@ -110,7 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if(isset($this->profile)){
             return asset('images/profile/' . $this->profile);
         }
-        return 'https://i.pravatar.cc?u='.$this->id;
+        return asset('site/img/noprofile.png');
     }
 
     public function getAcsrCheckUserLinkAttribute()
@@ -129,5 +135,15 @@ class User extends Authenticatable implements MustVerifyEmail
         $friend_ids = array_merge($pending_user_ids, $suggested_user_ids);
 
         return $friend_ids;
+    }
+
+    public function getAcsrFriendCountAttribute()
+    {
+        $pending_user_ids = Friend::where('from_user', $this->id)->where('status', 'accept')->pluck('to_user')->toArray();
+        $suggested_user_ids = Friend::where('to_user', $this->id)->where('status', 'accept')->pluck('from_user')->toArray();
+
+        $friend_count = array_merge($pending_user_ids, $suggested_user_ids);
+
+        return count($friend_count);
     }
 }

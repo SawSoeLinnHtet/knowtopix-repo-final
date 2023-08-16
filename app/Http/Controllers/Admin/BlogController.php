@@ -28,6 +28,8 @@ class BlogController extends Controller
             $blog = Blog::create([
                 'title' => $blog->title,
                 'slug' => $blog->slug,
+                'logo' => $blog->logo,
+                'category_id' => $blog->category_id,
                 'author_name' => $blog->author_name,
                 'author_bios' => $blog->author_bios,
                 'email' => $blog->email,

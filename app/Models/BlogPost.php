@@ -10,16 +10,20 @@ class BlogPost extends Model
 {
     use HasFactory;
 
+    protected $table = 'blog_posts';
+
     protected $fillable = [
         'post_thumbnail',
         'title',
+        'slug',
         'description',
         'content',
+        'is_feature',
         'blog_id'
     ];
 
     public function Blog()
     {
-        return $this->hasMany(Blog::class, "id");
+        return $this->hasMany(Blog::class, 'id');
     }
 }

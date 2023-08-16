@@ -33,33 +33,20 @@
                 x-transition:enter.duration.500ms
                 x-transition:leave.duration.400ms
             >
-                <div class="profile-float-detail">
-                    <img src="{{ Auth::user()->profile ? asset('images/profile/'.Auth::user()->profile) : asset('images/profile/user.jpeg') }}" alt="">
+                <div class="profile-float-detail pb-3">
+                    <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
                     <h5 class="profile-name">
                         {{ Auth::user()->name }}
                     </h5>
                     <span class="username">
                         @ {{ Auth::user()->username }}
                     </span>
-                    <div class="popular">
-                        <p class="following">
-                            620K<span class="ms-1">Following</span>
-                        </p>
-                        <p class="followers">
-                            28K<span class="ms-1">Followers</span>
-                        </p>
-                    </div>
                 </div>
                 <div class="collection-wrapper">
                     <ul>
                         <li>
                             <a href="{{ route('site.profile.index', Auth::user()->username)}}">
                                 <i class="fa-solid fa-user me-3"></i><span class="fw-bold">Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa-solid fa-bookmark me-3"></i><span>Upgrade</span>
                             </a>
                         </li>
                         <li>

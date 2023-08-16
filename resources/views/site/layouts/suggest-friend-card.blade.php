@@ -1,5 +1,5 @@
 @foreach ($users as $key => $user)
-    <div class="col-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-2 request-card">
+    <div class="col-12 col-lg-3 col-xl-3 col-xxl-2 request-card">
         <a href="">
             <img src="{{ $user->acsr_check_profile }}" alt="">
         </a>

@@ -2,10 +2,11 @@
 
 namespace App\Jobs;
 
-use App\Mail\BlogCreateMail;
 use App\Models\Blog;
 use Illuminate\Mail\Mailer;
+use App\Mail\BlogCreateMail;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,12 +34,11 @@ class BlogCreateAcceptEmail implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Mailer $mailer)
+    public function handle()
     {
-        $mailer
-            ->to($this->blog->email)
-            ->send(
-                new BlogCreateMail($this->blog)
-            );
+            Mail::to($this->blog->email)
+                ->send(
+                    new BlogCreateMail($this->blog)
+                );
     }
 }
