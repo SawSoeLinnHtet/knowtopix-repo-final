@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\RegistrationNotification;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Site\Auth\RegisterRequest;
+use App\Models\Enums\StatusTypes;
 
 class RegisterController extends Controller
 {
@@ -19,7 +20,13 @@ class RegisterController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::create($data);
+        $user = User::create([
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'status' => StatusTypes::ACTIVE
+        ]);
 
         $user->notify(new RegistrationNotification());
 

@@ -249,7 +249,7 @@ ul li a{
 }
 
 .main-wrap{
-    width: 70%;
+    width: 90%;
     min-height: 100vh;
 }
 
@@ -1572,6 +1572,7 @@ ul li a{
     height: 60px;
     border-radius: 100px;
     border: 1px solid #354966;
+    object-fit: cover;
 }
 
 .search-items-wrap .search-item-list-wrap .user-card .info{
@@ -2548,7 +2549,6 @@ ul li a{
 }
 
 .input-frame{
-    max-height: 100vh;
     padding-right: 10px;
     margin-bottom: 100px;
 }

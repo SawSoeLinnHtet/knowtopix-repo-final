@@ -1,12 +1,12 @@
 @extends('site.layouts.app')
 
 @section('content')
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 pb-5">
         <div class="row position-relative">
             <div class="col-12 col-lg-12 col-xl-12">
                 <div class="create-blog-form-wrap">
                     <p class="back-btn h6 text-decoration-none text-secondary">
-                        <i class="fa-solid fa-arrow-left-long me-2"></i><a href="#" class="text-decoration-none text-secondary">Back</a>
+                        <i class="fa-solid fa-arrow-left-long me-2"></i><a href="{{ route('site.profile.index', auth()->user()->id) }}" class="text-decoration-none text-secondary">Back</a>
                     </p>
                     <div class="header pb-1">
                         <h3 class="text-white">

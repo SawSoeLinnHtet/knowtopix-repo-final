@@ -19,15 +19,9 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
+        $data = Staff::paginate(10);
 
-            $data = Staff::get();
-
-            return DataTables::of($data)
-            ->addIndexColumn()
-            ->make(true);
-        }
-        return view('backend.staff.index');
+        return view('backend.staff.index', ['staffs' => $data]);
     }
 
     /**

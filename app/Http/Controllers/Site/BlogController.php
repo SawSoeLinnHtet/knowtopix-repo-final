@@ -19,18 +19,18 @@ class BlogController extends Controller
     public function index()
     {
         $categories = Category::get()->pluck('name', 'slug')->toBase();
-        $blogs = Blog::with('Category')->get();
+        $blogs = Blog::with('Category')->paginate(10);
 
         if(request('category_select')){
             $id = Category::where('slug', request('category_select'))->get()->pluck('id')->toBase();
 
-            $blogs = Blog::with('Category')->where('category_id', $id)->get();
+            $blogs = Blog::with('Category')->where('category_id', $id)->paginate(10);
         }
 
         if(request('blog_search')){
             $blog_query = Blog::with('Category')->latest()->filter(request()->all());
 
-            $blogs = $blog_query->get();
+            $blogs = $blog_query->paginate(10);
         }
 
         return view('site.blogs.index', ['categories' => $categories, 'blogs' => $blogs]);
@@ -72,7 +72,49 @@ class BlogController extends Controller
             'status' => BlogRequestTypes::PENDING
         ]);
 
-        return redirect()->route('site.index')->with('success', 'Your Blog Created Successfully');
+        return redirect()->route('site.profile.index', auth()->user()->id)->with('success', 'Your Blog Requested Successfully, Wait for a moment to consider from admin team');
+    }
+
+    public function request_edit($slug)
+    {
+        $blog = RequestBlog::where('slug', $slug)->where('status', 'reject')->where('user_id', auth()->user()->id)->first();
+        $categories = Category::get()->pluck('name', 'id')->toBase();
+
+        return view('site.blogs.edit-request', ['categories' => $categories, 'blog' => $blog]);
+    }
+
+    public function request_update(BlogRequest $request, $slug)
+    {
+        $blog = RequestBlog::where('slug', $request->slug)->where('user_id', auth()->user()->id)->where('status', 'reject')->first();
+        $slug = Str::slug($request->title);
+        $sampleFile = "";
+        if (isset($request->logo)) {
+            $logo = time() . '-' . $slug . '.' . $request->logo->extension();
+
+            $request->logo->move(public_path('images/blogs/logo'), $logo);
+        }
+
+        if (isset($request->sample_file)) {
+            $sampleFile = time() . '-' . $slug . '.' . $request->sample_file->extension();
+
+            $request->sample_file->move(public_path('images/blog_file'), $sampleFile);
+        }
+
+        $blog->update([
+            'title' => $request->title,
+            'slug' => $slug,
+            'logo' => $logo,
+            'category_id' => $request->category_id,
+            'author_name' => $request->author_name,
+            'author_bios' => $request->author_bios,
+            'email' => $request->email,
+            'sample_file' => $sampleFile,
+            'description' => $request->description,
+            'user_id' => auth()->user()->id,
+            'status' => BlogRequestTypes::PENDING
+        ]);
+
+        return redirect()->route('site.profile.index', auth()->user()->id)->with('success', 'Your Blog Request Updated Successfully, Wait for a moment to consider from admin team');
     }
 
     public function details(Blog $blog)

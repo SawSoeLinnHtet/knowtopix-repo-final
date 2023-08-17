@@ -97,7 +97,7 @@ Route::prefix('email/verify')->group(function () {
 // site routes
 Route::group([
     'as' => 'site.',
-    'middleware' => ['auth', 'verified']
+    'middleware' => ['auth', 'verified', 'user.ban']
 ], function () {
     Route::resource('/', HomeController::class);
     Route::resource('/posts', PostController::class);
@@ -132,10 +132,14 @@ Route::group([
     Route::get('blogs', [BlogController::class, 'index'])->name('blog.index');
     Route::get('blogs/request', [BlogController::class, 'request'])->name('blog.request');
     Route::post('blogs/request', [BlogController::class, 'request_store'])->name('blog.request.store');
+    Route::get('blogs/request/{slug}/edit', [BlogController::class, 'request_edit'])->name('blog.request.edit');
+    Route::patch('blogs/request/{slug}/update', [BlogController::class, 'request_update'])->name('blog.request.update');
     Route::get('blogs/{blog:slug}/edit', [BlogController::class, 'edit'])->name('blog.edit');
     Route::patch('blogs/{blog}/update', [BlogController::class, 'update'])->name('blog.update');
+    Route::get('blogs/{blog}/delete', [BlogController::class, 'update'])->name('blog.delete');
 
     Route::get('blogs/accept/mail/check', [BlogMailController::class, 'verify'])->name('blogs.accept.verify');
+    Route::get('blogs/reject/mail/check', [BlogMailController::class, 'reject'])->name('blogs.reject');
 
     Route::get('blogs/{blog:slug}/post/create', [BlogPostController::class, 'create'])->name('blog.post.create');
     Route::post('blogs/{blog:slug}/post/store', [BlogPostController::class, 'store'])->name('blog.post.store');

@@ -16,9 +16,6 @@
                 <a href="#" data-url="{{ route('site.friend.confirm', $req_user->id) }}" class="button accept-btn">
                     Confirm
                 </a>
-                <a href="#" class="button reject-btn">
-                    Remove
-                </a>
             </div>
         </div>
     </div>

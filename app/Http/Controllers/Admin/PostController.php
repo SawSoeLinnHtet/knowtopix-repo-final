@@ -17,29 +17,30 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
+        $data = Post::with(['User:id,name', 'PostLike', 'PostComment'])->paginate(10);
+        // if ($request->ajax()) {
 
-            $data = Post::with(['User:id,name', 'PostLike', 'PostComment'])->get();
+        //     $data = Post::with(['User:id,name', 'PostLike', 'PostComment'])->get();
 
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn(
-                    'content_area', function ($row) {
-                        return view('site.layouts.datatable-content-area', ['content_area' => $row->content_area])->render();
-                })
-                ->addColumn('privacy', function ($row) {
-                    return view('backend.layouts.post-type', ['post' => $row])->render();
-                })
-                ->addColumn('post_likes', function ($row) {
-                    return view('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.likes.index', $row->id),'attributes' => $row->PostLike])->render();
-                })
-                ->addColumn('post_comments', function ($row) {
-                    return view('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.comments.index', $row->id), 'attributes' => $row->PostComment])->render();
-                })
-                ->rawColumns(['privacy','post_likes', 'post_comments', 'content_area'])
-                ->make(true);
-        }
-        return view('backend.post.index');
+        //     return DataTables::of($data)
+        //         ->addIndexColumn()
+        //         ->addColumn(
+        //             'content_area', function ($row) {
+        //                 return view('site.layouts.datatable-content-area', ['content_area' => $row->content_area])->render();
+        //         })
+        //         ->addColumn('privacy', function ($row) {
+        //             return view('backend.layouts.post-type', ['post' => $row])->render();
+        //         })
+        //         ->addColumn('post_likes', function ($row) {
+        //             return view('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.likes.index', $row->id),'attributes' => $row->PostLike])->render();
+        //         })
+        //         ->addColumn('post_comments', function ($row) {
+        //             return view('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.comments.index', $row->id), 'attributes' => $row->PostComment])->render();
+        //         })
+        //         ->rawColumns(['privacy','post_likes', 'post_comments', 'content_area'])
+        //         ->make(true);
+        // }
+        return view('backend.post.index', ['posts' => $data]);
     }
 
     /**

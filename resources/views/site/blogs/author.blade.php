@@ -18,7 +18,7 @@
                             </span>
                         </div>
                         <div class="col-md-2 col-xs-12">
-                            <img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal">
+                            <img class="author-thumb" src="{{ asset('images/blogs/logo/artist-logo.png') }}" alt="Sal">
                         </div>
                     </div>
                 </div>

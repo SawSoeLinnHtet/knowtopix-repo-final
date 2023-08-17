@@ -10,41 +10,29 @@
                     <div class="post-created"><i class="fa-solid {{ $post->privacyIcon($post->privacy) }} text-info me-2"></i>{{ $post->acsr_created_at }}</div>
                 </div>
             </div>
-            <div class="card-option" x-data="{ openOption: false }">
-                <button 
-                    class="option-menu-btn"
-                    @click="openOption= !openOption"
-                    @keydown.escape="openOption= false"
-                >
-                    <i class="fa-solid fa-ellipsis"></i>
-                </button>
-                <div 
-                    class="option-float-wrap" 
-                    x-cloak x-show="openOption"
-                    @click.away="openOption= false"
-                    x-transition:enter.duration.500ms
-                    x-transition:leave.duration.400ms
-                >
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="fa-regular fa-bookmark text-primary"></i><span class="fw-bold">Add To Favorites</span>
-                            </a>
-                        </li>
-                        @if ($post->user_id !== auth()->user()->id)
-                            <li>
-                                <a href="#">
-                                    <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
-                                </a>
-                            </li>
-                        @endif
-                        @if ($post->user_id == auth()->user()->id)
+            @if ($post->user_id == auth()->user()->id)
+                <div class="card-option" x-data="{ openOption: false }">
+                    <button 
+                        class="option-menu-btn"
+                        @click="openOption= !openOption"
+                        @keydown.escape="openOption= false"
+                    >
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                    <div 
+                        class="option-float-wrap" 
+                        x-cloak x-show="openOption"
+                        @click.away="openOption= false"
+                        x-transition:enter.duration.500ms
+                        x-transition:leave.duration.400ms
+                    >
+                        <ul>
                             <x-site.post.post-edit-btn :post-id="$post->id"></x-site.post.post-edit-btn>
                             <x-site.post.post-delete-btn :post-id="$post->id"></x-site.post.post-delete-btn>
-                        @endif
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
         <div class="card-body">
             <div class="content-holder">
@@ -54,9 +42,13 @@
             </div>
             <div class="img-holder">        
                 @if(isset($post->thumbnail))
-                    <a href="{{ route('site.posts.show', $post->id) }}">
-                        <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
-                    </a>
+                <a 
+                    href="#" 
+                    class="click-details-modal " 
+                    @click="openPostDetailsModal = !openPostDetailsModal"
+                    data-url="{{ route('site.posts.show', $post->id) }}"
+                >
+                    <img src="{{ asset('images/'.$post->thumbnail) }}" alt="" class="mt-3">
                 @endif
             </div>
             <div class="card-body-option">
@@ -82,9 +74,6 @@
                         </a>
                     </span>
                 </div>
-                <button class="normal-btn ms-auto">
-                    <i class="fa-regular fa-share-from-square"></i>
-                </button>
             </div>
         </div>
         <div class="card-footer">

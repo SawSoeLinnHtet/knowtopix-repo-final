@@ -18,9 +18,7 @@
         "nadirhamid/docx-to-html": "^0.0.1",
         "phpoffice/phpword": "^1.1",
         "proengsoft/laravel-jsvalidation": "^4.7",
-        "pyaesoneaung/myanmar-phone-validation-rules": "^1.0",
-        "spatie/laravel-enum": "^3.0",
-        "yajra/laravel-datatables-oracle": "^9.21"
+        "pyaesoneaung/myanmar-phone-validation-rules": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

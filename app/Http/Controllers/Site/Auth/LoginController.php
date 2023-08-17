@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Site\Auth\LoginRequest;
-
+use App\Models\Enums\StatusTypes;
 
 class LoginController extends Controller
 {
@@ -24,19 +24,28 @@ class LoginController extends Controller
         $remember = isset($request->remember) && $request->remember == 'on' ? true : false;
 
         $user = User::where('email', $request->email)->first();
-        
+
         if(isset($user)){
-            if (!$user->hasVerifiedEmail()) {
-
-                $this->setResend($user);
-
-                return view('auth.verification.notice');
+            if ($user->status == StatusTypes::BANNED) {
+                return redirect()->route('site.login.index')->with('error', "Your Account has been suspended");
             }
+
+            if (isset($user)) {
+                if (!$user->hasVerifiedEmail()) {
+
+                    $this->setResend($user);
+
+                    return view('auth.verification.notice');
+                }
+            }
+
+            if (Auth::attempt($credentials, $remember)) {
+                return redirect()->back();
+            }
+
+            return redirect()->route('site.login.index')->with('error', "Your Credentials doesn't match");
         }
 
-        if(Auth::attempt($credentials, $remember)){
-            return redirect()->back();
-        }
         return redirect()->route('site.login.index')->with('error', "Your Credentials doesn't match");
     }
 
@@ -44,7 +53,7 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return view('site.auth.login');
+        return redirect()->route('site.login.index')->with('success', 'Logged Out Successfully!');
     }
 
     private function setResend($user)

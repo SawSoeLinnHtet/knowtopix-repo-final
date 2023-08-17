@@ -10,7 +10,7 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="dropdown @if (Request::route('admin.dashboard')) {{'active'}} @endif">
+            <li class="dropdown @if (Request::routeIs('admin.dashboard')) {{'active'}} @endif">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Office</li>
@@ -25,7 +25,7 @@
                 <a href="{{ route('admin.posts.index') }}" class="nav-link"><i class="fas fa-file-alt"></i><span>Posts</span></a>
             </li>
             <li class="menu-header">Social</li>
-            <li class="dropdown @if (Request::routeIs('admin.friends.index')) {{'active'}} @endif">
+            <li class="dropdown @if (Request::routeIs('admin.friends.accepted')) {{'active'}} @endif">
                 <a href="{{ route('admin.friends.accepted') }}" class="nav-link"><i class="fas fa-users"></i><span>Friends</span></a>
             </li>
             <li class="dropdown @if (Request::routeIs('admin.friends.pending')) {{'active'}} @endif">
@@ -35,7 +35,7 @@
             <li class="dropdown @if (Request::routeIs('admin.blogs.*')) {{'active'}} @endif">
                 <a href="{{ route('admin.blogs.request') }}" class="nav-link"><i class="fas fa-users"></i><span>Blogs</span></a>
             </li>
-            <li class="dropdown @if (Request::routeIs('admin.categories.*')) {{'active'}} @endif">
+            <li class="mb-5 dropdown @if (Request::routeIs('admin.categories.*')) {{'active'}} @endif">
                 <a href="{{ route('admin.categories.index') }}" class="nav-link"><i class="fas fa-users"></i><span>Categories</span></a>
             </li>
         </ul>    

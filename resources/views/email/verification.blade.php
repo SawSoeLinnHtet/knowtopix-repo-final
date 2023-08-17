@@ -1,45 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-US">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Verify Your Email Address</title>
+    <meta name="description" content="Reset Password Email Template.">
+    <style type="text/css">
+        a:hover {text-decoration: underline !important;}
+    </style>
 </head>
-<body style="background-color: #e9ecef; font-family: Arial, Helvetica, sans-serif">
-    <div style="height: auto; background-color: #e2ebf5; border-top: 2px solid #bdbdbd; margin: 0 auto; padding: 10px">
-        <table style="margin: 0px auto">
-            <tr>
-                <td>
-                    <p style="font-size: 25px; text-align: center; font-weight: bold; color: #000">Confirm Your Email Address</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Dear, <span style="font-weight: bold; font-size: 16px; color: #180836;">{{ $user->name }}</span></p>
-                    <p style="margin-left: 20px;">Please click on the verification to continue your registration.</p>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <a href="{{ $verification_link }}" style="color: #fff; text-decoration: none; text-align: center; padding: 10px 20px; background-color: rgb(13, 68, 219); font-size: 14px; font-weight: bold; border: 1px solid #0a398f; border-radius: 5px; margin: 0px auto">Click To Verify</a>
-                </td>
-            </tr>
 
-            <tr>
-                <td>
-                    <p style="color: #000; font-weight: normal">Thank you for using our website!</p>
-                    <p style="color: #071225; font-weight: bold">KNOWTOPIX,</p>
-                    <p style="font-size: 14px">Team</p>
-                </td>
-            </tr>
+<body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
+    <!--100% body table-->
+    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8"
+        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
+        <tr>
+            <td>
+                <table style="background-color: #f2f3f8; max-width:670px;  margin:0 auto;" width="100%" border="0"
+                    align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="height:80px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="height:20px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"
+                                style="max-width:670px;background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
+                                <tr>
+                                    <td style="height:40px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0 35px;">
+                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">
+                                          Hello!<br/>
+                                         
+                                      </h1>
+                                      
+                                      <h2>
+                                       Please Verify Your Email Address
+                                      </h2>
+                                        <span
+                                            style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
+                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0; text-align: left">
+                                          Dear {{ $user->name }}, <br/><br/>
+                                            Thank you for your accound creation on our platform. We are excited to see your post and suggestion  <br/>
 
-            <tr>
-                <td>
-                    <em style="font-size: 13px; color: red; font-weight: 800">This is a computer auto generated email and please do not reply.</em>
-                </td>
-            </tr>
-        </table>
-    </div>
+                                        Please click on the verification to continue your registration.<br/>
+                                           <a href="{{ $verification_link }}"
+                                            style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:20px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Verify Email</a><br/><br/>
+
+                                            Thank you for choosing our platform to showcase your content. We look forward to seeing the amazing content you'll create.<br/><br/>
+
+                                          Best regards,</br>
+KnowTopix,Staff Team
+                                        </p>
+                                       
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:40px;">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    <tr>
+                        <td style="height:20px;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">
+                            <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; <strong>www.rakeshmandal.com</strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:80px;">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <!--/100% body table-->
 </body>
+
 </html>

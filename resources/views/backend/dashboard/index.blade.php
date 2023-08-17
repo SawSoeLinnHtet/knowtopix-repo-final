@@ -94,16 +94,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Budget vs Sales</h4>
-                </div>
-                <div class="card-body">
-                    <canvas id="myChart" height="158"></canvas>
-                </div>
-            </div>
-        </div>
         <div class="col-lg-4">
             <div class="card gradient-bottom">
                 <div class="card-header">
@@ -236,8 +226,8 @@
                     <h4>Best Products</h4>
                 </div>
                 <div class="card-body">
-                    <div class="owl-carousel owl-theme" id="products-carousel">
-                        <div>
+                    <div class="owl-carousel owl-theme d-flex" id="products-carousel">
+                        <div class="p-3">
                             <div class="product-item pb-3">
                                 <div class="product-image">
                                     <img alt="image" src="{{ asset('backend/img/products/product-4-50.png') }}" class="img-fluid">
@@ -258,7 +248,7 @@
                                 </div>  
                             </div>
                         </div>
-                        <div>
+                        <div class="p-3">
                             <div class="product-item">
                                 <div class="product-image">
                                     <img alt="image" src="{{ asset('backend/img/products/product-3-50.png') }}" class="img-fluid">
@@ -279,7 +269,7 @@
                                 </div>  
                             </div>
                         </div>
-                        <div>
+                        <div class="p-3">
                             <div class="product-item">
                                 <div class="product-image">
                                     <img alt="image" src="{{ asset('backend/img/products/product-1-50.png') }}" class="img-fluid">
@@ -315,21 +305,21 @@
                             <div class="text-title mb-2">July</div>
                             <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
                                 <li class="media">
-                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/flag-icon-css/flags/4x3/id.svg') }}" alt="image" width="40">
+                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/backend/flag-icon-css/flags/4x3/id.svg') }}" alt="image" width="40">
                                     <div class="media-body ml-3">
                                         <div class="media-title">Indonesia</div>
                                         <div class="text-small text-muted">3,282 <i class="fas fa-caret-down text-danger"></i></div>
                                     </div>
                                 </li>
                                 <li class="media">
-                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/flag-icon-css/flags/4x3/my.svg') }}" alt="image" width="40">
+                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/backend/flag-icon-css/flags/4x3/my.svg') }}" alt="image" width="40">
                                     <div class="media-body ml-3">
                                         <div class="media-title">Malaysia</div>
                                         <div class="text-small text-muted">2,976 <i class="fas fa-caret-down text-danger"></i></div>
                                     </div>
                                 </li>
                                 <li class="media">
-                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/flag-icon-css/flags/4x3/us.svg') }}" alt="image" width="40">
+                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/backend/flag-icon-css/flags/4x3/us.svg') }}" alt="image" width="40">
                                     <div class="media-body ml-3">
                                         <div class="media-title">United States</div>
                                         <div class="text-small text-muted">1,576 <i class="fas fa-caret-up text-success"></i></div>
@@ -341,21 +331,21 @@
                             <div class="text-title mb-2">August</div>
                             <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
                                 <li class="media">
-                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/flag-icon-css/flags/4x3/id.svg') }}" alt="image" width="40">
+                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/backend/flag-icon-css/flags/4x3/id.svg') }}" alt="image" width="40">
                                     <div class="media-body ml-3">
                                         <div class="media-title">Indonesia</div>
                                         <div class="text-small text-muted">3,486 <i class="fas fa-caret-up text-success"></i></div>
                                     </div>
                                 </li>
                                 <li class="media">
-                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/flag-icon-css/flags/4x3/ps.svg') }}" alt="image" width="40">
+                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/backend/flag-icon-css/flags/4x3/ps.svg') }}" alt="image" width="40">
                                     <div class="media-body ml-3">
                                         <div class="media-title">Palestine</div>
                                         <div class="text-small text-muted">3,182 <i class="fas fa-caret-up text-success"></i></div>
                                     </div>
                                 </li>
                                 <li class="media">
-                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/flag-icon-css/flags/4x3/de.svg') }}" alt="image" width="40">
+                                    <img class="img-fluid mt-1 img-shadow" src="{{ asset('plugins/backend/flag-icon-css/flags/4x3/de.svg') }}" alt="image" width="40">
                                     <div class="media-body ml-3">
                                         <div class="media-title">Germany</div>
                                         <div class="text-small text-muted">2,317 <i class="fas fa-caret-down text-danger"></i></div>

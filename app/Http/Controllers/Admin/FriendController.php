@@ -11,7 +11,7 @@ class FriendController extends Controller
 {
     public function accepted(Request $request)
     {
-        $data = Friend::where('status', 'accept')->with('RequestToUser:id,name', 'RequestFromUser:id,name')->get();
+        $data = Friend::where('status', 'accept')->with('RequestToUser:id,name', 'RequestFromUser:id,name')->paginate();
 
         return view('backend.friend.index', ['friends' => $data]);
     }

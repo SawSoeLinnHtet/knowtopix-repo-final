@@ -20,7 +20,7 @@ class CreateBlogRequestsTable extends Migration
             $table->string('slug')->unique();
             $table->string('author_name');
             $table->text('author_bios')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->foreignId('category_id');
             $table->text('sample_file');
             $table->text('description');

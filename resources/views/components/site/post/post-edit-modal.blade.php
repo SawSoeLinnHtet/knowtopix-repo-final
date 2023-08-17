@@ -33,6 +33,11 @@
 @push('script')
 
 <script>
+    function getIcon() {
+        console.log('hello');
+        const selectedPrivacyLevel = document.querySelector('input[name="privacy"]:checked').value;
+        Alpine.store('selectedPrivacy', selectedPrivacyLevel);
+    }
     $(document).ready(function () {
         $(document).on('change', '#editPhotoUpload', function () {    
             console.log('hello');

@@ -14,7 +14,7 @@
         @if(count($features) !== 0)
             <div class="row">
                 @foreach ($features as $feature)
-                    <div class="col-6 px-4">
+                    <div class="col-xl-6 col-lg-6 col-12 px-4">
                         <div class="row shadow-lg p-1 bg-white border border-light" style="border-radius: 5px">
                             <div class="col-5 p-0">
                                 <img src="{{ asset('images/blogs/posts/'.$feature->post_thumbnail) }}" alt="" class="" width="100%" height="300px" style="object-fit: cover;border-radius: 5px">
@@ -30,7 +30,7 @@
                                 </p>
                                 <div class="mt-3 px-2 py-3 d-flex align-items-center w-100 position-absolute" style="right: 0; bottom: 0">
                                     <span>
-                                        <img src="{{ asset('site/img/logo.png') }}" class="img-thumbnail rounded-circle" alt="" style="width: 45px; height: 45px">
+                                        <img src="{{ asset('images/blogs/logo/artist-logo.png') }}" class="img-thumbnail rounded-circle" alt="" style="width: 45px; height: 45px">
                                     </span>
                                     <span class="author-meta ml-2">
                                         <span class="post-name">{{ $blog->author_name }}</span><br/>
@@ -77,7 +77,9 @@
                             <div class="metafooter">
                                 <div class="wrapfooter">
                                     <span class="meta-footer-thumb">
-                                        <a href="{{ route('site.blog.author_details', $blog->slug) }}"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
+                                        <a href="{{ route('site.blog.author_details', $blog->slug) }}">
+                                            <img class="author-thumb" src="{{ asset('images/blogs/logo/artist-logo.png') }}" alt="Sal">
+                                        </a>
                                     </span>
                                     <span class="author-meta">
                                         <span class="post-name"><a href="{{ route('site.blog.author_details', $blog->slug) }}">{{ $blog->author_name }}</a></span><br/>

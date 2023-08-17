@@ -14,7 +14,7 @@
             @include('site.layouts.page_info')
             <div class="profile-setting-wrap">
                 <div class="img-holder">
-                    <img src="{{ asset('images/profile/'.$user->profile) }}" alt="">
+                    <img src="{{ $user->acsr_check_profile }}" alt="">
                     <a
                         href="#"
                         @click="openProfileUpload = !openProfileUpload"

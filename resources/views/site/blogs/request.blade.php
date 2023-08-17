@@ -3,14 +3,14 @@
 @section('content')
     <div class="container-fluid p-0">
         <div class="row position-relative">
-            <div class="col-12 col-lg-12 col-xl-12">
+            <div class="col-12 col-lg-12 col-xl-12 pb-5">
                 <div class="create-blog-form-wrap">
                     <p class="back-btn h6 text-decoration-none text-secondary">
-                        <i class="fa-solid fa-arrow-left-long me-2"></i><a href="#" class="text-decoration-none text-secondary">Back</a>
+                        <i class="fa-solid fa-arrow-left-long me-2"></i><a href="{{ route('site.profile.index', auth()->user()->id) }}" class="text-decoration-none text-secondary">Back</a>
                     </p>
                     <div class="header pb-1">
                         <h3 class="text-white">
-                            Create a Blog
+                            Create Blog Request
                         </h3>
                         <p class="text-secondary">
                             Your Blog is where people go to learn more about you. Make sure yours has all the information they may need.
@@ -90,10 +90,10 @@
                                         - End user can know your blog's main things and this blog's quality.
                                     </span>
                                 </div>
-                            </div>
-                            <div class="blog-form-input-wrap">
-                                <div class="blog-input-wrap pe-2">
-                                    <button type="submit" class="w-100 submit-btn">Submit To Admin</button>
+                                <div class="blog-form-input-wrap">
+                                    <div class="blog-input-wrap pe-2">
+                                        <button type="submit" class="w-100 submit-btn">Submit To Admin</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>

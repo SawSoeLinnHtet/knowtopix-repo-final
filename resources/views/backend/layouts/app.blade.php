@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>KnowTopix Dashboard</title>
-
+    <link rel="icon" href="{{ asset('site/img/logo.png') }}">
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('plugins/backend/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/backend/fontawesome/css/all.min.css') }}">
@@ -14,8 +14,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/backend/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/backend/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/backend/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="{{ asset('plugins/final/sweetalert2/sweetalert2.min.css') }}">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/components.css') }}">
@@ -56,16 +55,14 @@
     <script src="{{ asset('plugins/backend/nicescroll/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/moment.min.js') }}"></script>
     <script src="{{ asset('backend/js/stisla.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
     <!-- JS Libraies -->
     <script src="{{ asset('plugins/backend/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/chart.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('plugins/backend/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('plugins/backend/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('plugins/final/sweetalert2/sweetalert2.min.js') }}"></script>
     {{-- Laravel Validation --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     
     <!-- Template JS File -->

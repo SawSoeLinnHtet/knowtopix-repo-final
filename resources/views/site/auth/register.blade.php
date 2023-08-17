@@ -1,38 +1,50 @@
 @extends('site.auth.layouts.app')
-
+@php
+    $title = "Register"
+@endphp
 @section('content')
 
-<form action="{{ route('site.register.store') }}" method="POST" autocomplete="off">
-    @csrf
-    <div class="input-wrap">
-        <input type="text" name="name" placeholder="Enter Your Name">
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <form method="POST" action="{{ route('site.register.store') }}" id="signup-form" class="signup-form">
+                @csrf
+                <h2 class="form-title">Create your account</h2>
+                @include('site.auth.layouts.page_info')
+                <div class="form-group">
+                    <input type="text" class="form-input" name="name" id="email" placeholder="Your Name"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" name="username" id="username" placeholder="Your Username"/>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" name="email" id="email" placeholder="Your Email"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" name="password" id="password" placeholder="Password"/>
+                    <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" name="password_confirmation" id="password" placeholder="Repeat Your Password"/>
+                    <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="form-submit">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+            <p class="loginhere">
+                Already have account?<a href="{{ route('site.login.index') }}" class="loginhere-link" style="margin-left: 10px">Login Here</a>
+            </p>
+        </div>
     </div>
-    <div class="input-wrap">
-        <input type="text" name="username" placeholder="Enter Your Username">
-    </div>
-    <div class="input-wrap">
-        <input type="email" name="email" placeholder="Enter Your Email">
-    </div>
-    <div class="input-wrap">
-        <input type="password" name="password" placeholder="Enter Your Password">
-    </div>
-    <div class="input-wrap">
-        <input type="password" name="password_confirmation" placeholder="Repeat Your Password">
-    </div>
-    <div class="input-wrap submit-btn-wrap">
-        <button class="submit-btn" type="submit">
-            Sign Up
-        </button>
-    </div>
-</form>
+</section>
 
 @push('script')
     {!! JsValidator::formRequest('App\Http\Requests\Site\Auth\RegisterRequest') !!}
 @endpush
-
-<div class="form-option">
-    <p>Already login?</p> <a href="{{ route('site.login.index') }}">Sign In</a>
-</div>
 
 @endsection
 

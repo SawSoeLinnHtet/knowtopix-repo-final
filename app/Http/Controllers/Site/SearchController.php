@@ -16,7 +16,7 @@ class SearchController extends Controller
     {
         $current_auth_user = auth()->user();
         if(request('search')){
-            $users = User::filter(request()->all())->get();
+            $users = User::filter(request()->all())->where('status', '!=', StatusTypes::BANNED)->get();
             $friend_users = Friend::friendCheck($users);
 
             $friend_users_id = $current_auth_user->acsr_accept_friend;
@@ -31,7 +31,7 @@ class SearchController extends Controller
             $recent_posts = Post::whereNotIN('user_id', [$current_auth_user->id])->where('privacy', PostTypes::PUBLIC)->where('status', '!=', StatusTypes::BANNED)->with('PostComment.User:id,name')->get()->random(2);
             $liked_posts = Post::getWithLike($recent_posts);
 
-            $recent_users = User::get()->whereNotIn('id', auth()->user()->id)->random(2);
+            $recent_users = User::get()->where('status', '!=', StatusTypes::BANNED)->whereNotIn('id', auth()->user()->id)->random(2);
             $friend_users = Friend::friendCheck($recent_users);
             
             return view('site.search.index', ['recent_users' => $recent_users, 'recent_posts' => $recent_posts]);

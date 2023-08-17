@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\BlogCreateAcceptEmail;
+use App\Jobs\BlogCreateRejectEmail;
 use App\Models\Blog;
 use App\Models\Enums\BlogRequestTypes;
 use App\Models\RequestBlog;
@@ -13,7 +14,7 @@ class BlogController extends Controller
 {
     public function request()
     {
-        $blogs = RequestBlog::where('status', 'pending')->with('User:id,name')->get();
+        $blogs = RequestBlog::where('status', 'pending')->with('User:id,name')->paginate(10);
 
         return view('backend.blogs.request', ['blogs' => $blogs]);
     }
@@ -41,5 +42,18 @@ class BlogController extends Controller
 
             return redirect()->route('admin.blogs.request')->with('success', 'Successfully accepted');
         }
+    }
+
+    public function reject(RequestBlog $blog)
+    {
+        if ($blog->status  == BlogRequestTypes::PENDING) {
+            $blog->update([
+                'status' => BlogRequestTypes::REJECT
+            ]);
+        }
+
+        BlogCreateRejectEmail::dispatch($blog);
+
+        return redirect()->route('admin.blogs.request')->with('success', 'Successfully rejected');
     }
 }

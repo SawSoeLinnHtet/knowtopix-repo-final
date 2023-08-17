@@ -7,7 +7,7 @@
                 <div class="search-main-wrap mb-3">
                     <div class="search-tool-wrap">
                         <form action="{{ route('site.blog.index') }}" method="GET">
-                            <div class="dropdown">
+                            <div class="dropdown d-inline-block">
                                 <button class="btn text-white dropdown-toggle shadow-none outline-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Categories
                                 </button>
@@ -28,37 +28,39 @@
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    @if(isset($blogs))
+                <div class="row px-2">
+                    @if(isset($blogs) && count($blogs) !== 0)
                         @foreach ($blogs as $key => $blog)
-                            <section class="d-flex flex-column flex-lg-row flex-xl-row mt-3" style="background-color: #1E293B; border-radius: 10px; min-height: 300px !important">
-                                <div class="p-2">
-                                    <img src="{{ $blog->acsr_blog_logo }}" alt="" width="250px" style="object-fit: cover; border-radius: 10px">
+                            <section class="d-flex flex-column position-relative flex-lg-row flex-xl-row mt-3" style="background-color: #1E293B; border-radius: 10px" x-data="{ openBlogOptions: false }">
+                                @if(auth()->user()->id == $blog->user_id)
+                                    <button class="blogs-options-dropdown" @click="openBlogOptions = !openBlogOptions">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <div 
+                                        class="blogs-options-dropdown-wrap" 
+                                        x-cloak x-show="openBlogOptions"
+                                        @click.away="openBlogOptions = false"
+                                        x-transition:enter.duration.500ms
+                                        x-transition:leave.duration.400ms
+                                    >
+                                        <ul>
+                                            <li>
+                                                <a href="{{ route('site.blog.edit', $blog->slug) }}">
+                                                    <i class="fa-solid fa-pen-to-square text-info me-3"></i>Edit Blog
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('site.blog.delete', $blog->id) }}">
+                                                    <i class="fa-solid fa-trash text-danger me-3"></i>Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                <div class="p-2 col-12 col-lg-4 col-xl-4">
+                                    <img src="{{ $blog->acsr_blog_logo }}" alt="" width="100%" height="100%" style="object-fit: cover; border-radius: 10px">
                                 </div>
-                                <div class="ps-4 py-3 pe-4 position-relative" x-data="{ openBlogOptions: false }">
-                                    @if(auth()->user()->id == $blog->user_id)
-                                        <button class="blogs-options-dropdown" @click="openBlogOptions = !openBlogOptions">
-                                            <i class="fa-solid fa-ellipsis"></i>
-                                        </button>
-                                        <div 
-                                            class="blogs-options-dropdown-wrap" 
-                                            x-cloak x-show="openBlogOptions"
-                                            @click.away="openBlogOptions = false"
-                                            x-transition:enter.duration.500ms
-                                            x-transition:leave.duration.400ms
-                                        >
-                                            <ul>
-                                                <li>
-                                                    <a href="{{ route('site.blog.edit', $blog->slug) }}">
-                                                        <i class="fa-solid fa-pen-to-square me-3"></i>Edit Blog
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <x-site.logout-btn />
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    @endif
+                                <div class="col-12 col-lg-8 col-xl-8 ps-4 py-3 pe-4 position-relative" >
                                     <div class="badge pt-1 pb-2 mb-2" style="background-color: #DB2777">
                                         {{ $blog->Category->name }}
                                     </div>
@@ -74,12 +76,14 @@
                                             <i class="fa-solid fa-user-graduate me-2 text-info"></i><span style="font-size: 12px">{{ $blog->author_name }}</span>
                                         </p>
                                     </div>
-                                    <p class="text-secondary" style="padding-bottom: 50px">
+                                    <p class="text-secondary">
                                         {{ $blog->description }}
                                     </p>
-                                    <a href="{{ route('site.blog.details', $blog->slug) }}" target="_blank" class="text-decoration-none text-white position-absolute bottom-0 end-0 mt-5 mb-3 me-3 go-to-blog-btn d-flex align-items-center gap-2">
-                                        Go To Blog <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                                    </a>
+                                    <div class="w-100 d-flex justify-content-end">
+                                        <a href="{{ route('site.blog.details', $blog->slug) }}" target="_blank" class="text-decoration-none text-white mt-5 mb-3 me-3 go-to-blog-btn d-flex align-items-center gap-2">
+                                            Go To Blog <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </section>
                         @endforeach

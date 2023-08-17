@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Site\ProfileRequest;
 use App\Http\Requests\Site\ProfileUploadRequest;
 use App\Http\Requests\Site\PasswordSettingRequest;
+use App\Models\Enums\StatusTypes;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,7 @@ class ProfileController extends Controller
 
         
 
-        $posts = Post::where('user_id', $auth_user->id)->with('User:id,name,username', 'PostComment.User:id,name')->latest()->get();
+        $posts = Post::where('user_id', $auth_user->id)->with('User:id,name,username', 'PostComment.User:id,name')->where('status', '!=', StatusTypes::BANNED)->latest()->get();
         $liked_posts = Post::getWithLike($posts);
         $blogs = Blog::where('user_id', auth()->user()->id)->with('Category')->get();
 
@@ -70,7 +71,6 @@ class ProfileController extends Controller
         }
 
         $auth_user->update([
-            'username' => 'dog',
             'profile' => $imageName
         ]);
     

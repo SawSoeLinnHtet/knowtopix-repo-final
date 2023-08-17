@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Enums\StatusTypes;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,15 +14,9 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-
-            $data = User::get();
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->make(true);
-        }
-        return view('backend.user.index');
+        $data = User::paginate(10);
+ 
+        return view('backend.user.index', ['users' => $data]);
     }
 
     public function create()
@@ -75,13 +70,13 @@ class UserController extends Controller
 
     public function changeAccountStatus(User $user)
     {
-        if($user->status == 0){
-            $user->status = 1;
+        if($user->status == StatusTypes::BANNED){
+            $user->status = StatusTypes::ACTIVE;
 
             $user->save();
             return response()->json(['success' => "Now, this user's account is active"]);
         }else{
-            $user->status = 0;
+            $user->status = StatusTypes::BANNED;
 
             $user->save();
             return response()->json(['success' => "Now, this user's account is suspended"]);

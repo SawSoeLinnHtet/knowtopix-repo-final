@@ -12,23 +12,53 @@
         </div>
 
         <div class="section-body">
-            <div class="">
+            <div class="table-responsive-sm">
                 <table class="myTable table table-bordered" style="width:100%; margin: 0px !important">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Username</th>
                             <th>Email</th>
                             <th>Status</th>
-                            <th>Join Date</th>
+                            <th>Joined Data</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @if(count($users) !== 0)
+                            @foreach ($users as $key => $user)
+                                <tr>
+                                    <td>
+                                        {{ $key + 1 }}
+                                    </td>
+                                    <td>
+                                        {{ $user->name }}
+                                    </td>
+                                    <td>
+                                        {{ $user->email }}
+                                    </td>
+                                    <td>
+                                        <a class="status-btn badge {{ $user->status == 'active' ? 'badge-success' : 'badge-danger text-white' }} status-btn mb-2" data-url="{{ route('admin.users.status', $user->id) }}">{{ $user->status == 'active' ? 'Active' : 'Banned' }}</a>
+                                    </td>
+                                    <td>
+                                        {{ $user->created_at->diffForHumans() }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-icon btn-info"><i class="far fa-eye"></i></a>
+                                        <x-admin.delete-btn action="{{ route('admin.users.destroy', $user->id) }}"/>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="alert alert-warning text-white">
+                                There is no data found!
+                            </div>
+                        @endif
                     </tbody>
                 </table>
+            </div>
+            <div class="float-right mt-3">
+                {{ $users->links() }}
             </div>
         </div>
     </section>
@@ -39,60 +69,7 @@
 @push('script')
     <script>
         $(function () {
-            var table = $('.myTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('admin.users.index') }}",
-                columns: [
-                    {
-                        data: 'id',
-                        name: 'id',
-                        render: function (data, type, row, meta) {
-                            var x = meta.row + 1;
-                            return x;
-                        }
-                    },
-                    {data: 'name', name: 'name'},
-                    {data: 'username', name: 'username'},
-                    {data: 'email', name: 'email'},
-                    {
-                        data: 'status', 
-                        name: 'status',
-                        render: function (data, type, row) {
-                            var statusUrl = "{{ route('admin.users.status', ':id') }}".replace(':id', row.id)
-                            return `
-                                <a class="status-btn badge ${ data ? 'badge-success' : 'badge-danger text-white' } status-btn mb-2" data-url="${ statusUrl }">${ data ? 'Active' : 'Banned' }</a>
-                                `
-                        }
-                    },
-                    {
-                        data: 'created_at', 
-                        name: 'created_at', 
-                        render: function (data) {
-                            return moment(data).fromNow();
-                        }
-                    },
-                    {
-                        data: null,
-                        name: 'actions',
-                        searchable: false,
-                        orderable: false,
-                        render: function(data, type, row) {
-                            var editUrl = "{{ route('admin.users.edit', ':id') }}".replace(':id', row.id);
-                            var deleteUrl = "{{ route('admin.users.destroy', ':id') }}".replace(':id', row.id);
-                            var showUrl = "{{ route('admin.users.show', ':id') }}".replace(':id', row.id);
-                            return `
-                                <div class="dropdown d-inline">
-                                    <a href="${showUrl}" class="btn btn-icon btn-info"><i class="far fa-eye"></i></a>
-                                    <a href="${editUrl}" class="btn btn-icon btn-warning"><i class="far fa-edit"></i></a>
-                                    @component('components.admin.delete-btn', ['action' => '${deleteUrl}'])
-                                    @endcomponent
-                                </div>
-                            `;
-                        },
-                    },
-                ]
-            });
+        
             $(document).on('click', '.status-btn', function(e){
                 e.preventDefault();                
                 Swal.fire({
@@ -115,8 +92,8 @@
                             type: 'POST',
                             success: function(res){
                                 Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Banned',
+                                    'This user has been banned',
                                     'success'
                                 )
                                 setTimeout(() => {

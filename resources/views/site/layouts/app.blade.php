@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>
+        KnowTopix
+    </title>
+
+    <link rel="icon" href="{{ asset('site/img/logo.png') }}">
     <!-- bootstrap -->
     <link rel="stylesheet" href="{{ asset('plugins/site/bootstrap/bootstrap.min.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('plugins/final/select2/select2.min.css') }}" rel="stylesheet" />
     <!-- fontawesome -->
     <link rel="stylesheet" href="{{ asset('plugins/site/fontawesome/fontawesome-free-6.4.0-web/css/all.css') }}"/>
     <link rel="stylesheet" href="{{ asset('plugins/site/fontawesome/fontawesome-free-6.4.0-web/css/regular.css') }}">
@@ -18,12 +22,14 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('site/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('site/css/test.css') }}">
+     <!-- jquery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     @stack('heading')
 </head>
 <body 
     id="app" 
     x-data="{ 
-        openPostDetailsModal : false, 
+        openPostDetailsModal : false,
         openEditModalBox : false, 
         openDeleteModal : false, 
         openCommentDeleteModal : false,
@@ -53,10 +59,9 @@
             </main>
         </div>
     </div>
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
     <!-- bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('plugins/final/select2/select2.min.js') }}"></script>
     <script src="{{ asset('plugins/site/bootstrap/bootstrap.min.js') }}"></script>
     <!-- fontawesome -->
     <script src="{{  asset('plugins/site/fontawesome/fontawesome-free-6.4.0-web/js/all.js') }}"></script>
@@ -64,7 +69,7 @@
     <script src="{{ asset('plugins/site/swiper/swiper-bundle.min.js') }}"></script>
     <!-- Alpinejs -->
     <script defer src="{{ asset('plugins/site/alpinejs/cdn.min.js') }}"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.2.1/dist/cdn.min.js"></script>
+    <script defer src="{{ asset('plugins/final/alpine/cdn.min.js') }}"></script>
     <!-- owl carousel js -->
     <script src="{{ asset('plugins/site/owl-carousel/owl.carousel.min.js') }}"></script>
     <!-- laravel validation -->

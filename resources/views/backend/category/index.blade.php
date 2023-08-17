@@ -23,17 +23,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $key=>$category)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->created_at->diffForHumans() }}</td>
-                                <td>
-                                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-icon btn-info"><i class="far fa-edit"></i></a>
-                                    <x-admin.delete-btn action="{{ route('admin.categories.destroy', $category->id) }}"/>
-                                </td>
-                            </tr>
-                        @endforeach
+                        @if(count($categories) !== 0)
+                            @foreach ($categories as $key=>$category)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->created_at->diffForHumans() }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-icon btn-info"><i class="far fa-edit"></i></a>
+                                        <x-admin.delete-btn action="{{ route('admin.categories.destroy', $category->id) }}"/>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="alert alert-warning text-white">
+                                There is no data found!
+                            </div>
+                        @endif
                     </tbody>
                 </table>
             </div>

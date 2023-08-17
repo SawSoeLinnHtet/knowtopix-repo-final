@@ -26,7 +26,7 @@
                                 Friends
                             </span>
                             <span class="text-white fw-bold fs-5">
-                                123
+                                {{ $user->acsr_friend_count }}
                             </span>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                     Friends
                                 </span>
                                 <span class="text-white fw-bold fs-5">
-                                    123
+                                    {{ $user->acsr_friend_count }}
                                 </span>
                             </div>
                         </div>

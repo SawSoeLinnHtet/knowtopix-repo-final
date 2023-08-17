@@ -18,7 +18,7 @@
 					<a class="nav-link" href="{{ route('site.blog.author_details', $blog->slug) }}">Author</a>
 				</li>
 				@if($owner)
-					<li class="nav-item mr-3">
+					<li class="nav-item mr-3 {{ request()->routeIs('site.blog.post.*') ? 'active' : ''}}">
 						<a href="{{ route('site.blog.post.create', $blog->slug) }}" class="nav-link d-flex align-items-center"><i class="fa-solid fa-pen mr-2"></i>Write</a>	
 					</li>						
 				@endif

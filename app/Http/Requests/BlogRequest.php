@@ -29,7 +29,7 @@ class BlogRequest extends FormRequest
             'category_id' => 'required',
             'author_name' => 'required',
             'author_bios' => 'required',
-            'email' => 'required|email|unique:blog_requests,email',
+            'email' => 'required|email',
             'sample_file' => 'required|file|mimes:pdf,txt,doc,docx',
             'description' => 'required'
         ];

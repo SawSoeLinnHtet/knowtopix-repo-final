@@ -25,9 +25,50 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @if(count($posts) !== 0)
+                            @foreach ($posts as $key => $post)
+                                <tr>
+                                    <td>
+                                        {{ $key + 1 }}
+                                    </td>
+                                    <td>
+                                        @include('site.layouts.datatable-content-area', ['content_area' => $post->content_area])
+                                    </td>
+                                    <td>
+                                        {{ $post->User->name }}
+                                    </td>
+                                    <td>
+                                        @include('backend.layouts.post-type', ['post' => $post])
+                                    </td>
+                                    <td>
+                                        <a  class="status-btn badge {{ $post->status == 'active' ? 'badge-success' : 'badge-danger text-white'}} mb-2" data-url="{{ route('admin.posts.status', $post->id) }}">
+                                            {{ $post->status == 'active' ? 'Active' : 'Banned' }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @include('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.likes.index', $post->id), 'attributes' => $post->PostLike])
+                                    </td>
+                                    <td>
+                                        @include('backend.layouts.post-relation-quantity', ['action' => route('admin.posts.comments.index', $post->id), 'attributes' => $post->PostComment])
+                                    </td>
+                                    <td>
+                                        {{ $post->created_at->diffForHumans() }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.posts.show', $post->id) }}" class="btn btn-icon btn-info"><i class="far fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="alert alert-warning text-white">
+                                There is no data found!
+                            </div>
+                        @endif
                     </tbody>
                 </table>
+            </div>
+            <div class="w-100 d-flex justify-content-end mt-4">
+                {{ $posts->links() }}
             </div>
         </div>
     </section>
@@ -36,112 +77,47 @@
 @push('script')
     <script>
             $(function () {
-                var table = $('.myTable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('admin.posts.index') }}",
-                    columns: [
-                        {
-                            data: 'id',
-                            name: 'id',
-                            render: function (data, type, row, meta) {
-                                var x = meta.row + 1;
-                                return x;
-                            }
-                        },
-                        {
-                            data: 'content_area', 
-                            name: 'content_area',
-                            width: '300px',
-                        },
-                        {data: 'user.name', name: 'user.name'},
-                        {data: 'privacy', name: 'privacy'},
-                        {
-                            data: 'status', 
-                            name: 'status',
-                            render: function (data, type, row) {
-                                var statusUrl = "{{ route('admin.posts.status', ':id') }}".replace(':id', row.id)
-                                console.log(data);
-                                return `
-                                    <a  class="status-btn badge ${ data == 'active' ? 'badge-success' : 'badge-danger text-white'} mb-2" data-url="${statusUrl}">
-                                        ${ data == 'active' ? 'Active' : 'Banned' }
-                                    </a>
-                                `
-                            }
-                        },
-                        {
-                            data: 'post_likes',
-                            name: 'post_likes',
-                        },
-                        {
-                            data: 'post_comments',
-                            name: 'post_comments',
-                        },
-                        {
-                            data: 'created_at', 
-                            name: 'created_at', 
-                            render: function (data) {
-                                return moment(data).fromNow();
-                            }
-                        },
-                        {
-                            data: null,
-                            name: 'actions',
-                            searchable: false,
-                            orderable: false,
-                            render: function(data, type, row) {
-                                var showUrl = "{{ route('admin.posts.show', ':id') }}".replace(':id', row.id);
-                                return `
-                                    <div class="dropdown d-inline">
-                                        <a href="${showUrl}" class="btn btn-icon btn-info"><i class="far fa-eye"></i></a>
-                                    </div>
-                                `;
-                            },
-                        },
-                    ]
-                });
-            })
-            $(document).on('click', '.status-btn', function(e){
-                e.preventDefault();
-                console.log('hello post')
-                
-                Swal.fire({
-                    title: 'Post Status Control',
-                    text: "You will control this post's status!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Confirm'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        let status_url = $(this).data('url');
+                $(document).on('click', '.status-btn', function(e){
+                    e.preventDefault();
+                    
+                    Swal.fire({
+                        title: 'Post Status Control',
+                        text: "You will control this post's status!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Confirm'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            let status_url = $(this).data('url');
 
-                        $.ajax({
-                            url: status_url,
-                            data: {
-                                '_token': '{{ csrf_token() }}',
-                            },
-                            type: 'PATCH',
-                            success: function(res){
-                                Swal.fire(
-                                    res.status,
-                                    res.success,
-                                    'success'
-                                )
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1000); 
-                            },
-                            error: function(res) {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: "Something wrong",
-                                    text: res.responseJSON.message
-                                });
-                            }
-                        })
-                    }
+                            $.ajax({
+                                url: status_url,
+                                data: {
+                                    '_token': '{{ csrf_token() }}',
+                                },
+                                type: 'PATCH',
+                                success: function(res){
+                                    Swal.fire(
+                                        res.status,
+                                        res.success,
+                                        'success'
+                                    )
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000); 
+                                },
+                                error: function(res) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: "Something wrong",
+                                        text: res.responseJSON.message
+                                    });
+                                }
+                            })
+                        }
+                    })
                 })
             })
     </script>

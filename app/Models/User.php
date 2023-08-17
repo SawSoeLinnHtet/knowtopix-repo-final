@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\StatusTypes;
 use App\Models\Post;
 use App\Models\Friend;
 use Laravel\Sanctum\HasApiTokens;
@@ -32,7 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile',
         'address',
         'gender',
-        'personal_info'
+        'personal_info',
+        'status'
     ];
 
     /**
@@ -117,6 +119,13 @@ class User extends Authenticatable implements MustVerifyEmail
             return asset('images/profile/' . $this->profile);
         }
         return asset('site/img/noprofile.png');
+    }
+
+    public function getAcsrUserStatus()
+    {
+        if($this->status == StatusTypes::ACTIVE){
+            //
+        }
     }
 
     public function getAcsrCheckUserLinkAttribute()

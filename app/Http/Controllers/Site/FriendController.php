@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Models\User;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Friend;
 use Illuminate\Http\Request;
+use App\Models\Enums\PostTypes;
+use App\Models\Enums\StatusTypes;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Enums\PostTypes;
 
 class FriendController extends Controller
 {
@@ -76,14 +77,14 @@ class FriendController extends Controller
     {    
         $friend = Friend::getFriendUser($user);
         
-        $pending_friend = Friend::where('from_user', auth()->user()->id)->where('to_user', $user->id)->where('status', 'pending')->first();
-        $requested_friend = Friend::where('from_user', $user->id)->where('to_user', auth()->user()->id)->where('status', 'pending')->first();
+        $pending_friend = Friend::where('from_user', auth()->user()->id)->where('status', '!=', StatusTypes::BANNED)->where('to_user', $user->id)->where('status', 'pending')->first();
+        $requested_friend = Friend::where('from_user', $user->id)->where('status', '!=', StatusTypes::BANNED)->where('to_user', auth()->user()->id)->where('status', 'pending')->first();
     
-        $posts = Post::where('user_id', $user->id)->where('privacy', PostTypes::PUBLIC)->with('PostComment.User:id,name')->latest()->get();
+        $posts = Post::where('user_id', $user->id)->where('privacy', PostTypes::PUBLIC)->where('status', '!=', StatusTypes::BANNED)->with('PostComment.User:id,name')->latest()->get();
 
         $is_friend = false;
         if(isset($friend)){
-            $posts = $posts->merge(Post::where('user_id', $user->id)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->get());
+            $posts = $posts->merge(Post::where('user_id', $user->id)->where('status', '!=', StatusTypes::BANNED)->where('privacy', PostTypes::FRIEND_ONLY)->with('PostComment.User:id,name')->latest()->get());
             $user->is_friend = 'accept';
         }elseif(isset($pending_friend)){
             $user->is_friend = 'pending';
