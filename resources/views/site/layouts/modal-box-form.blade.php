@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="modal-footer privacy">
-                <a href="#" class="footer-btn bg-secondary" @click="selectedPrivacy='public',openSelectPrivacy=false">
+                <a href="#" class="footer-btn bg-secondary" @click="selectedPrivacy={{ $post->privacy }},openSelectPrivacy=false">
                     Cancel
                 </a>
                 <a href="#" class="footer-btn" @click="getIcon(), openSelectPrivacy=false">
