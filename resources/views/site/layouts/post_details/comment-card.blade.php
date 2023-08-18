@@ -33,7 +33,7 @@
                 <p class="text-white">{{ $comment->acsr_created_at }}</p>
                 @if ($comment->User->id == auth()->user()->id)
                     <a href="#" class="text-decoration-none text-info" @click="openCommentBox = true">Edit</a>
-                    <a href="#" class="text-decoration-none text-warning">Delete</a>
+                    <a class="text-decoration-none text-warning" style="cursor: pointer" @click="postId ={{ $comment->post_id }}; commentId={{ $comment->id }}; openCommentDeleteModal = !openCommentDeleteModal">Delete</a>
                 @endif
             </div>
         </div>

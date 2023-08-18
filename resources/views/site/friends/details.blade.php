@@ -147,7 +147,7 @@
                                     @if(isset($post->thumbnail))
                                         <div class="col-4 col-md-3 col-lg-4 col-xl-3 p-1 profile-photos-wrap">
                                             <a href="">
-                                                <img src="{{ asset('images/'.$photo) }}" alt="">
+                                                <img src="{{ asset('images/'.$post->thumbnail) }}" alt="">
                                             </a>
                                         </div>
                                     @endif

@@ -34,18 +34,6 @@
                     x-transition:leave.duration.400ms
                 >
                     <ul>
-                        <li>
-                            <a href="#">
-                                <i class="fa-regular fa-bookmark text-primary"></i><span class="fw-bold">Add To Favorites</span>
-                            </a>
-                        </li>
-                        @if ($post->user_id !== auth()->user()->id)
-                            <li>
-                                <a href="#">
-                                    <i class="fa-solid fa-square-check text-danger"></i><span class="fw-bold">Follow</span>
-                                </a>
-                            </li>
-                        @endif
                         @if ($post->user_id == auth()->user()->id)
                             <x-site.post.post-edit-btn :post-id="$post->id"></x-site.post.post-edit-btn>
                             <x-site.post.post-delete-btn :post-id="$post->id"></x-site.post.post-delete-btn>
