@@ -41,4 +41,12 @@ class PostComment extends Model
 
         return $created_at;
     }
+
+    public function getAcsrCommentUserLinkAttribute()
+    {
+        if ($this->user_id == auth()->user()->id) {
+            return route('site.profile.index', auth()->user()->username);
+        }
+        return route('site.friend.details', $this->user_id);
+    }
 }

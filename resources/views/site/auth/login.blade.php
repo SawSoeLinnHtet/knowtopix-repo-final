@@ -10,7 +10,7 @@
         <div class="signup-content">
             <form method="POST" action="{{ route('site.login.auth') }}" id="signup-form" class="signup-form">
                 @csrf
-                <h2 class="form-title">Create Your Account</h2>
+                <h2  class="form-title">Log In</h2>
                 @include('site.auth.layouts.page_info')
                 <div class="form-group">
                     <input type="email" class="form-input" name="email" id="email" placeholder="Your Email"/>

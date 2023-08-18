@@ -2,22 +2,22 @@
     <div class="responsive-menu-bar">
         <ul>
             <li>
-                <a href="{{ route('site.index') }}">
+                <a href="{{ route('site.index') }}" class="{{ Request::routeIs('site.index') ? 'text-info' : '' }}">
                     <i class="fa-solid fa-house"></i>
                 </a>
             </li>
             <li>
-                <a href="{{ route('site.search.index') }}">
+                <a href="{{ route('site.search.index') }}" class="{{ Request::routeIs('site.search.index') ? 'text-info' : '' }}">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{{ route("site.blog.index") }}" class="{{ Request::routeIs('site.blog.index') ? 'text-info' : '' }}">
                     <i class="fa-solid fa-flag"></i>
                 </a>
             </li>
             <li>
-                <a href="{{ route('site.friend.index') }}">
+                <a href="{{ route('site.friend.index') }}" class="{{ Request::routeIs('site.friend.*') ? 'text-info' : '' }}">
                     <i class="fa-solid fa-users"></i>
                 </a>
             </li>
@@ -29,44 +29,29 @@
                     x-transition:enter.duration.500ms
                     x-transition:leave.duration.400ms
                 >
-                    <div class="profile-float-detail">
-                        <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                    <div class="profile-float-detail pb-3">
+                        <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
                         <h5 class="profile-name">
-                            Saw Soe Linn Htet
+                            {{ Auth::user()->name }}
                         </h5>
                         <span class="username">
-                            @hazelism
+                            @ {{ Auth::user()->username }}
                         </span>
-                        <div class="popular">
-                            <p class="following">
-                                620K<span class="ms-1">Following</span>
-                            </p>
-                            <p class="followers">
-                                28K<span class="ms-1">Followers</span>
-                            </p>
-                        </div>
                     </div>
                     <div class="collection-wrapper">
                         <ul>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('site.profile.index', Auth::user()->username)}}">
                                     <i class="fa-solid fa-user me-3"></i><span class="fw-bold">Profile</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fa-solid fa-bookmark me-3"></i><span>Upgrade</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="{{ route('site.profile.setting', Auth::user()->username) }}">
                                     <i class="fa-solid fa-gear me-3"></i><span>Account Setting</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fa-solid fa-right-from-bracket me-3"></i><span>Logout</span>
-                                </a>
+                                <x-site.logout-btn />
                             </li>
                         </ul>
                     </div>
@@ -77,7 +62,7 @@
                     @click="openFloatProfile = !openFloatProfile" 
                     @keydown.escape="openFloatProfile = false"    
                 >
-                    <img src="{{ asset('site/img/user.jpeg') }}" alt="">
+                    <img src="{{ auth()->user()->acsr_check_profile }}" alt="">
                 </a>
             </li>
         </ul>

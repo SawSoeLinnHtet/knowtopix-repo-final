@@ -129,12 +129,13 @@ body {
   font-family: 'Montserrat';
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;
   -ms-background-size: cover;
   background-position: center center;
-  padding: 70px 0; }
+  padding: 120px 0; }
 
 .container {
   width: 500px;

@@ -25,7 +25,7 @@ class PostLike extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function findByUserAndPost(int $post_id, int $user_id){
+    public static function findByUserAndPost(int $post_id, int $user_id){
         return self::where('post_id', $post_id)->where('user_id', $user_id)->first();
     }
 

@@ -1154,6 +1154,7 @@ ul li a{
     width: 30px;
     height: 30px;
     border-radius: 100px;
+    object-fit: cover;
 }
 
 /* responsive menu bar */

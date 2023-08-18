@@ -10,7 +10,7 @@
         <img src="{{ $comment->User->acsr_check_profile }}" alt="">
         <div class="comment-text-wrapper d-flex flex-column" x-data='{openCommentBox: false, comment: "{{ str_replace(['"', "'"], '', $comment->comment) }}"}'>
             <div class="text-wrap">
-                <a href="{{ route('site.friend.details', $comment->user_id) }}" class="text-decoration-none text-white">
+                <a href="{{ $comment->acsr_comment_user_link }}" class="text-decoration-none text-white">
                     <h6>
                         {{ $comment->User->name }}
                     </h6>
